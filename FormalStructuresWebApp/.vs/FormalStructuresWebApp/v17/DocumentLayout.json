@@ -1,7 +1,92 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\views\\structures\\generate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\views\\structures\\generate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\views\\structures\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\views\\structures\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\controllers\\api\\structureapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\controllers\\api\\structureapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\controllers\\structurecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\controllers\\structurecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\automatonanalysisservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\automatonanalysisservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\automatonvalidationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\automatonvalidationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\aigenerationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\aigenerationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\interfaces\\iautomatonanalysisservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\interfaces\\iautomatonanalysisservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\interfaces\\iautomatonvalidationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\interfaces\\iautomatonvalidationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\interfaces\\iaigenerationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\interfaces\\iaigenerationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\models\\viewmodel\\structureeditorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\models\\viewmodel\\structureeditorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\models\\dtos\\validationresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\models\\dtos\\validationresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\models\\dtos\\validatestructurerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\models\\dtos\\validatestructurerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\models\\dtos\\generatestrucutureresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\models\\dtos\\generatestrucutureresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\models\\domain\\formalstructuretype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\models\\domain\\formalstructuretype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\models\\dtos\\generatestructurerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\models\\dtos\\generatestructurerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\models\\domain\\finiteautomaton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\models\\domain\\finiteautomaton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\models\\domain\\transition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\models\\domain\\transition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\models\\domain\\state.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\models\\domain\\state.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +94,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,6 +107,279 @@
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Program.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Program.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Program.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:30:40.245Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Generate.cshtml",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Views\\Structures\\Generate.cshtml",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Views\\Structures\\Generate.cshtml",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Views\\Structures\\Generate.cshtml",
+              "RelativeToolTip": "FormalStructuresWebApp\\Views\\Structures\\Generate.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-21T18:30:09.043Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Views\\Structures\\Index.cshtml",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Views\\Structures\\Index.cshtml",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Views\\Structures\\Index.cshtml",
+              "RelativeToolTip": "FormalStructuresWebApp\\Views\\Structures\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-21T18:29:46.746Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "FormalStructuresWebApp\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-21T18:28:29.746Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "StructureApiController.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Controllers\\Api\\StructureApiController.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Controllers\\Api\\StructureApiController.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Controllers\\Api\\StructureApiController.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Controllers\\Api\\StructureApiController.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAgwDAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:28:04.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "StructureController.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Controllers\\StructureController.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Controllers\\StructureController.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Controllers\\StructureController.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Controllers\\StructureController.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAIwDoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:27:35.212Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AutomatonAnalysisService.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AutomatonAnalysisService.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\AutomatonAnalysisService.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AutomatonAnalysisService.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Services\\AutomatonAnalysisService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:25:54.765Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AutomatonValidationService.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AutomatonValidationService.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\AutomatonValidationService.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AutomatonValidationService.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Services\\AutomatonValidationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:25:18.433Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AiGenerationService.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AiGenerationService.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\AiGenerationService.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AiGenerationService.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Services\\AiGenerationService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAACgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:24:42.944Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "IAutomatonAnalysisService.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonAnalysisService.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonAnalysisService.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonAnalysisService.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonAnalysisService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:24:09.01Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IAutomatonValidationService.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonValidationService.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonValidationService.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonValidationService.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonValidationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:23:42.31Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IAiGenerationService.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\Interfaces\\IAiGenerationService.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\Interfaces\\IAiGenerationService.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\Interfaces\\IAiGenerationService.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Services\\Interfaces\\IAiGenerationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:23:12.351Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "StructureEditorViewModel.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\ViewModel\\StructureEditorViewModel.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Models\\ViewModel\\StructureEditorViewModel.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\ViewModel\\StructureEditorViewModel.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Models\\ViewModel\\StructureEditorViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:22:04.677Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ValidationResultDto.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\DTOs\\ValidationResultDto.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Models\\DTOs\\ValidationResultDto.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\DTOs\\ValidationResultDto.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Models\\DTOs\\ValidationResultDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:21:40.511Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ValidateStructureRequest.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\DTOs\\ValidateStructureRequest.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Models\\DTOs\\ValidateStructureRequest.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\DTOs\\ValidateStructureRequest.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Models\\DTOs\\ValidateStructureRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:21:00.869Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "GenerateStrucutureResponse.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\DTOs\\GenerateStrucutureResponse.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Models\\DTOs\\GenerateStrucutureResponse.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\DTOs\\GenerateStrucutureResponse.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Models\\DTOs\\GenerateStrucutureResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:20:28.405Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "GenerateStructureRequest.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\DTOs\\GenerateStructureRequest.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Models\\DTOs\\GenerateStructureRequest.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\DTOs\\GenerateStructureRequest.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Models\\DTOs\\GenerateStructureRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:19:46.89Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "FiniteAutomaton.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\Domain\\FiniteAutomaton.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Models\\Domain\\FiniteAutomaton.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\Domain\\FiniteAutomaton.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Models\\Domain\\FiniteAutomaton.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:19:13.218Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Transition.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\Domain\\Transition.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Models\\Domain\\Transition.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\Domain\\Transition.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Models\\Domain\\Transition.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:18:37.35Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "State.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\Domain\\State.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Models\\Domain\\State.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\Domain\\State.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Models\\Domain\\State.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:18:12.184Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "FormalStructureType.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\Domain\\FormalStructureType.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Models\\Domain\\FormalStructureType.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\Domain\\FormalStructureType.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Models\\Domain\\FormalStructureType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:17:49.007Z",
+              "EditorCaption": ""
             }
           ]
         }
