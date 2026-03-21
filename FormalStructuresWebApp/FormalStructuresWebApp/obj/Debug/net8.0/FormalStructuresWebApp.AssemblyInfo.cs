@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FormalStructuresWebApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a4f6059260988eb2b0550a834c9613816ddf891")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b70ca65bf167bc1c64f9437fd21e63b200affb65")]
 [assembly: System.Reflection.AssemblyProductAttribute("FormalStructuresWebApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FormalStructuresWebApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
