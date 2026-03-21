@@ -1,12 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{AE4D5785-995B-4925-BCF3-27ED32C86B09}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{AE4D5785-995B-4925-BCF3-27ED32C86B09}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -14,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -27,19 +22,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Pages\\Index.cshtml",
-              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Pages\\Index.cshtml",
-              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Pages\\Index.cshtml",
-              "RelativeToolTip": "FormalStructuresWebApp\\Pages\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-21T17:44:23.061Z",
-              "EditorCaption": ""
             }
           ]
         }
