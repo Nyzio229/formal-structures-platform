@@ -232,3 +232,6 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+FormalStructuresWebApp/FormalStructuresWebApp/obj/Debug/net8.0/FormalStructuresWebApp.AssemblyInfoInputs.cache
+FormalStructuresWebApp/FormalStructuresWebApp/obj/Debug/net8.0/FormalStructuresWebApp.AssemblyInfo.cs
+FormalStructuresWebApp/.vs/FormalStructuresWebApp/v17/.suo
