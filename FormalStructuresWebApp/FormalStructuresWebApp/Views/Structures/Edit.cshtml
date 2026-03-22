@@ -1,0 +1,140 @@
+﻿@model FormalStructuresWebApp.Models.ViewModels.EditAutomatonViewModel
+
+@{
+    ViewData["Title"] = "Edycja automatu";
+}
+
+<h1>Edycja automatu</h1>
+
+<div style="display: flex; gap: 30px; align-items: flex-start;">
+    <div style="flex: 2;">
+        <h3>Graf automatu</h3>
+
+        <div id="automatonGraphWrapper"
+             style="position: relative; width: 100%; height: 500px; border: 1px solid #ccc; margin-bottom: 20px;">
+            <div id="automatonGraph" style="position: absolute; inset: 0;"></div>
+            <canvas id="automatonOverlay"
+                    style="position: absolute; inset: 0; pointer-events: none;"></canvas>
+        </div>
+
+        <script id="automaton-data" type="application/json">
+            @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Automaton))
+        </script>
+    </div>
+
+    <div style="flex: 1;">
+        <h3>Dodaj stan</h3>
+        <form asp-action="AddState" method="post">
+            <div>
+                <label>Nazwa stanu</label>
+                <input asp-for="NewStateName" />
+            </div>
+            <div>
+                <label>
+                    <input asp-for="NewStateIsStart" type="checkbox" />
+                    Stan początkowy
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input asp-for="NewStateIsAccepting" type="checkbox" />
+                    Stan akceptujący
+                </label>
+            </div>
+            <button type="submit">Dodaj stan</button>
+        </form>
+
+        <hr />
+
+        <h3>Usuń stan</h3>
+        @foreach (var state in Model.Automaton.States)
+        {
+            <form asp-action="RemoveState" method="post" style="margin-bottom: 5px;">
+                <input type="hidden" name="stateName" value="@state.Name" />
+                <button type="submit">Usuń @state.Name</button>
+            </form>
+        }
+
+        <hr />
+
+        <h3>Dodaj przejście</h3>
+        <form asp-action="AddTransition" method="post">
+            <div>
+                <label>Ze stanu</label>
+                <select asp-for="TransitionFromState">
+                    @foreach (var state in Model.Automaton.States)
+                    {
+                        <option value="@state.Name">@state.Name</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <label>Symbol</label>
+                <input asp-for="TransitionSymbol" />
+            </div>
+            <div>
+                <label>Do stanu</label>
+                <select asp-for="TransitionToState">
+                    @foreach (var state in Model.Automaton.States)
+                    {
+                        <option value="@state.Name">@state.Name</option>
+                    }
+                </select>
+            </div>
+            <button type="submit">Dodaj przejście</button>
+        </form>
+
+        <hr />
+
+        <h3>Usuń przejście</h3>
+        @foreach (var transition in Model.Automaton.Transitions)
+        {
+            <form asp-action="RemoveTransition" method="post" style="margin-bottom: 5px;">
+                <input type="hidden" name="fromState" value="@transition.FromState" />
+                <input type="hidden" name="symbol" value="@transition.Symbol" />
+                <input type="hidden" name="toState" value="@transition.ToState" />
+                <button type="submit">
+                    Usuń @transition.FromState --(@transition.Symbol)--> @transition.ToState
+                </button>
+            </form>
+        }
+
+        <hr />
+
+        <h3>Uruchom automat</h3>
+        <form asp-action="Run" method="post">
+            <div>
+                <label asp-for="InputWord">Słowo wejściowe</label>
+                <input asp-for="InputWord" />
+            </div>
+            <button type="submit">Uruchom</button>
+        </form>
+
+        @if (Model.SimulationAccepted.HasValue)
+        {
+            <hr />
+            <h3>Wynik</h3>
+
+            @if (Model.SimulationAccepted.Value)
+            {
+                <p><strong>Automat zaakceptował słowo.</strong></p>
+            }
+            else
+            {
+                <p><strong>Automat odrzucił słowo.</strong></p>
+            }
+
+            <ul>
+                @foreach (var step in Model.SimulationSteps)
+                {
+                    <li>@step</li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="~/js/graph-editor.js"></script>
+}

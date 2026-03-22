@@ -8,42 +8,98 @@ namespace FormalStructuresWebApp.Controllers.Api
     [Route("api/structures")]
     public class StructuresApiController : ControllerBase
     {
-        private readonly IAiGenerationService _aiGenerationService;
-        private readonly IAutomatonValidationService _validationService;
-        private readonly IAutomatonAnalysisService _analysisService;
+        private readonly IAutomatonSessionService _sessionService;
+        private readonly IAutomatonEditorService _editorService;
 
         public StructuresApiController(
-            IAiGenerationService aiGenerationService,
-            IAutomatonValidationService validationService,
-            IAutomatonAnalysisService analysisService)
+            IAutomatonSessionService sessionService,
+            IAutomatonEditorService editorService)
         {
-            _aiGenerationService = aiGenerationService;
-            _validationService = validationService;
-            _analysisService = analysisService;
+            _sessionService = sessionService;
+            _editorService = editorService;
         }
 
-        [HttpPost("generate")]
-        public async Task<IActionResult> Generate([FromBody] GenerateStructureRequest request)
+        [HttpGet("current")]
+        public IActionResult GetCurrent()
         {
-            if (string.IsNullOrWhiteSpace(request.Description))
-                return BadRequest("Opis nie może być pusty.");
-
-            var result = await _aiGenerationService.GenerateAutomatonFromDescriptionAsync(request.Description);
-            return Ok(result);
+            var automaton = _sessionService.GetAutomaton();
+            return Ok(automaton);
         }
 
-        [HttpPost("validate")]
-        public IActionResult Validate([FromBody] ValidateStructureRequest request)
+        [HttpPost("add-state")]
+        public IActionResult AddState([FromBody] AddStateRequest request)
         {
-            var result = _validationService.Validate(request.Automaton);
-            return Ok(result);
+            var automaton = _sessionService.GetAutomaton();
+
+            _editorService.AddState(
+                automaton,
+                request.Name,
+                request.IsStart,
+                request.IsAccepting,
+                request.X,
+                request.Y);
+
+            _sessionService.SetAutomaton(automaton);
+
+            return Ok(automaton);
         }
 
-        [HttpPost("analyze")]
-        public IActionResult Analyze([FromBody] ValidateStructureRequest request)
+        [HttpPost("remove-state")]
+        public IActionResult RemoveState([FromBody] RemoveStateRequest request)
         {
-            var result = _analysisService.Analyze(request.Automaton);
-            return Ok(result);
+            var automaton = _sessionService.GetAutomaton();
+
+            _editorService.RemoveState(automaton, request.StateName);
+            _sessionService.SetAutomaton(automaton);
+
+            return Ok(automaton);
+        }
+
+        [HttpPost("add-transition")]
+        public IActionResult AddTransition([FromBody] AddTransitionRequest request)
+        {
+            var automaton = _sessionService.GetAutomaton();
+
+            _editorService.AddTransition(
+                automaton,
+                request.FromState,
+                request.Symbol,
+                request.ToState);
+
+            _sessionService.SetAutomaton(automaton);
+
+            return Ok(automaton);
+        }
+
+        [HttpPost("remove-transition")]
+        public IActionResult RemoveTransition([FromBody] RemoveTransitionRequest request)
+        {
+            var automaton = _sessionService.GetAutomaton();
+
+            _editorService.RemoveTransition(
+                automaton,
+                request.FromState,
+                request.Symbol,
+                request.ToState);
+
+            _sessionService.SetAutomaton(automaton);
+
+            return Ok(automaton);
+        }
+
+        [HttpPost("update-layout")]
+        public IActionResult UpdateLayout([FromBody] UpdateLayoutRequest request)
+        {
+            var automaton = _sessionService.GetAutomaton();
+
+            var positions = request.States
+                .Select(s => (s.Name, s.X, s.Y))
+                .ToList();
+
+            _editorService.UpdateStatePositions(automaton, positions);
+            _sessionService.SetAutomaton(automaton);
+
+            return Ok(automaton);
         }
     }
 }

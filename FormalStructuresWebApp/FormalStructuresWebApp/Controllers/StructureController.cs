@@ -9,15 +9,18 @@ namespace FormalStructuresWebApp.Controllers
         private readonly IAiGenerationService _aiGenerationService;
         private readonly IAutomatonValidationService _validationService;
         private readonly IAutomatonAnalysisService _analysisService;
+        private readonly IAutomatonSessionService _sessionService;
 
         public StructuresController(
             IAiGenerationService aiGenerationService,
             IAutomatonValidationService validationService,
-            IAutomatonAnalysisService analysisService)
+            IAutomatonAnalysisService analysisService,
+            IAutomatonSessionService sessionService)
         {
             _aiGenerationService = aiGenerationService;
             _validationService = validationService;
             _analysisService = analysisService;
+            _sessionService = sessionService;
         }
 
         [HttpGet]
@@ -50,8 +53,22 @@ namespace FormalStructuresWebApp.Controllers
             }
 
             model.Automaton = generationResult.Automaton;
+            _sessionService.SetAutomaton(generationResult.Automaton);
             model.ValidationResult = _validationService.Validate(generationResult.Automaton);
             model.AnalysisMessages = _analysisService.Analyze(generationResult.Automaton);
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Editor()
+        {
+            var automaton = _sessionService.GetAutomaton();
+
+            var model = new StructureEditorViewModel
+            {
+                Automaton = automaton
+            };
 
             return View(model);
         }

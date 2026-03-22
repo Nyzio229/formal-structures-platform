@@ -8,6 +8,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAiGenerationService, AiGenerationService>();
 builder.Services.AddScoped<IAutomatonValidationService, AutomatonValidationService>();
 builder.Services.AddScoped<IAutomatonAnalysisService, AutomatonAnalysisService>();
+builder.Services.AddSingleton<IAutomatonSessionService, AutomatonSessionService>();
+builder.Services.AddScoped<IAutomatonEditorService, AutomatonEditorService>();
+
 
 var app = builder.Build();
 

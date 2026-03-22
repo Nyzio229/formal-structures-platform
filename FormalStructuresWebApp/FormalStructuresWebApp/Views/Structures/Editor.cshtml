@@ -1,0 +1,49 @@
+﻿@model FormalStructuresWebApp.Models.ViewModels.StructureEditorViewModel
+
+@{
+    ViewData["Title"] = "Edytor graficzny automatu";
+}
+
+<h1>Edytor graficzny automatu</h1>
+
+<div style="display: flex; gap: 24px; align-items: flex-start;">
+    <div style="flex: 1 1 70%;">
+        <div id="automatonGraphWrapper"
+             style="position: relative; width: 100%; height: 650px; border: 1px solid #ccc; background: #fafafa;">
+            <div id="automatonGraph" style="position: absolute; inset: 0;"></div>
+            <canvas id="automatonOverlay" style="position: absolute; inset: 0; pointer-events: none;"></canvas>
+        </div>
+
+        <script id="automaton-data" type="application/json">
+            @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Automaton))
+        </script>
+    </div>
+
+    <div style="flex: 1 1 30%; min-width: 320px;">
+        <h3>Akcje</h3>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <button type="button" id="addStateButton">Dodaj stan</button>
+            <button type="button" id="removeSelectedStateButton">Usuń zaznaczony stan</button>
+            <button type="button" id="removeSelectedEdgeButton">Usuń zaznaczone przejście</button>
+            <button type="button" id="saveLayoutButton">Zapisz układ</button>
+        </div>
+
+        <hr />
+
+        <h3>Dodaj przejście</h3>
+        <p>Kliknij najpierw stan źródłowy, potem stan docelowy.</p>
+        <input type="text" id="transitionSymbolInput" placeholder="Symbol przejścia" />
+        <button type="button" id="startAddTransitionModeButton">Tryb dodawania przejścia</button>
+
+        <hr />
+
+        <h3>Zaznaczony element</h3>
+        <div id="selectionInfo">Nic nie zaznaczono.</div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="~/js/automaton-editor.js"></script>
+}
