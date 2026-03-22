@@ -77,4 +77,94 @@
             }
         </ul>
     }
+
+    <!-- Okno do edycji automatu -->
+    @if (Model.Automaton != null)
+    {
+        <hr />
+        <h2>Wygenerowany automat</h2>
+
+        <p><strong>Nazwa:</strong> @Model.Automaton.Name</p>
+        <p><strong>Stan początkowy:</strong> @Model.Automaton.StartState</p>
+        <p><strong>Stany akceptujące:</strong> @string.Join(", ", Model.Automaton.AcceptingStates)</p>
+
+        <h3>Wizualizacja grafu</h3>
+        <div id="automatonGraphWrapper"
+             style="position: relative; width: 100%; height: 500px; border: 1px solid #ccc; margin-bottom: 20px;">
+            <div id="automatonGraph"
+                 style="position: absolute; inset: 0;">
+            </div>
+            <canvas id="automatonOverlay"
+                    style="position: absolute; inset: 0; pointer-events: none;"></canvas>
+        </div>
+
+        <script id="automaton-data" type="application/json">
+            @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                        Model.Automaton,
+                        new System.Text.Json.JsonSerializerOptions
+        {
+            PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase
+        }))
+        </script>
+
+        <h3>Stany</h3>
+        <ul>
+            @foreach (var state in Model.Automaton.States)
+            {
+                <li>
+                    @state.Name
+                    @(state.IsStart ? " [start]" : "")
+                    @(state.IsAccepting ? " [accepting]" : "")
+                    [@state.X, @state.Y]
+                </li>
+            }
+        </ul>
+
+        <h3>Alfabet</h3>
+        <p>@string.Join(", ", Model.Automaton.Alphabet)</p>
+
+        <h3>Przejścia</h3>
+        <ul>
+            @foreach (var transition in Model.Automaton.Transitions)
+            {
+                <li>@transition.FromState --(@transition.Symbol)--> @transition.ToState</li>
+            }
+        </ul>
+
+        @if (Model.ValidationResult != null)
+        {
+            <h3>Walidacja</h3>
+
+            @if (Model.ValidationResult.IsValid)
+            {
+                <p>Struktura jest poprawna.</p>
+            }
+            else
+            {
+                <ul>
+                    @foreach (var error in Model.ValidationResult.Errors)
+                    {
+                        <li>@error</li>
+                    }
+                </ul>
+            }
+        }
+
+        @if (Model.AnalysisMessages.Any())
+        {
+            <h3>Analiza</h3>
+            <ul>
+                @foreach (var message in Model.AnalysisMessages)
+                {
+                    <li>@message</li>
+                }
+            </ul>
+        }
+    }
+
+    @section Scripts {
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="~/js/graph-editor.js"></script>
+    }
+
 }

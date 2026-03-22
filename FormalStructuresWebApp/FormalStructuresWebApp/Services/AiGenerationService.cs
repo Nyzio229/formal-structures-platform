@@ -15,9 +15,9 @@ namespace FormalStructuresWebApp.Services
                 Alphabet = new List<string> { "a", "b" },
                 States = new List<State>
                 {
-                    new State { Name = "q0", IsStart = true, IsAccepting = false },
-                    new State { Name = "q1", IsStart = false, IsAccepting = false },
-                    new State { Name = "q2", IsStart = false, IsAccepting = true }
+                    new State { Name = "q0", IsStart = true, IsAccepting = false, X = 100, Y = 150 },
+                    new State { Name = "q1", IsStart = false, IsAccepting = false, X = 300, Y = 80 },
+                    new State { Name = "q2", IsStart = false, IsAccepting = true, X = 500, Y = 150 }
                 },
                 Transitions = new List<Transition>
                 {
@@ -33,7 +33,7 @@ namespace FormalStructuresWebApp.Services
             return Task.FromResult(new GenerateStructureResponse
             {
                 Success = true,
-                Message = "Automat został wygenerowany na podstawie opisu.",
+                Message = "Automat został wygenerowany na podstawie opisu. (testowy, bez modelu)",
                 Automaton = automaton
             });
         }
