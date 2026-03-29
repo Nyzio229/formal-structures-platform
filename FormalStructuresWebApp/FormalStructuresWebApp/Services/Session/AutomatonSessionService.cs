@@ -1,7 +1,7 @@
 ﻿using FormalStructuresWebApp.Models.Domain;
 using FormalStructuresWebApp.Services.Interfaces;
 
-namespace FormalStructuresWebApp.Services
+namespace FormalStructuresWebApp.Services.Session
 {
     public class AutomatonSessionService : IAutomatonSessionService
     {

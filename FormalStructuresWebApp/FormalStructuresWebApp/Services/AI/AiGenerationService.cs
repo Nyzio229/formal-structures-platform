@@ -2,7 +2,7 @@
 using FormalStructuresWebApp.Models.DTOs;
 using FormalStructuresWebApp.Services.Interfaces;
 
-namespace FormalStructuresWebApp.Services
+namespace FormalStructuresWebApp.Services.AI
 {
     public class AiGenerationService : IAiGenerationService
     {

@@ -1,5 +1,8 @@
-using FormalStructuresWebApp.Services;
+using FormalStructuresWebApp.Services.AI;
+using FormalStructuresWebApp.Services.Automaton;
 using FormalStructuresWebApp.Services.Interfaces;
+using FormalStructuresWebApp.Services.LStar;
+using FormalStructuresWebApp.Services.Session;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,9 @@ builder.Services.AddScoped<IAutomatonValidationService, AutomatonValidationServi
 builder.Services.AddScoped<IAutomatonAnalysisService, AutomatonAnalysisService>();
 builder.Services.AddSingleton<IAutomatonSessionService, AutomatonSessionService>();
 builder.Services.AddScoped<IAutomatonEditorService, AutomatonEditorService>();
+
+builder.Services.AddHttpClient<IOllamaService, OllamaService>();
+builder.Services.AddScoped<LStarService>();
 
 
 var app = builder.Build();

@@ -2,7 +2,7 @@
 using FormalStructuresWebApp.Models.DTOs;
 using FormalStructuresWebApp.Services.Interfaces;
 
-namespace FormalStructuresWebApp.Services
+namespace FormalStructuresWebApp.Services.Automaton
 {
     public class AutomatonValidationService : IAutomatonValidationService
     {
