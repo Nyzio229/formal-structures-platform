@@ -5,17 +5,21 @@ namespace FormalStructuresWebApp.Services.AI
     public class OllamaService : IOllamaService
     {
         private readonly HttpClient _httpClient;
+        private readonly string _baseUrl;
+        private readonly string _model;
 
-        public OllamaService(HttpClient httpClient)
+        public OllamaService(HttpClient httpClient, IConfiguration config)
         {
             _httpClient = httpClient;
+            _baseUrl = config["Ollama:BaseUrl"] ?? "http://localhost:11434";
+            _model = config["Ollama:Model"] ?? "lstar";
         }
 
         public async Task<string> AskAsync(string prompt)
         {
-            var response = await _httpClient.PostAsJsonAsync("http://localhost:11434/api/generate", new
+            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/generate", new
             {
-                model = "lstar",
+                model = _model,
                 prompt = prompt,
                 stream = false
             });

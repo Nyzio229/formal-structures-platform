@@ -9,5 +9,6 @@ namespace FormalStructuresWebApp.Models.ViewModels
         public FiniteAutomaton? Automaton { get; set; }
         public ValidationResultDto? ValidationResult { get; set; }
         public List<string> AnalysisMessages { get; set; } = new();
+        public List<string> RawOllamaResponses { get; set; } = new(); // DODAJ
     }
 }

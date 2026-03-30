@@ -114,6 +114,35 @@
             ctx.lineWidth = 4;
             ctx.stroke();
         });
+        cy.nodes().forEach(node => {
+            if (!node.data("isStart")) return;
+
+            const pos = node.renderedPosition();
+            const radius = node.renderedWidth() / 2;
+
+            const arrowLength = 40;
+            const startX = pos.x - radius - arrowLength;
+            const endX = pos.x - radius;
+            const y = pos.y;
+
+            // linia
+            ctx.beginPath();
+            ctx.moveTo(startX, y);
+            ctx.lineTo(endX, y);
+            ctx.strokeStyle = "#333";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // grot (wypełniony trójkąt)
+            const headLen = 10;
+            ctx.beginPath();
+            ctx.moveTo(endX, y);
+            ctx.lineTo(endX - headLen, y - headLen / 2);
+            ctx.lineTo(endX - headLen, y + headLen / 2);
+            ctx.closePath();
+            ctx.fillStyle = "#333";
+            ctx.fill();
+        });
     }
 
     cy.on("render", drawAcceptingStateInnerCircles);

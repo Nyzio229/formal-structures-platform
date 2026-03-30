@@ -6,6 +6,7 @@ namespace FormalStructuresWebApp.Services.AI
     {
         private readonly IOllamaService _ollama;
         private readonly string _description;
+        public List<string> RawResponses { get; } = new(); 
 
         public LlmOracle(IOllamaService ollama, string description)
         {
@@ -27,6 +28,7 @@ namespace FormalStructuresWebApp.Services.AI
             try
             {
                 var result = await _ollama.AskAsync(prompt);
+                RawResponses.Add($"[{word}] → {result.Trim()}");
 
                 if (string.IsNullOrWhiteSpace(result))
                     throw new Exception("Pusta odpowiedź z LLM");

@@ -45,33 +45,6 @@ namespace FormalStructuresWebApp.Controllers
 
         //---------------------------- GENERATE stary ------------------------------------
 
-        //[HttpPost]
-        //public async Task<IActionResult> Generate(StructureEditorViewModel model)
-        //{
-        //    if (string.IsNullOrWhiteSpace(model.Description))
-        //    {
-        //        ModelState.AddModelError(nameof(model.Description), "Opis nie może być pusty.");
-        //        return View(model);
-        //    }
-
-        //    var generationResult = await _aiGenerationService.GenerateAutomatonFromDescriptionAsync(model.Description);
-
-        //    if (!generationResult.Success || generationResult.Automaton == null)
-        //    {
-        //        ModelState.AddModelError(string.Empty, generationResult.Message);
-        //        return View(model);
-        //    }
-
-        //    model.Automaton = generationResult.Automaton;
-        //    _sessionService.SetAutomaton(generationResult.Automaton);
-        //    model.ValidationResult = _validationService.Validate(generationResult.Automaton);
-        //    model.AnalysisMessages = _analysisService.Analyze(generationResult.Automaton);
-
-        //    return View(model);
-        //}
-
-
-        //---------------------------- GENERATE nowy ------------------------------------
         [HttpPost]
         public async Task<IActionResult> Generate(StructureEditorViewModel model)
         {
@@ -81,20 +54,48 @@ namespace FormalStructuresWebApp.Controllers
                 return View(model);
             }
 
-            // Tworzymy oracle ręcznie
-            var oracle = new LlmOracle(_ollamaService, model.Description);
+            var generationResult = await _aiGenerationService.GenerateAutomatonFromDescriptionAsync(model.Description);
 
-            // L*
-            var automaton = await _lstarService.LearnAsync(oracle);
+            if (!generationResult.Success || generationResult.Automaton == null)
+            {
+                ModelState.AddModelError(string.Empty, generationResult.Message);
+                return View(model);
+            }
 
-            model.Automaton = automaton;
-            _sessionService.SetAutomaton(automaton);
-
-            model.ValidationResult = _validationService.Validate(automaton);
-            model.AnalysisMessages = _analysisService.Analyze(automaton);
+            model.Automaton = generationResult.Automaton;
+            _sessionService.SetAutomaton(generationResult.Automaton);
+            model.ValidationResult = _validationService.Validate(generationResult.Automaton);
+            model.AnalysisMessages = _analysisService.Analyze(generationResult.Automaton);
 
             return View(model);
         }
+
+
+        //---------------------------- GENERATE nowy ------------------------------------
+        //[HttpPost]
+        //public async Task<IActionResult> Generate(StructureEditorViewModel model)
+        //{
+        //    if (string.IsNullOrWhiteSpace(model.Description))
+        //    {
+        //        ModelState.AddModelError(nameof(model.Description), "Opis nie może być pusty.");
+        //        return View(model);
+        //    }
+
+        //    // Tworzymy oracle ręcznie
+        //    var oracle = new LlmOracle(_ollamaService, model.Description);
+
+        //    // L*
+        //    var automaton = await _lstarService.LearnAsync(oracle);
+
+        //    model.Automaton = automaton;
+        //    model.RawOllamaResponses = oracle.RawResponses; 
+        //    _sessionService.SetAutomaton(automaton);
+
+        //    model.ValidationResult = _validationService.Validate(automaton);
+        //    model.AnalysisMessages = _analysisService.Analyze(automaton);
+
+        //    return View(model);
+        //}
 
         [HttpGet]
         public IActionResult Editor()

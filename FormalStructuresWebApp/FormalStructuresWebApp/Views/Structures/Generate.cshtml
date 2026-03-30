@@ -19,6 +19,17 @@
 @if (Model.Automaton != null)
 {
     <hr />
+    @if (Model.RawOllamaResponses.Any())
+    {
+        <h3>Surowe odpowiedzi modelu</h3>
+        <ul style="font-family: monospace; background: #f5f5f5; padding: 10px;">
+            @foreach (var response in Model.RawOllamaResponses)
+            {
+                <li>@response</li>
+            }
+        </ul>
+    }
+    <hr />
     <h2>Wygenerowany automat</h2>
 
     <p><strong>Nazwa:</strong> @Model.Automaton.Name</p>
