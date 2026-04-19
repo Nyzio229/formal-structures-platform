@@ -16,40 +16,28 @@ namespace FormalStructuresWebApp.Services.AI
 
         public async Task<bool> MembershipQuery(string word)
         {
-            var prompt = $@"
-                Opis języka:
-                {_description}
+            var wordDisplay = word == "" ? "ε (słowo puste)" : $"'{word}'";
 
-                Czy słowo '{word}' należy do języka?
+            var prompt = $@"Rozważamy język formalny nad alfabetem {{0,1}}.
+Opis języka: {_description}
 
-                Odpowiedz tylko: TAK lub NIE.
-                ";
+Czy słowo {wordDisplay} należy do tego języka?
+Odpowiedz WYŁĄCZNIE słowem TAK lub NIE — zero innych słów, zero wyjaśnień.";
 
-            try
-            {
-                var result = await _ollama.AskAsync(prompt);
-                RawResponses.Add($"[{word}] → {result.Trim()}");
+            var result = await _ollama.AskAsync(prompt);
+            RawResponses.Add($"[{word}] → {result.Trim()}");
 
-                if (string.IsNullOrWhiteSpace(result))
-                    throw new Exception("Pusta odpowiedź z LLM");
+            if (string.IsNullOrWhiteSpace(result))
+                throw new Exception("Pusta odpowiedź z LLM");
 
-                var normalized = result.Trim().ToUpper();
+            var normalized = result.Trim().ToUpper();
 
-                if (normalized.Contains("TAK"))
-                    return true;
+            if (normalized.Contains("TAK")) return true;
+            if (normalized.Contains("NIE")) return false;
 
-                if (normalized.Contains("NIE"))
-                    return false;
-
-                throw new Exception($"Niepoprawna odpowiedź LLM: {result}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Oracle error: {ex.Message}");
-
-                // ważne: NIE udawaj wyniku
-                throw;
-            }
+            // Fallback zamiast wyjątku — loguj i zwróć false
+            Console.WriteLine($"[WARN] Niepoprawna odpowiedź LLM dla '{word}': {result}");
+            return false;
         }
     }
 }

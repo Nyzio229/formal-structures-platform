@@ -12,7 +12,8 @@ namespace FormalStructuresWebApp.Services.AI
         {
             _httpClient = httpClient;
             _baseUrl = config["Ollama:BaseUrl"] ?? "http://localhost:11434";
-            _model = config["Ollama:Model"] ?? "lstar";
+            _model = config["Ollama:Model"] ?? "mistral";
+            Console.WriteLine($"MODEL: {_model}");
         }
 
         public async Task<string> AskAsync(string prompt)

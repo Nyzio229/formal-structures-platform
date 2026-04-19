@@ -3,18 +3,6 @@
   "WorkspaceRootPath": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\controllers\\structurecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\controllers\\structurecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\ai\\aigenerationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\ai\\aigenerationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\views\\structures\\generate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\views\\structures\\generate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\ai\\llmoracle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\ai\\llmoracle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -23,28 +11,48 @@
       "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\ai\\ollamaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\controllers\\structurecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\controllers\\structurecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\models\\viewmodels\\structureeditorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\models\\viewmodels\\structureeditorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\controllers\\api\\structureapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\controllers\\api\\structureapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\lstar\\lstarservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\lstar\\lstarservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\views\\structures\\generate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\views\\structures\\generate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\controllers\\api\\structureapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\controllers\\api\\structureapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\lstar\\observationtableservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\lstar\\observationtableservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\lstar\\automatonbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\lstar\\automatonbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\wwwroot\\js\\graph-editor.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\wwwroot\\js\\graph-editor.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\ai\\aigenerationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\ai\\aigenerationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\lstar\\lstarservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\lstar\\lstarservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\wwwroot\\js\\graph-editor.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\wwwroot\\js\\graph-editor.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\interfaces\\iautomatonoracle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -53,14 +61,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\interfaces\\iollamaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\interfaces\\iollamaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\lstar\\automatonbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\lstar\\automatonbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\lstar\\observationtableservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|solutionrelative:formalstructureswebapp\\services\\lstar\\observationtableservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A5CEE825-0955-49DF-81EE-BBB416E69C3A}|FormalStructuresWebApp\\FormalStructuresWebApp.csproj|d:\\inne\\umk\\magistera_aplikacja\\formal-structures-platform\\formalstructureswebapp\\formalstructureswebapp\\services\\automaton\\automatonvalidationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -74,7 +74,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -90,53 +90,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "Generate.cshtml",
               "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Views\\Structures\\Generate.cshtml",
               "RelativeDocumentMoniker": "FormalStructuresWebApp\\Views\\Structures\\Generate.cshtml",
               "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Views\\Structures\\Generate.cshtml",
               "RelativeToolTip": "FormalStructuresWebApp\\Views\\Structures\\Generate.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAADUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-03-30T19:26:54.71Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
+              "Title": "StructureEditorViewModel.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\ViewModels\\StructureEditorViewModel.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Models\\ViewModels\\StructureEditorViewModel.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\ViewModels\\StructureEditorViewModel.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Models\\ViewModels\\StructureEditorViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-30T19:30:07.367Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "StructureController.cs",
               "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Controllers\\StructureController.cs",
               "RelativeDocumentMoniker": "FormalStructuresWebApp\\Controllers\\StructureController.cs",
               "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Controllers\\StructureController.cs",
               "RelativeToolTip": "FormalStructuresWebApp\\Controllers\\StructureController.cs",
-              "ViewState": "AgIAAFIAAAAAAAAAAADwv2oAAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAGUAAAAAAAAAAAAwwGUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-29T15:50:53.119Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "ObservationTableService.cs",
-              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\LStar\\ObservationTableService.cs",
-              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\LStar\\ObservationTableService.cs",
-              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\LStar\\ObservationTableService.cs",
-              "RelativeToolTip": "FormalStructuresWebApp\\Services\\LStar\\ObservationTableService.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwCYAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-29T15:38:55.15Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "LlmOracle.cs",
-              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AI\\LlmOracle.cs",
-              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\AI\\LlmOracle.cs",
-              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AI\\LlmOracle.cs",
-              "RelativeToolTip": "FormalStructuresWebApp\\Services\\AI\\LlmOracle.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-29T15:38:17.225Z",
               "EditorCaption": ""
             },
             {
@@ -149,74 +137,77 @@
               "RelativeToolTip": "FormalStructuresWebApp\\Services\\Automaton\\AutomatonValidationService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-29T15:37:09.076Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "LStarService.cs",
-              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\LStar\\LStarService.cs",
-              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\LStar\\LStarService.cs",
-              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\LStar\\LStarService.cs",
-              "RelativeToolTip": "FormalStructuresWebApp\\Services\\LStar\\LStarService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-29T15:32:39.904Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "IAutomatonOracle.cs",
-              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonOracle.cs",
-              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonOracle.cs",
-              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonOracle.cs",
-              "RelativeToolTip": "FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonOracle.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-29T15:31:22.503Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "OllamaService.cs",
-              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AI\\OllamaService.cs",
-              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\AI\\OllamaService.cs",
-              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AI\\OllamaService.cs",
-              "RelativeToolTip": "FormalStructuresWebApp\\Services\\AI\\OllamaService.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABgAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-29T15:30:35.192Z",
+              "WhenOpened": "2026-03-29T15:37:09.076Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "StructureApiController.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Controllers\\Api\\StructureApiController.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Controllers\\Api\\StructureApiController.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Controllers\\Api\\StructureApiController.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Controllers\\Api\\StructureApiController.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAcwA8AAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-21T18:28:04.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LlmOracle.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AI\\LlmOracle.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\AI\\LlmOracle.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AI\\LlmOracle.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Services\\AI\\LlmOracle.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T15:38:17.225Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\appsettings.json",
               "RelativeDocumentMoniker": "FormalStructuresWebApp\\appsettings.json",
               "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\appsettings.json",
               "RelativeToolTip": "FormalStructuresWebApp\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2026-03-30T19:19:47.949Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "graph-editor.js",
-              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\wwwroot\\js\\graph-editor.js",
-              "RelativeDocumentMoniker": "FormalStructuresWebApp\\wwwroot\\js\\graph-editor.js",
-              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\wwwroot\\js\\graph-editor.js",
-              "RelativeToolTip": "FormalStructuresWebApp\\wwwroot\\js\\graph-editor.js",
-              "ViewState": "AgIAAGwAAAAAAAAAAAAIwJAAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-03-30T19:17:48.511Z",
+              "DocumentIndex": 4,
+              "Title": "LStarService.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\LStar\\LStarService.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\LStar\\LStarService.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\LStar\\LStarService.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Services\\LStar\\LStarService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAF0AAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T15:32:39.904Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 10,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Program.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Program.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Program.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T15:42:45.045Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "AiGenerationService.cs",
               "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AI\\AiGenerationService.cs",
               "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\AI\\AiGenerationService.cs",
@@ -229,58 +220,72 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "StructureEditorViewModel.cs",
-              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\ViewModels\\StructureEditorViewModel.cs",
-              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Models\\ViewModels\\StructureEditorViewModel.cs",
-              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Models\\ViewModels\\StructureEditorViewModel.cs",
-              "RelativeToolTip": "FormalStructuresWebApp\\Models\\ViewModels\\StructureEditorViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "OllamaService.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AI\\OllamaService.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\AI\\OllamaService.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\AI\\OllamaService.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Services\\AI\\OllamaService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-30T19:30:07.367Z",
+              "WhenOpened": "2026-03-29T15:30:35.192Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "StructureApiController.cs",
-              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Controllers\\Api\\StructureApiController.cs",
-              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Controllers\\Api\\StructureApiController.cs",
-              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Controllers\\Api\\StructureApiController.cs",
-              "RelativeToolTip": "FormalStructuresWebApp\\Controllers\\Api\\StructureApiController.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAcwA8AAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-21T18:28:04.46Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 9,
               "Title": "AutomatonBuilder.cs",
               "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\LStar\\AutomatonBuilder.cs",
               "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\LStar\\AutomatonBuilder.cs",
               "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\LStar\\AutomatonBuilder.cs",
               "RelativeToolTip": "FormalStructuresWebApp\\Services\\LStar\\AutomatonBuilder.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-29T15:39:08.269Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Program.cs",
-              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Program.cs",
-              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Program.cs",
-              "RelativeToolTip": "FormalStructuresWebApp\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-29T15:42:45.045Z",
+              "WhenOpened": "2026-03-29T15:39:08.269Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
+              "Title": "graph-editor.js",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\wwwroot\\js\\graph-editor.js",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\wwwroot\\js\\graph-editor.js",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\wwwroot\\js\\graph-editor.js",
+              "RelativeToolTip": "FormalStructuresWebApp\\wwwroot\\js\\graph-editor.js",
+              "ViewState": "AgIAAGwAAAAAAAAAAAAIwJAAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-30T19:17:48.511Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "IAutomatonOracle.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonOracle.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonOracle.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonOracle.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Services\\Interfaces\\IAutomatonOracle.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T15:31:22.503Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ObservationTableService.cs",
+              "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\LStar\\ObservationTableService.cs",
+              "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\LStar\\ObservationTableService.cs",
+              "ToolTip": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\LStar\\ObservationTableService.cs",
+              "RelativeToolTip": "FormalStructuresWebApp\\Services\\LStar\\ObservationTableService.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAAAAIAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T15:38:55.15Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "IOllamaService.cs",
               "DocumentMoniker": "D:\\Inne\\UMK\\magistera_aplikacja\\formal-structures-platform\\FormalStructuresWebApp\\FormalStructuresWebApp\\Services\\Interfaces\\IOllamaService.cs",
               "RelativeDocumentMoniker": "FormalStructuresWebApp\\Services\\Interfaces\\IOllamaService.cs",
@@ -288,7 +293,8 @@
               "RelativeToolTip": "FormalStructuresWebApp\\Services\\Interfaces\\IOllamaService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-29T15:29:55.811Z"
+              "WhenOpened": "2026-03-29T15:29:55.811Z",
+              "EditorCaption": ""
             }
           ]
         }
