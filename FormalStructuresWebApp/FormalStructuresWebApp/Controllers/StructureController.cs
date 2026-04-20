@@ -82,7 +82,9 @@ namespace FormalStructuresWebApp.Controllers
             }
 
             // Parsuj alfabet z formularza (np. "0,1" → ["0","1"])
-            var alphabet = model.Alphabet.Split(',').Select(a => a.Trim()).ToList();
+            var alphabet = string.IsNullOrWhiteSpace(model.Alphabet)
+                ? new List<string>()  // pusty = wyciągnij z opisu
+                : model.Alphabet.Split(',').Select(a => a.Trim()).ToList();
 
             // Stwórz oracle korzystający z Llamy
             var oracle = new LlmOracle(_ollamaService, model.Description);

@@ -14,7 +14,10 @@ builder.Services.AddScoped<IAutomatonAnalysisService, AutomatonAnalysisService>(
 builder.Services.AddSingleton<IAutomatonSessionService, AutomatonSessionService>();
 builder.Services.AddScoped<IAutomatonEditorService, AutomatonEditorService>();
 
-builder.Services.AddHttpClient<IOllamaService, OllamaService>();
+builder.Services.AddHttpClient<IOllamaService, OllamaService>(client =>
+{
+    client.Timeout = TimeSpan.FromMinutes(10);
+});
 builder.Services.AddScoped<LStarService>();
 
 

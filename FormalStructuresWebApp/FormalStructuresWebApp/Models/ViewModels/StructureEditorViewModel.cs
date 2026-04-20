@@ -10,6 +10,6 @@ namespace FormalStructuresWebApp.Models.ViewModels
         public ValidationResultDto? ValidationResult { get; set; }
         public List<string> AnalysisMessages { get; set; } = new();
         public List<string> RawOllamaResponses { get; set; } = new();
-        public string Alphabet { get; set; } = "0,1";
+        public string Alphabet { get; set; } = "";
     }
 }

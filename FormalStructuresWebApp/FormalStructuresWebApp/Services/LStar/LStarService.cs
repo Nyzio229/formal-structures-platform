@@ -1,4 +1,5 @@
 ﻿using FormalStructuresWebApp.Models.Domain;
+using FormalStructuresWebApp.Services.AI;
 using FormalStructuresWebApp.Services.Interfaces;
 
 namespace FormalStructuresWebApp.Services.LStar
@@ -9,23 +10,55 @@ namespace FormalStructuresWebApp.Services.LStar
 
         public async Task<FiniteAutomaton> LearnAsync(IAutomatonOracle oracle, List<string> alphabet)
         {
-            var S = new List<string> { "" };         // prefixes
-            var E = new List<string> { "", "0", "1" };         // suffixes
-            var table = new Dictionary<(string, string), bool>();
 
+            if (alphabet == null || alphabet.Count == 0)
+            {
+                var llmOracle = (LlmOracle)oracle;
+                alphabet = await llmOracle.ExtractAlphabetAsync();
+            }
+            var S = new List<string> { "" };    //prefixy
+            var E = new List<string> { "" };    //suffixy
+            E.AddRange(alphabet);
+            var table = new Dictionary<(string, string), bool>();
+            
+            if (alphabet == null || alphabet.Count == 0)
+            {
+                var llmOracle = (LlmOracle)oracle;
+                alphabet = await llmOracle.ExtractAlphabetAsync();
+                Console.WriteLine($"[DEBUG] Wyciągnięty alfabet: '{string.Join(",", alphabet)}'");
+            }
+            else
+            {
+                Console.WriteLine($"[DEBUG] Alfabet z formularza: '{string.Join(",", alphabet)}'");
+            }
             // Funkcja wypełniająca tabelę
             async Task Fill()
             {
                 foreach (var s in S.Concat(S.SelectMany(si => alphabet.Select(a => si + a))))
+                {
+                    if (s.Length > 10) continue;  // ← DODAJ TEN WARUNEK
                     foreach (var e in E)
+                    {
+                        if ((s + e).Length > 10) continue;  // ← I TEN
                         if (!table.ContainsKey((s, e)))
                             table[(s, e)] = await oracle.MembershipQuery(s + e);
+                    }
+                }
             }
 
             await Fill();
 
+            int maxIterations = 10;
+            int iteration = 0;
+
             while (true)
             {
+                if (iteration++ >= maxIterations)
+                {
+                    Console.WriteLine("[WARN] Przekroczono limit iteracji L*");
+                    break;
+                }
+
                 // Sprawdź domknięcie (closedness)
                 var SxA = S.SelectMany(s => alphabet.Select(a => s + a)).ToList();
                 var missingPrefix = SxA.FirstOrDefault(sa =>
@@ -38,10 +71,12 @@ namespace FormalStructuresWebApp.Services.LStar
                     continue;
                 }
 
-                // Zbuduj automat i zapytaj o kontrprzykład (equivalence query — uproszczone)
-                var automaton = BuildAutomaton(S, E, alphabet, table);
-                return automaton; // w pełnej wersji tu byłoby zapytanie o kontrprzykład
+                break; // tabela domknięta — buduj automat
             }
+
+            var automaton = BuildAutomaton(S, E, alphabet, table);
+            return automaton;
+
         }
 
         private FiniteAutomaton BuildAutomaton(List<string> S, List<string> E, List<string> alphabet, Dictionary<(string, string), bool> table)
