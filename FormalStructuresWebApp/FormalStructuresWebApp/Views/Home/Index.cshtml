@@ -1,10 +1,449 @@
 ﻿@{
-    ViewData["Title"] = "Strona główna";
+    ViewData["Title"] = "Formal Structures Platform";
 }
 
-<h1>Formal Structures Platform</h1>
-<p>System do generowania i analizy struktur formalnych.</p>
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
 
-<p>
-    <a asp-controller="Structures" asp-action="Generate">Przejdź do generatora automatów</a>
-</p>
+    :root {
+        --ink: #0f0f0f;
+        --ink-soft: #3a3a3a;
+        --ink-muted: #7a7a7a;
+        --paper: #f7f4ef;
+        --paper-dark: #ede9e1;
+        --accent: #1a4a8a;
+        --accent-light: #e8f0fb;
+        --green: #1a6a3a;
+        --red: #8a1a1a;
+        --border: #d4cfc6;
+    }
+
+    body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: 'DM Sans', sans-serif;
+    }
+
+    .home-wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 3rem 2rem 5rem;
+    }
+
+    /* HERO */
+    .hero {
+        border-bottom: 2px solid var(--ink);
+        padding-bottom: 2.5rem;
+        margin-bottom: 3rem;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        gap: 2rem;
+    }
+
+    .hero-label {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+        margin-bottom: 0.75rem;
+    }
+
+    .hero h1 {
+        font-family: 'DM Serif Display', serif;
+        font-size: clamp(2.4rem, 5vw, 3.8rem);
+        line-height: 1.05;
+        margin: 0 0 0.75rem;
+        color: var(--ink);
+    }
+
+    .hero h1 em {
+        font-style: italic;
+        color: var(--accent);
+    }
+
+    .hero-sub {
+        font-size: 1.05rem;
+        color: var(--ink-soft);
+        font-weight: 300;
+        max-width: 520px;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .hero-badge {
+        background: var(--ink);
+        color: var(--paper);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+        padding: 0.5rem 0.9rem;
+        white-space: nowrap;
+        align-self: start;
+        margin-top: 0.5rem;
+    }
+
+    /* GRID */
+    .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 0;
+        border: 1.5px solid var(--border);
+        margin-bottom: 3rem;
+    }
+
+    .panel {
+        padding: 2rem;
+        border-right: 1.5px solid var(--border);
+        position: relative;
+    }
+
+    .panel:last-child {
+        border-right: none;
+    }
+
+    .panel-num {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        color: var(--ink-muted);
+        letter-spacing: 0.15em;
+        margin-bottom: 1.2rem;
+        display: block;
+    }
+
+    .panel h2 {
+        font-family: 'DM Serif Display', serif;
+        font-size: 1.3rem;
+        margin: 0 0 0.9rem;
+        line-height: 1.2;
+    }
+
+    .panel p {
+        font-size: 0.9rem;
+        color: var(--ink-soft);
+        line-height: 1.65;
+        margin: 0;
+        font-weight: 300;
+    }
+
+    .panel-accent {
+        background: var(--accent);
+        color: white;
+    }
+
+    .panel-accent .panel-num { color: rgba(255,255,255,0.5); }
+    .panel-accent h2 { color: white; }
+    .panel-accent p { color: rgba(255,255,255,0.8); }
+
+    /* ALGORITHMS */
+    .algo-section {
+        border: 1.5px solid var(--border);
+        margin-bottom: 3rem;
+        overflow: hidden;
+    }
+
+    .algo-header {
+        background: var(--ink);
+        color: var(--paper);
+        padding: 0.9rem 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .algo-header span {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        opacity: 0.6;
+    }
+
+    .algo-header strong {
+        font-family: 'DM Serif Display', serif;
+        font-size: 1.1rem;
+        font-weight: normal;
+    }
+
+    .algo-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+    }
+
+    .algo-item {
+        padding: 1.8rem 2rem;
+        border-right: 1.5px solid var(--border);
+        border-bottom: 1.5px solid var(--border);
+    }
+
+    .algo-item:nth-child(2n) { border-right: none; }
+    .algo-item:nth-last-child(-n+2) { border-bottom: none; }
+
+    .algo-tag {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.72rem;
+        color: var(--accent);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .algo-item h3 {
+        font-family: 'DM Serif Display', serif;
+        font-size: 1.1rem;
+        margin: 0 0 0.5rem;
+    }
+
+    .algo-item p {
+        font-size: 0.85rem;
+        color: var(--ink-soft);
+        line-height: 1.6;
+        margin: 0;
+        font-weight: 300;
+    }
+
+    /* BOTTOM GRID */
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border: 1.5px solid var(--border);
+    }
+
+    .graph-panel {
+        padding: 2rem;
+        border-right: 1.5px solid var(--border);
+    }
+
+    .graph-panel-label {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+        margin-bottom: 1.5rem;
+    }
+
+    /* SVG AUTOMATON */
+    .automaton-svg {
+        width: 100%;
+        background: white;
+        border: 1px solid var(--border);
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-edit {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: var(--accent);
+        color: white;
+        text-decoration: none;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.75rem 1.5rem;
+        transition: background 0.15s;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-edit:hover {
+        background: #0f2f5c;
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-generate {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: transparent;
+        color: var(--ink);
+        text-decoration: none;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.75rem 1.5rem;
+        border: 1.5px solid var(--ink);
+        transition: all 0.15s;
+    }
+
+    .btn-generate:hover {
+        background: var(--ink);
+        color: var(--paper);
+        text-decoration: none;
+    }
+
+    .cta-panel {
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .cta-panel h2 {
+        font-family: 'DM Serif Display', serif;
+        font-size: 1.6rem;
+        margin: 0 0 1rem;
+        line-height: 1.2;
+    }
+
+    .cta-panel p {
+        font-size: 0.88rem;
+        color: var(--ink-soft);
+        font-weight: 300;
+        line-height: 1.65;
+        margin-bottom: 2rem;
+    }
+
+    .example-word {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.8rem;
+        background: var(--accent-light);
+        color: var(--accent);
+        padding: 0.2rem 0.5rem;
+        border-radius: 2px;
+    }
+
+    @@media (max-width: 768px) {
+        .grid-3, .algo-grid, .grid-2 { grid-template-columns: 1fr; }
+        .panel, .algo-item { border-right: none; }
+        .graph-panel { border-right: none; border-bottom: 1.5px solid var(--border); }
+        .hero { grid-template-columns: 1fr; }
+    }
+</style>
+
+<div class="home-wrap">
+
+    <!-- HERO -->
+    <div class="hero">
+        <div>
+            <div class="hero-label">v1.0 &nbsp;·&nbsp; Praca magisterska &nbsp;·&nbsp; UMK</div>
+            <h1>Formal Structures<br><em>Platform</em></h1>
+            <p class="hero-sub">System do generowania i analizy struktur formalnych — automatów skończonych, gramatyk i wyrażeń regularnych — na podstawie opisów słownych w języku naturalnym.</p>
+        </div>
+        <div class="hero-badge">Aktywny</div>
+    </div>
+
+    <!-- 3 PANELS -->
+    <div class="grid-3">
+        <div class="panel">
+            <span class="panel-num">01 &nbsp;— Cel</span>
+            <h2>Generowanie ze słów</h2>
+            <p>Opisz język formalny w języku naturalnym — system samodzielnie skonstruuje odpowiedni automat skończony, gramatykę lub wyrażenie regularne.</p>
+        </div>
+        <div class="panel panel-accent">
+            <span class="panel-num">02 &nbsp;— Metoda</span>
+            <h2>Uczenie ze&nbsp;zapytań</h2>
+            <p>Model językowy (LLM) pełni rolę wyroczni — odpowiada na pytania o przynależność słów do języka. Algorytm L* buduje automat na podstawie tych odpowiedzi.</p>
+        </div>
+        <div class="panel">
+            <span class="panel-num">03 &nbsp;— Wynik</span>
+            <h2>Graf &amp; Walidacja</h2>
+            <p>Wygenerowany automat jest wizualizowany jako interaktywny graf, walidowany pod kątem poprawności i analizowany pod kątem właściwości strukturalnych.</p>
+        </div>
+    </div>
+
+    <!-- ALGORITHMS -->
+    <div class="algo-section">
+        <div class="algo-header">
+            <span>Algorytmy</span>
+            <strong>Aktualnie używane metody</strong>
+        </div>
+        <div class="algo-grid">
+            <div class="algo-item">
+                <span class="algo-tag">Uczenie automatów</span>
+                <h3>Algorytm L* (Angluin)</h3>
+                <p>Algorytm aktywnego uczenia automatów skończonych. Buduje tablicę obserwacji przez iteracyjne zadawanie zapytań o przynależność (membership queries) i równoważność (equivalence queries).</p>
+            </div>
+            <div class="algo-item">
+                <span class="algo-tag">Wyrocznia</span>
+                <h3>LLM jako Oracle</h3>
+                <p>Model językowy Mistral (przez Ollama) odpowiada na pytania o przynależność słów do języka. Odpowiedzi TAK/NIE zasilają tablicę obserwacji algorytmu L*.</p>
+            </div>
+            <div class="algo-item">
+                <span class="algo-tag">Ekstrakcja alfabetu</span>
+                <h3>Regex + LLM Fallback</h3>
+                <p>Alfabet języka wyciągany jest bezpośrednio z opisu użytkownika wyrażeniem regularnym (<code>{a,b}</code>). Jeśli nie zostanie znaleziony — model językowy podejmuje próbę ekstrakcji.</p>
+            </div>
+            <div class="algo-item">
+                <span class="algo-tag">Wizualizacja</span>
+                <h3>Graf skierowany (cytoscape.js)</h3>
+                <p>Stany automatu i przejścia renderowane są jako interaktywny graf skierowany z możliwością ręcznej edycji — dodawania stanów, przejść i zmiany układu.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM: GRAPH + CTA -->
+    <div class="grid-2">
+        <div class="graph-panel">
+            <div class="graph-panel-label">Przykład &nbsp;— Automat akceptujący słowa kończące się na <span class="example-word">b</span></div>
+
+            <!-- Example DFA SVG -->
+            <svg class="automaton-svg" viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg">
+                <!-- q0 -->
+                <circle cx="80" cy="90" r="30" fill="white" stroke="#1a4a8a" stroke-width="2" />
+                <circle cx="80" cy="90" r="24" fill="none" stroke="#e8f0fb" stroke-width="1" />
+                <text x="80" y="95" text-anchor="middle" font-family="DM Mono,monospace" font-size="13" fill="#1a4a8a">q0</text>
+                <!-- start arrow -->
+                <line x1="20" y1="90" x2="46" y2="90" stroke="#0f0f0f" stroke-width="1.5" marker-end="url(#arr)" />
+                <text x="8" y="86" font-family="DM Mono,monospace" font-size="9" fill="#7a7a7a">start</text>
+
+                <!-- q1 (accepting) -->
+                <circle cx="340" cy="90" r="30" fill="white" stroke="#1a6a3a" stroke-width="2" />
+                <circle cx="340" cy="90" r="24" fill="none" stroke="#1a6a3a" stroke-width="1.5" />
+                <text x="340" y="95" text-anchor="middle" font-family="DM Mono,monospace" font-size="13" fill="#1a6a3a">q1</text>
+
+                <!-- q0 -> q1 on b -->
+                <path d="M110 80 Q210 30 310 80" fill="none" stroke="#0f0f0f" stroke-width="1.5" marker-end="url(#arr)" />
+                <text x="210" y="42" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#0f0f0f">b</text>
+
+                <!-- q1 -> q0 on a -->
+                <path d="M310 100 Q210 150 110 100" fill="none" stroke="#0f0f0f" stroke-width="1.5" marker-end="url(#arr)" />
+                <text x="210" y="148" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#0f0f0f">a</text>
+
+                <!-- q0 self-loop on a -->
+                <path d="M60 62 Q40 20 80 58" fill="none" stroke="#7a7a7a" stroke-width="1.5" marker-end="url(#arr2)" />
+                <text x="38" y="30" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#7a7a7a">a</text>
+
+                <!-- q1 self-loop on b -->
+                <path d="M360 62 Q400 20 350 60" fill="none" stroke="#1a6a3a" stroke-width="1.5" marker-end="url(#arr3)" />
+                <text x="396" y="30" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#1a6a3a">b</text>
+
+                <defs>
+                    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L8,3 z" fill="#0f0f0f" />
+                    </marker>
+                    <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L8,3 z" fill="#7a7a7a" />
+                    </marker>
+                    <marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                        <path d="M0,0 L0,6 L8,3 z" fill="#1a6a3a" />
+                    </marker>
+                </defs>
+            </svg>
+
+            <a asp-controller="Structures" asp-action="Editor" class="btn-edit">
+                ✎ &nbsp; Edytuj graf automatu
+            </a>
+        </div>
+
+        <div class="cta-panel">
+            <div>
+                <h2>Wygeneruj własny automat</h2>
+                <p>Opisz język formalny w dowolny sposób — np. <em>„Słowa nad {a,b} kończące się na ab"</em> lub <em>„Liczby binarne podzielne przez 3"</em>. System zapyta model językowy o przynależność słów i automatycznie zbuduje minimalne DFA.</p>
+            </div>
+            <div>
+                <a asp-controller="Structures" asp-action="Generate" class="btn-generate">
+                    → &nbsp; Przejdź do generatora
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
