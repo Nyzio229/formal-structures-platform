@@ -1,0 +1,513 @@
+﻿@model FormalStructuresWebApp.Models.ViewModels.StructureEditorViewModel
+
+@{
+    ViewData["Title"] = "Identyfikacja języka automatu";
+}
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
+
+    :root {
+        --ink: #0f0f0f;
+        --ink-soft: #3a3a3a;
+        --ink-muted: #7a7a7a;
+        --paper: #f7f4ef;
+        --paper-dark: #ede9e1;
+        --accent: #1a4a8a;
+        --accent-light: #e8f0fb;
+        --green: #1a6a3a;
+        --green-light: #e8f5ee;
+        --red: #8a1a1a;
+        --red-light: #faeaea;
+        --border: #d4cfc6;
+    }
+
+    body { background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; }
+
+    .identify-wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem 5rem;
+    }
+
+    .page-header {
+        border-bottom: 2px solid var(--ink);
+        padding-bottom: 1.5rem;
+        margin-bottom: 2.5rem;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .page-header-left .label {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+        margin-bottom: 0.5rem;
+    }
+
+    .page-header h1 {
+        font-family: 'DM Serif Display', serif;
+        font-size: 2.4rem;
+        margin: 0;
+        line-height: 1.05;
+    }
+
+    .page-header h1 em { font-style: italic; color: var(--accent); }
+
+    .back-link {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        color: var(--ink-muted);
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+
+    .back-link:hover { color: var(--ink); }
+
+    .main-layout {
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 2rem;
+        align-items: start;
+    }
+
+    .section-box {
+        border: 1.5px solid var(--border);
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+    }
+
+    .section-header {
+        background: var(--ink);
+        color: var(--paper);
+        padding: 0.8rem 1.8rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .section-header.blue { background: var(--accent); }
+
+    .section-header .num {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        opacity: 0.5;
+    }
+
+    .section-header strong {
+        font-family: 'DM Serif Display', serif;
+        font-size: 1rem;
+        font-weight: normal;
+    }
+
+    #automatonGraphWrapper {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        background: white;
+    }
+
+    #automatonGraph { position: absolute; inset: 0; }
+    #automatonOverlay { position: absolute; inset: 0; pointer-events: none; }
+
+    .toolbar {
+        padding: 1rem 1.8rem;
+        background: var(--paper-dark);
+        border-top: 1.5px solid var(--border);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        align-items: center;
+    }
+
+    .toolbar-sep {
+        width: 1px;
+        height: 28px;
+        background: var(--border);
+        margin: 0 0.2rem;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 0.55rem 1rem;
+        border: 1.5px solid var(--ink);
+        color: var(--ink);
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.15s;
+        white-space: nowrap;
+    }
+
+    .btn:hover { background: var(--ink); color: var(--paper); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .input-sm {
+        border: 1.5px solid var(--border);
+        background: var(--paper);
+        padding: 0.5rem 0.8rem;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.8rem;
+        color: var(--ink);
+        outline: none;
+        width: 110px;
+        transition: border-color 0.15s;
+    }
+
+    .input-sm:focus { border-color: var(--accent); }
+
+    .alphabet-row {
+        padding: 1rem 1.8rem;
+        background: var(--paper-dark);
+        border-bottom: 1.5px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+    }
+
+    .alphabet-label {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--ink-muted);
+        white-space: nowrap;
+    }
+
+    .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .identify-panel { border: 1.5px solid var(--border); overflow: hidden; }
+
+    .identify-btn-row {
+        padding: 1.5rem 1.8rem 1.2rem;
+        background: white;
+    }
+
+    .btn-identify {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+        width: 100%;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 1rem 1.5rem;
+        background: var(--accent);
+        border: none;
+        color: white;
+        cursor: pointer;
+        transition: background 0.15s;
+    }
+
+    .btn-identify:hover { background: #0f2f5c; }
+    .btn-identify:disabled { background: #8a9ab8; cursor: not-allowed; }
+
+    .spinner-sm {
+        width: 13px;
+        height: 13px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        display: none;
+    }
+
+    @@keyframes spin { to { transform: rotate(360deg); } }
+    .spinner-sm.active { display: inline-block; }
+
+    .result-box {
+        display: none;
+        padding: 1.5rem 1.8rem;
+        background: white;
+        border-top: 1.5px solid var(--border);
+    }
+
+    .result-box.visible { display: block; }
+
+    .result-label {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+        margin-bottom: 1rem;
+    }
+
+    .result-text {
+        font-size: 0.88rem;
+        color: var(--ink-soft);
+        line-height: 1.7;
+        white-space: pre-wrap;
+        font-weight: 300;
+    }
+
+    .error-box {
+        display: none;
+        padding: 1rem 1.8rem;
+        background: var(--red-light);
+        border-top: 1.5px solid var(--red);
+    }
+
+    .error-box.visible { display: block; }
+
+    .error-text {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.75rem;
+        color: var(--red);
+    }
+
+    .sel-info {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.78rem;
+        color: var(--ink-muted);
+    }
+
+    @@media (max-width: 900px) {
+        .main-layout { grid-template-columns: 1fr; }
+    }
+</style>
+
+<div class="identify-wrap">
+
+    <div class="page-header">
+        <div class="page-header-left">
+            <div class="label">Identyfikacja &nbsp;·&nbsp; Automaton → Language</div>
+            <h1>Rozpoznaj <em>język</em> automatu</h1>
+        </div>
+        <a href="/" class="back-link">← Strona główna</a>
+    </div>
+
+    <div class="main-layout">
+
+        <!-- LEWA KOLUMNA: edytor graficzny -->
+        <div>
+            <div class="section-box">
+                <div class="section-header">
+                    <span class="num">01</span>
+                    <strong>Edytor automatu</strong>
+                </div>
+
+                <div class="alphabet-row">
+                    <span class="alphabet-label">Alfabet:</span>
+                    <input type="text" id="alphabetInput" class="input-sm"
+                           placeholder="np. a,b lub 0,1"
+                           value="@string.Join(",", Model.Automaton?.Alphabet ?? new List<string>())" />
+                    <button class="btn" id="setAlphabetBtn">Ustaw</button>
+                    <span id="alphabetInfo"
+                          style="font-family:'DM Mono',monospace; font-size:0.7rem; color:var(--ink-muted);"></span>
+                </div>
+
+                <div id="automatonGraphWrapper">
+                    <div id="automatonGraph"></div>
+                    <canvas id="automatonOverlay"></canvas>
+                </div>
+
+                <div class="toolbar">
+                    <button class="btn" id="addStateButton">+ Stan</button>
+                    <button class="btn" id="removeSelectedStateButton">✕ Stan</button>
+                    <button class="btn" id="removeSelectedEdgeButton">✕ Przejście</button>
+                    <div class="toolbar-sep"></div>
+                    <input type="text" id="transitionSymbolInput" class="input-sm" placeholder="Symbol" />
+                    <button class="btn" id="startAddTransitionModeButton">⇒ Przejście</button>
+                    <div class="toolbar-sep"></div>
+                    <button class="btn" id="saveLayoutButton">💾 Zapisz układ</button>
+                </div>
+            </div>
+
+            <div class="section-box">
+                <div style="padding: 0.8rem 1.8rem; background: white; display:flex; align-items:center; gap:0.8rem;">
+                    <span class="alphabet-label">Zaznaczony element:</span>
+                    <span id="selectionInfo" class="sel-info">Nic nie zaznaczono.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRAWA KOLUMNA: identyfikacja + statystyki -->
+        <div class="sidebar">
+
+            <div class="identify-panel">
+                <div class="section-header blue">
+                    <span class="num">02</span>
+                    <strong>Identyfikacja języka</strong>
+                </div>
+
+                <div class="identify-btn-row">
+                    <p style="font-size:0.82rem; color:var(--ink-muted); margin-bottom:1.2rem; font-weight:300; line-height:1.6;">
+                        Zbuduj automat w edytorze, ustaw alfabet, a następnie kliknij przycisk — model językowy przeanalizuje strukturę i opisze rozpoznawany język.
+                    </p>
+                    <button class="btn-identify" id="identifyBtn">
+                        <div class="spinner-sm" id="identifySpinner"></div>
+                        <span id="identifyBtnText">🔍 &nbsp; Identyfikuj język</span>
+                    </button>
+                </div>
+
+                <div class="result-box" id="resultBox">
+                    <div class="result-label">Wynik analizy modelu</div>
+                    <div class="result-text" id="resultText"></div>
+                </div>
+
+                <div class="error-box" id="errorBox">
+                    <div class="error-text" id="errorText"></div>
+                </div>
+            </div>
+
+            <!-- STATYSTYKI -->
+            <div class="section-box">
+                <div class="section-header">
+                    <span class="num">03</span>
+                    <strong>Podgląd struktury</strong>
+                </div>
+                <div style="padding: 1rem 1.5rem; background: white;">
+                    <table style="width:100%; font-size:0.82rem; border-collapse:collapse;">
+                        <tr>
+                            <td style="font-family:'DM Mono',monospace; font-size:0.68rem; color:var(--ink-muted); text-transform:uppercase; padding:0.4rem 0.8rem 0.4rem 0; border-bottom:1px solid var(--border); width:45%;">Stany</td>
+                            <td style="padding:0.4rem 0; border-bottom:1px solid var(--border);" id="statsStates">—</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:'DM Mono',monospace; font-size:0.68rem; color:var(--ink-muted); text-transform:uppercase; padding:0.4rem 0.8rem 0.4rem 0; border-bottom:1px solid var(--border);">Akceptujące</td>
+                            <td style="padding:0.4rem 0; border-bottom:1px solid var(--border);" id="statsAccepting">—</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:'DM Mono',monospace; font-size:0.68rem; color:var(--ink-muted); text-transform:uppercase; padding:0.4rem 0.8rem 0.4rem 0; border-bottom:1px solid var(--border);">Przejścia</td>
+                            <td style="padding:0.4rem 0; border-bottom:1px solid var(--border);" id="statsTransitions">—</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:'DM Mono',monospace; font-size:0.68rem; color:var(--ink-muted); text-transform:uppercase; padding:0.4rem 0.8rem 0.4rem 0;">Alfabet</td>
+                            <td style="padding:0.4rem 0; font-family:'DM Mono',monospace;" id="statsAlphabet">—</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script id="automaton-data" type="application/json">
+    @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                Model.Automaton,
+                new System.Text.Json.JsonSerializerOptions
+        {
+            PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase
+        }))
+</script>
+
+@section Scripts {
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="~/js/automaton-editor.js"></script>
+    <script>
+        // --- STATYSTYKI: odświeżaj po każdej mutacji ---
+        function updateStats() {
+            fetch('/api/structures/current')
+                .then(r => r.json())
+                .then(a => {
+                    const states      = a.states      || a.States      || [];
+                    const transitions = a.transitions || a.Transitions || [];
+                    const alphabet    = a.alphabet    || a.Alphabet    || [];
+                    const accepting   = states.filter(s => s.isAccepting || s.IsAccepting);
+
+                    document.getElementById('statsStates').textContent =
+                        states.length || '—';
+                    document.getElementById('statsAccepting').textContent =
+                        accepting.map(s => s.name || s.Name).join(', ') || '—';
+                    document.getElementById('statsTransitions').textContent =
+                        transitions.length || '—';
+                    document.getElementById('statsAlphabet').textContent =
+                        alphabet.length ? '{' + alphabet.join(', ') + '}' : '—';
+                })
+                .catch(() => {});
+        }
+
+        // Przechwytuj fetch, żeby odświeżać statystyki po każdym wywołaniu API
+        const _origFetch = window.fetch;
+        window.fetch = function (url, opts) {
+            return _origFetch.apply(this, arguments).then(res => {
+                if (typeof url === 'string'
+                    && url.startsWith('/api/structures')
+                    && url !== '/api/structures/current') {
+                    setTimeout(updateStats, 200);
+                }
+                return res;
+            });
+        };
+
+        updateStats();
+
+        // --- USTAW ALFABET ---
+        document.getElementById('setAlphabetBtn').addEventListener('click', async function () {
+            const raw     = document.getElementById('alphabetInput').value.trim();
+            const infoEl  = document.getElementById('alphabetInfo');
+            if (!raw) return;
+
+            const symbols = raw.split(',').map(s => s.trim()).filter(s => s.length > 0);
+
+            const res = await fetch('/api/structures/set-alphabet', {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ symbols })
+            });
+
+            if (res.ok) {
+                infoEl.textContent = '✓ { ' + symbols.join(', ') + ' }';
+                infoEl.style.color = 'var(--green)';
+            } else {
+                infoEl.textContent = '✕ Błąd zapisu';
+                infoEl.style.color = 'var(--red)';
+            }
+        });
+
+        // --- IDENTYFIKUJ JĘZYK ---
+        document.getElementById('identifyBtn').addEventListener('click', async function () {
+            const btn       = this;
+            const spinner   = document.getElementById('identifySpinner');
+            const btnText   = document.getElementById('identifyBtnText');
+            const resultBox = document.getElementById('resultBox');
+            const resultText= document.getElementById('resultText');
+            const errorBox  = document.getElementById('errorBox');
+            const errorText = document.getElementById('errorText');
+
+            resultBox.classList.remove('visible');
+            errorBox.classList.remove('visible');
+            btn.disabled = true;
+            spinner.classList.add('active');
+            btnText.textContent = 'Analizuję...';
+
+            try {
+                const res  = await fetch('/api/structures/identify-language', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    errorText.textContent = data.error || 'Nieznany błąd.';
+                    errorBox.classList.add('visible');
+                } else {
+                    resultText.textContent = data.description;
+                    resultBox.classList.add('visible');
+                }
+            } catch (err) {
+                errorText.textContent = 'Błąd połączenia: ' + err.message;
+                errorBox.classList.add('visible');
+            } finally {
+                btn.disabled = false;
+                spinner.classList.remove('active');
+                btnText.textContent = '🔍 \u00a0 Identyfikuj język';
+            }
+        });
+    </script>
+}

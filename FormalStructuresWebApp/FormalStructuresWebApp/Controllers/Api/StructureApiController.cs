@@ -10,13 +10,68 @@ namespace FormalStructuresWebApp.Controllers.Api
     {
         private readonly IAutomatonSessionService _sessionService;
         private readonly IAutomatonEditorService _editorService;
+        private readonly IOllamaService _ollamaService;
 
         public StructuresApiController(
             IAutomatonSessionService sessionService,
-            IAutomatonEditorService editorService)
+            IAutomatonEditorService editorService,
+            IOllamaService ollamaService)
         {
             _sessionService = sessionService;
             _editorService = editorService;
+            _ollamaService = ollamaService;
+        }
+
+        [HttpPost("identify-language")]
+        public async Task<IActionResult> IdentifyLanguage()
+        {
+            var automaton = _sessionService.GetAutomaton();
+
+            if (automaton == null || !automaton.States.Any())
+                return BadRequest(new { error = "Automat jest pusty. Dodaj stany i przejścia przed identyfikacją języka." });
+
+            var stateLines = automaton.States.Select(s =>
+            {
+                var flags = new List<string>();
+                if (s.IsStart) flags.Add("początkowy");
+                if (s.IsAccepting) flags.Add("akceptujący");
+                var flagStr = flags.Any() ? $" [{string.Join(", ", flags)}]" : "";
+                return $"  - {s.Name}{flagStr}";
+            });
+
+            var transitionLines = automaton.Transitions.Select(t =>
+                $"  - δ({t.FromState}, {t.Symbol}) = {t.ToState}");
+
+            var prompt = $@"Masz dany deterministyczny automat skończony (DFA) opisany poniżej.
+
+                Alfabet: {{{string.Join(", ", automaton.Alphabet)}}}
+
+                Stany:
+                {string.Join("\n", stateLines)}
+
+                Funkcja przejść:
+                {string.Join("\n", transitionLines)}
+
+                Stan początkowy: {automaton.StartState}
+                Stany akceptujące: {string.Join(", ", automaton.AcceptingStates)}
+
+                Przeanalizuj ten automat i opisz dokładnie jaki język formalny rozpoznaje.
+                Podaj:
+                1. Zwięzły opis słowny języka (jedno lub dwa zdania)
+                2. Wyrażenie regularne opisujące język (jeśli możliwe)
+                3. Kilka przykładów słów należących do języka i kilka nienależących
+
+                Odpowiadaj po polsku.";
+
+            try
+            {
+                var result = await _ollamaService.AskAsync(prompt);
+                return Ok(new { description = result });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = $"Błąd połączenia z modelem: {ex.Message}" });
+            }
         }
 
         [HttpGet("current")]
@@ -101,5 +156,19 @@ namespace FormalStructuresWebApp.Controllers.Api
 
             return Ok(automaton);
         }
+
+
+        [HttpPost("set-alphabet")]
+        public IActionResult SetAlphabet([FromBody] SetAlphabetRequest request)
+        {
+            var automaton = _sessionService.GetAutomaton();
+            automaton.Alphabet = request.Symbols
+                .Where(s => !string.IsNullOrWhiteSpace(s))
+                .Distinct()
+                .ToList();
+            _sessionService.SetAutomaton(automaton);
+            return Ok(automaton);
+        }
+
     }
 }

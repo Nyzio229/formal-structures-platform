@@ -102,6 +102,17 @@ namespace FormalStructuresWebApp.Controllers
         }
 
         [HttpGet]
+        public IActionResult Identify()
+        {
+            var automaton = _sessionService.GetAutomaton();
+            var model = new StructureEditorViewModel
+            {
+                Automaton = automaton
+            };
+            return View(model);
+        }
+
+        [HttpGet]
         public IActionResult Editor()
         {
             var automaton = _sessionService.GetAutomaton();
