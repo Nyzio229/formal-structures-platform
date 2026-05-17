@@ -1,4 +1,5 @@
 ﻿using FormalStructuresWebApp.Models.DTOs;
+using FormalStructuresWebApp.Services.Automaton;
 using FormalStructuresWebApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,47 +31,78 @@ namespace FormalStructuresWebApp.Controllers.Api
             if (automaton == null || !automaton.States.Any())
                 return BadRequest(new { error = "Automat jest pusty. Dodaj stany i przejścia przed identyfikacją języka." });
 
-            var stateLines = automaton.States.Select(s =>
-            {
-                var flags = new List<string>();
-                if (s.IsStart) flags.Add("początkowy");
-                if (s.IsAccepting) flags.Add("akceptujący");
-                var flagStr = flags.Any() ? $" [{string.Join(", ", flags)}]" : "";
-                return $"  - {s.Name}{flagStr}";
-            });
+            // FAZA 1: analiza algorytmiczna
+            var analyzer = new AutomatonLanguageAnalyzer();
+            var analysis = analyzer.Analyze(automaton);
 
-            var transitionLines = automaton.Transitions.Select(t =>
-                $"  - δ({t.FromState}, {t.Symbol}) = {t.ToState}");
+            // Jeśli język pusty/uniwersalny — odpowiadamy bez modelu
+            if (analysis.IsLanguageEmpty)
+                return Ok(new
+                {
+                    description = "✓ Analiza algorytmiczna: automat nie akceptuje żadnego słowa — język jest pusty.",
+                    algorithmic = true
+                });
 
-            var prompt = $@"Masz dany deterministyczny automat skończony (DFA) opisany poniżej.
+            if (analysis.IsLanguageUniversal)
+                return Ok(new
+                {
+                    description = "✓ Analiza algorytmiczna: automat akceptuje każde słowo nad podanym alfabetem — język jest uniwersalny (Σ*).",
+                    algorithmic = true
+                });
 
-                Alfabet: {{{string.Join(", ", automaton.Alphabet)}}}
+            // FAZA 2: model dostaje gotowe fakty, nie musi liczyć
+            var acceptedDisplay = analysis.AcceptsEmptyWord
+                ? new[] { "ε" }.Concat(analysis.AcceptedWords).ToList()
+                : analysis.AcceptedWords;
 
-                Stany:
-                {string.Join("\n", stateLines)}
+            var prompt = $@"Poniżej znajdują się ZWERYFIKOWANE ALGORYTMICZNIE fakty dotyczące deterministycznego automatu skończonego (DFA). Nie kwestionuj tych danych — są w 100% poprawne.
 
-                Funkcja przejść:
-                {string.Join("\n", transitionLines)}
+                === ALFABET ===
+                {{ {string.Join(", ", automaton.Alphabet)} }}
 
-                Stan początkowy: {automaton.StartState}
-                Stany akceptujące: {string.Join(", ", automaton.AcceptingStates)}
+                === FAKTY O JĘZYKU (wyznaczone algorytmicznie) ===
+                {string.Join("\n", analysis.DetectedPatterns.Select(p => "• " + p))}
 
-                Przeanalizuj ten automat i opisz dokładnie jaki język formalny rozpoznaje.
-                Podaj:
-                1. Zwięzły opis słowny języka (jedno lub dwa zdania)
-                2. Wyrażenie regularne opisujące język (jeśli możliwe)
-                3. Kilka przykładów słów należących do języka i kilka nienależących
+                === PRZYKŁADY SŁÓW AKCEPTOWANYCH ===
+                {(acceptedDisplay.Any() ? string.Join(", ", acceptedDisplay) : "(brak w zakresie do długości 6)")}
 
-                Odpowiadaj po polsku.";
+                === PRZYKŁADY SŁÓW ODRZUCANYCH ===
+                {(analysis.RejectedWords.Any() ? string.Join(", ", analysis.RejectedWords) : "(brak w zakresie do długości 6)")}
+
+                === TABELA PRZEJŚĆ ===
+                {analysis.TransitionTableText}
+
+                === TWOJE ZADANIE ===
+                Na podstawie powyższych faktów:
+                1. Podaj zwięzły opis słowny języka (1–2 zdania)
+                2. Podaj wyrażenie regularne (jeśli język jest regularny i da się zwięźle zapisać)
+                3. Krótko uzasadnij swój opis, odwołując się do podanych przykładów
+
+                Odpowiadaj po polsku. Nie wymyślaj faktów — opieraj się wyłącznie na danych powyżej.";
 
             try
             {
-                var result = await _ollamaService.AskAsync(prompt);
-                return Ok(new { description = result });
+                var modelDescription = await _ollamaService.AskAsync(prompt);
+                var fullResponse =
+                    $"── Analiza algorytmiczna ──────────────────\n" +
+                    string.Join("\n", analysis.DetectedPatterns.Select(p => "• " + p)) +
+                    $"\n\nSłowa akceptowane: {(acceptedDisplay.Any() ? string.Join(", ", acceptedDisplay) : "brak")}" +
+                    $"\nSłowa odrzucane:   {(analysis.RejectedWords.Any() ? string.Join(", ", analysis.RejectedWords) : "brak")}" +
+                    $"\n\n── Interpretacja modelu ───────────────────\n" +
+                    modelDescription;
+
+                return Ok(new { description = fullResponse });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { error = $"Błąd połączenia z modelem: {ex.Message}" });
+                // Jeśli model niedostępny — zwróć samą analizę algorytmiczną
+                var fallback =
+                    $"── Analiza algorytmiczna (model niedostępny) ──\n" +
+                    string.Join("\n", analysis.DetectedPatterns.Select(p => "• " + p)) +
+                    $"\n\nSłowa akceptowane: {(acceptedDisplay.Any() ? string.Join(", ", acceptedDisplay) : "brak")}" +
+                    $"\nSłowa odrzucane:   {(analysis.RejectedWords.Any() ? string.Join(", ", analysis.RejectedWords) : "brak")}";
+
+                return Ok(new { description = fallback, warning = $"Model niedostępny: {ex.Message}" });
             }
         }
 
