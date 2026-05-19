@@ -31,57 +31,69 @@ namespace FormalStructuresWebApp.Services.CFG
             pda.States = new List<string> { "q_start", "q_loop", "q_accept" };
             pda.AcceptingStates = new List<string> { "q_accept" };
 
-            var nonTerminals = grammar.Productions.Select(p => p.Left).Distinct().ToList();
+            // Nieterminale = symbole które pojawiają się po lewej stronie produkcji
+            var nonTerminals = grammar.Productions
+                .Select(p => p.Left)
+                .Distinct()
+                .ToHashSet();
+
+            // Terminale = symbole z prawej strony które NIE są nieterminalami
             var terminals = grammar.Productions
                 .SelectMany(p => p.Right)
                 .Where(s => !nonTerminals.Contains(s))
-                .Distinct().ToList();
+                .Distinct()
+                .ToList();
 
             pda.InputAlphabet = terminals;
             pda.StackAlphabet = nonTerminals.Concat(terminals).Append("Z").ToList();
 
-            // Przejście 1: q_start →ε,Z/SZ→ q_loop
-            // Inicjalizacja stosu: push symbolu startowego
+            // Przejście inicjalizujące
             pda.Transitions.Add(new PdaTransition
             {
                 FromState = "q_start",
-                InputSymbol = null, // ε
+                InputSymbol = null,
                 StackTop = "Z",
                 PushSymbols = new List<string> { grammar.StartSymbol, "Z" },
                 ToState = "q_loop"
             });
 
-            // Przejścia dla produkcji: q_loop →ε,A/α(odwrócone)→ q_loop
+            // Przejścia dla produkcji — deduplikacja przez HashSet
+            var seenProductions = new HashSet<string>();
+
             foreach (var prod in grammar.Productions)
             {
+                // Klucz unikalności: lewa strona + prawa strona
+                var key = prod.Left + "→" + string.Join(" ", prod.Right);
+                if (!seenProductions.Add(key)) continue;  // pomiń duplikat
+
                 var pushSymbols = prod.Right.Count == 0
-                    ? new List<string>() // ε-produkcja = pop A
-                    : Enumerable.Reverse(prod.Right).ToList(); // push odwrócone
+                    ? new List<string>()
+                    : Enumerable.Reverse(prod.Right).ToList();
 
                 pda.Transitions.Add(new PdaTransition
                 {
                     FromState = "q_loop",
-                    InputSymbol = null, // ε
+                    InputSymbol = null,
                     StackTop = prod.Left,
                     PushSymbols = pushSymbols,
                     ToState = "q_loop"
                 });
             }
 
-            // Przejścia dla terminali: q_loop →a,a/ε→ q_loop (match i pop)
+            // Przejścia dla terminali — match i pop
             foreach (var term in terminals)
             {
                 pda.Transitions.Add(new PdaTransition
                 {
                     FromState = "q_loop",
-                    InputSymbol = term,
-                    StackTop = term,
-                    PushSymbols = new List<string>(), // pop
+                    InputSymbol = term,   // czyta 'a' z wejścia
+                    StackTop = term,      // gdy 'a' na szczycie stosu
+                    PushSymbols = new List<string>(),  // pop
                     ToState = "q_loop"
                 });
             }
 
-            // Przejście finalne: q_loop →ε,Z/ε→ q_accept (stos pusty)
+            // Przejście finalne
             pda.Transitions.Add(new PdaTransition
             {
                 FromState = "q_loop",

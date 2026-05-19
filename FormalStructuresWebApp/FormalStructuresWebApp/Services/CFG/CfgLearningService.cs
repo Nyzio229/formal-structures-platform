@@ -76,23 +76,23 @@ namespace FormalStructuresWebApp.Services.CFG
                 ? string.Join(", ", alphabet)
                 : "wywnioskuj z opisu";
 
-            return $@"Twoim zadaniem jest zapisanie gramatyki bezkontekstowej (CFG) dla podanego języka.
+            return $@"Twoim zadaniem jest zapisanie gramatyki bezkontekstowej (CFG).
 
                 OPIS JĘZYKA: {description}
                 ALFABET TERMINALI: {alphabetStr}
 
-                Zapisz gramatykę WYŁĄCZNIE w formacie BNF:
-                - Każda produkcja w osobnej linii
-                - Format: LeftSide -> symbol1 symbol2 ... | alternative
-                - Alternatywy oddzielaj znakiem |
-                - Symbol pusty zapisuj jako: ε
-                - Nieterminale pisz WIELKIMI LITERAMI (S, A, B, ...)
-                - Terminale pisz małymi literami (a, b, ...) lub cyframi
+                ZASADY — przestrzegaj ściśle:
+                - Każda produkcja w osobnej linii, format: A -> prawa_strona
+                - Alternatywy oddzielaj: |
+                - Symbol pusty: ε
+                - Nieterminale: TYLKO wielkie litery lub wielkie litery z cyfrą (S, A, B, S1, A1)
+                - Terminale: TYLKO małe litery lub cyfry (a, b, 0, 1)
+                - NIE łącz terminali z nieterminalami w nazwach (nie pisz aA, bB itp.)
 
-                PRZYKŁAD dla języka {{aⁿbⁿ | n≥1}}:
+                PRZYKŁAD dla języka aⁿbⁿ (n≥1):
                 S -> a S b | a b
 
-                Nie pisz nic poza produkcjami gramatyki. Żadnych wyjaśnień.";
+                Napisz TYLKO produkcje gramatyki, zero wyjaśnień.";
         }
 
         private List<string> GenerateTestWords(List<string> alphabet, int maxLen)
