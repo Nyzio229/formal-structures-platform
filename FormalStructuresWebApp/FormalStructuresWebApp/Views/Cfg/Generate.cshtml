@@ -553,18 +553,29 @@
                         <span class="info-pill">Stan startowy: @Model.Result.Pda.StartState</span>
                         <span class="info-pill">Symbol startowy stosu: @Model.Result.Pda.StartStackSymbol</span>
                         <span class="info-pill">
-                            Akceptacja: @(Model.Result.Pda.AcceptanceMode == FormalStructuresWebApp.Models.Domain.PdaAcceptanceMode.EmptyStack ? "przez pusty stos" : "przez stany akceptujące")
+                            Akceptacja:
+                            @(Model.Result.Pda.AcceptanceMode == FormalStructuresWebApp.Models.Domain.PdaAcceptanceMode.EmptyStack
+                                ? "przez pusty stos"
+                                : "przez stany akceptujące")
                         </span>
-                        <span class="info-pill">
-                            Alfabet wejściowy: @string.Join(", ", Model.Result.Pda.InputAlphabet)
-                        </span>
-                        <span class="info-pill">
-                            Alfabet stosu: @string.Join(", ", Model.Result.Pda.StackAlphabet)
-                        </span>
+                        <span class="info-pill">Alfabet wejściowy: @string.Join(", ", Model.Result.Pda.InputAlphabet)</span>
+                        <span class="info-pill">Alfabet stosu: @string.Join(", ", Model.Result.Pda.StackAlphabet)</span>
                     </div>
+                </div>
 
-                    <div style="margin-top: 1rem;">
-                        <div class="field-label" style="margin-bottom: 0.8rem;">Funkcja przejść δ(stan, symbol_wej, szczyt_stosu) → (stan, push)</div>
+                <!-- GRAF -->
+                <div style="position: relative; width: 100%; height: 500px; background: white; border-top: 1.5px solid var(--border);">
+                    <div id="pdaGraph" style="position: absolute; inset: 0;"></div>
+                    <canvas id="pdaOverlay" style="position: absolute; inset: 0; pointer-events: none;"></canvas>
+                </div>
+
+                <!-- Tabela przejść zwijana -->
+                <div>
+                    <button class="raw-toggle" onclick="toggleRaw(this)">
+                        <span>Tabela przejść δ (@Model.Result.Pda.Transitions.Count przejść)</span>
+                        <span>▼ rozwiń</span>
+                    </button>
+                    <div class="raw-body">
                         @foreach (var t in Model.Result.Pda.Transitions)
                         {
                             var inp = t.InputSymbol ?? "ε";
@@ -584,12 +595,24 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Dane PDA jako JSON dla skryptu -->
+            <script id="pda-data" type="application/json">
+                @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                             Model.Result.Pda,
+                             new System.Text.Json.JsonSerializerOptions
+            {
+                PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase
+            }))
+            </script>
         }
     }
 
 </div>
 
 @section Scripts {
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="~/js/pda-graph.js"></script>
     <script>
         document.getElementById('cfgForm').addEventListener('submit', function () {
             document.getElementById('loadingBar').classList.add('active');
