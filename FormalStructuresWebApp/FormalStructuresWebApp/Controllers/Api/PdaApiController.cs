@@ -3,6 +3,7 @@ using FormalStructuresWebApp.Models.DTOs;
 using FormalStructuresWebApp.Services.Interfaces;
 using FormalStructuresWebApp.Services.Pda;
 using Microsoft.AspNetCore.Mvc;
+using FormalStructuresWebApp.Models.Domain;
 
 namespace FormalStructuresWebApp.Controllers.Api
 {
@@ -87,12 +88,8 @@ namespace FormalStructuresWebApp.Controllers.Api
             var pda = _session.GetPda();
 
             if (pda.States.Count == 0)
-                return BadRequest(new
-                {
-                    error = "Automat jest pusty. Dodaj stany i przejścia."
-                });
+                return BadRequest(new { error = "Automat jest pusty." });
 
-            // Faza 1: analiza algorytmiczna
             var analyzer = new PdaAnalysisService();
             var analysis = analyzer.Analyze(pda);
 
@@ -100,61 +97,90 @@ namespace FormalStructuresWebApp.Controllers.Api
                 ? new[] { "ε" }.Concat(analysis.AcceptedWords).ToList()
                 : analysis.AcceptedWords;
 
-            // Faza 2: model dostaje gotowe fakty
-            var transitions = pda.Transitions.Select(t =>
-            {
-                var inp = t.InputSymbol ?? "ε";
-                var push = t.PushSymbols.Any()
-                    ? string.Join(" ", t.PushSymbols) : "ε";
-                return $"  δ({t.FromState}, {inp}, {t.StackTop}) → ({t.ToState}, {push})";
-            });
+            // Zbuduj szczegółowy prompt z faktami algorytmicznymi
+            var prompt = $@"Jesteś ekspertem od teorii języków formalnych.
+                Poniżej znajdują się ZWERYFIKOWANE ALGORYTMICZNIE dane o niedeterministycznym
+                automacie ze stosem (NPDA). Wszystkie fakty są w 100% poprawne.
 
-            var prompt = $@"Poniżej są ZWERYFIKOWANE ALGORYTMICZNIE fakty o niedeterministycznym automacie ze stosem (PDA).
+                ════════════════════════════════════════
+                DANE STRUKTURALNE
+                ════════════════════════════════════════
+                Alfabet wejściowy : {{{string.Join(", ", pda.InputAlphabet)}}}
+                Alfabet stosu     : {{{string.Join(", ", pda.StackAlphabet)}}}
+                Symbol startowy stosu: {pda.StartStackSymbol}
+                Tryb akceptacji   : {(pda.AcceptanceMode == PdaAcceptanceMode.EmptyStack ? "pusty stos" : "stany akceptujące")}
+                Liczba stanów     : {pda.States.Count}
+                Liczba przejść    : {pda.Transitions.Count}
 
-                === FAKTY (wyznaczone algorytmicznie) ===
+                ════════════════════════════════════════
+                ZACHOWANIE STOSU (analiza strukturalna)
+                ════════════════════════════════════════
+                {string.Join("\n", analysis.StackBehaviorNotes.Select(n => "• " + n))}
+
+                ════════════════════════════════════════
+                WYKRYTE WZORCE
+                ════════════════════════════════════════
                 {string.Join("\n", analysis.DetectedPatterns.Select(p => "• " + p))}
 
-                === SŁOWA AKCEPTOWANE (zweryfikowane symulacją) ===
-                {(accepted.Any() ? string.Join(", ", accepted) : "(brak w zakresie testowym)")}
+                ════════════════════════════════════════
+                SŁOWA ZAAKCEPTOWANE (symulacja BFS)
+                ════════════════════════════════════════
+                {(accepted.Any() ? string.Join(", ", accepted) : "(brak w zakresie do długości 8)")}
 
-                === SŁOWA ODRZUCANE ===
-                {(analysis.RejectedWords.Any() ? string.Join(", ", analysis.RejectedWords) : "(brak w zakresie testowym)")}
+                ════════════════════════════════════════
+                SŁOWA ODRZUCONE (symulacja BFS)
+                ════════════════════════════════════════
+                {(analysis.RejectedWords.Any() ? string.Join(", ", analysis.RejectedWords) : "(brak)")}
 
-                === FUNKCJA PRZEJŚĆ ===
-                {string.Join("\n", transitions)}
+                ════════════════════════════════════════
+                FUNKCJA PRZEJŚĆ
+                ════════════════════════════════════════
+                {analysis.TransitionTableText}
 
-                === ZADANIE ===
-                Na podstawie powyższych faktów opisz jaki język bezkontekstowy rozpoznaje ten PDA:
-                1. Zwięzły opis słowny (1–2 zdania)
-                2. Gramatykę CFG lub wzorzec (np. aⁿbⁿ, palindromy)
-                3. Krótkie uzasadnienie oparte na podanych przykładach
+                ════════════════════════════════════════
+                TWOJE ZADANIE
+                ════════════════════════════════════════
+                Korzystając WYŁĄCZNIE z powyższych danych, podaj:
 
-                Odpowiadaj po polsku. Opieraj się wyłącznie na podanych danych.";
+                1. NAZWA JĘZYKA: jednozdaniowa nazwa (np. ""język aⁿbⁿ"", ""palindromy nad {{a,b}}"")
+                2. OPIS FORMALNY: opis matematyczny (np. L = {{aⁿbⁿ | n≥1}})
+                3. GRAMATYKA CFG: napisz gramatykę bezkontekstową dla tego języka
+                4. UZASADNIENIE: w 2–3 zdaniach wyjaśnij dlaczego struktura automatu
+                   (szczególnie zachowanie stosu) wskazuje na ten język
+
+                Jeśli dane są niewystarczające lub sprzeczne — napisz to wprost zamiast zgadywać.
+                Odpowiadaj po polsku.";
 
             try
             {
                 var modelResult = await _ollama.AskAsync(prompt);
+
                 var full =
-                    "── Analiza algorytmiczna ──────────────────\n" +
+                    "── Analiza algorytmiczna ──────────────────────────\n" +
                     string.Join("\n", analysis.DetectedPatterns.Select(p => "• " + p)) +
-                    "\n\nSłowa akceptowane: " +
+                    "\n\n── Zachowanie stosu ───────────────────────────────\n" +
+                    string.Join("\n", analysis.StackBehaviorNotes.Select(n => "• " + n)) +
+                    "\n\nSłowa akceptowane : " +
                     (accepted.Any() ? string.Join(", ", accepted) : "brak") +
-                    "\nSłowa odrzucane:   " +
+                    "\nSłowa odrzucane   : " +
                     (analysis.RejectedWords.Any()
                         ? string.Join(", ", analysis.RejectedWords) : "brak") +
-                    "\n\n── Interpretacja modelu ───────────────────\n" +
+                    "\n\n── Interpretacja modelu ───────────────────────────\n" +
                     modelResult;
 
                 return Ok(new { description = full });
             }
             catch (Exception ex)
             {
+                // Fallback bez modelu — sama analiza algorytmiczna
                 var fallback =
-                    "── Analiza algorytmiczna (model niedostępny) ──\n" +
+                    "── Analiza algorytmiczna (model niedostępny) ──────\n" +
                     string.Join("\n", analysis.DetectedPatterns.Select(p => "• " + p)) +
-                    "\n\nSłowa akceptowane: " +
+                    "\n\n── Zachowanie stosu ───────────────────────────────\n" +
+                    string.Join("\n", analysis.StackBehaviorNotes.Select(n => "• " + n)) +
+                    "\n\nSłowa akceptowane : " +
                     (accepted.Any() ? string.Join(", ", accepted) : "brak") +
-                    "\nSłowa odrzucane: " +
+                    "\nSłowa odrzucane   : " +
                     (analysis.RejectedWords.Any()
                         ? string.Join(", ", analysis.RejectedWords) : "brak");
 
