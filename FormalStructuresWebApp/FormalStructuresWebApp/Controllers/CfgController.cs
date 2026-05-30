@@ -1,6 +1,7 @@
 ﻿using FormalStructuresWebApp.Models.ViewModels;
 using FormalStructuresWebApp.Services.CFG;
 using FormalStructuresWebApp.Services.Interfaces;
+using FormalStructuresWebApp.Services.Pda;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormalStructuresWebApp.Controllers
@@ -8,14 +9,23 @@ namespace FormalStructuresWebApp.Controllers
     public class CfgController : Controller
     {
         private readonly IOllamaService _ollamaService;
+        private readonly IPdaSessionService _pdaSessionService;
 
-        public CfgController(IOllamaService ollamaService)
+        public CfgController(IOllamaService ollamaService, IPdaSessionService pdaSessionService)
         {
             _ollamaService = ollamaService;
+            _pdaSessionService = pdaSessionService;
         }
 
         [HttpGet]
         public IActionResult Generate() => View(new CfgViewModel());
+
+        [HttpGet]
+        public IActionResult PdaEditor()
+        {
+            var pda = _pdaSessionService.GetPda();
+            return View(pda);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Generate(CfgViewModel model)

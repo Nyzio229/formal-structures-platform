@@ -6,10 +6,21 @@
     const container = document.getElementById("pdaGraph");
     if (!container) return;
 
-    const states = pda.states || pda.States || [];
+    //const states = pda.states || pda.States || [];
     const transitions = pda.transitions || pda.Transitions || [];
-    const accepting = pda.acceptingStates || pda.AcceptingStates || [];
-    const startState = pda.startState || pda.StartState || "";
+    //const accepting = pda.acceptingStates || pda.AcceptingStates || [];
+    //const startState = pda.startState || pda.StartState || "";
+
+
+    const rawStates = pda.states || pda.States || [];
+    const startState = (rawStates.find(s =>
+        s.isStart || s.IsStart) || {}).name
+        || (rawStates.find(s => s.isStart || s.IsStart) || {}).Name
+        || pda.startState || pda.StartState || "";
+    const accepting = rawStates
+        .filter(s => s.isAccepting || s.IsAccepting)
+        .map(s => s.name || s.Name);
+    const states = rawStates.map(s => s.name || s.Name);
 
     // Grupuj przejścia między tymi samymi parami stanów
     // żeby wiele przejść pokazać jako jedną krawędź z wieloma etykietami

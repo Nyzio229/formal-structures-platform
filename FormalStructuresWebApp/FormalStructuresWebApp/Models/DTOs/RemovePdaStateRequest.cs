@@ -2,5 +2,6 @@
 {
     public class RemovePdaStateRequest
     {
+        public string StateName { get; set; } = "";
     }
 }
