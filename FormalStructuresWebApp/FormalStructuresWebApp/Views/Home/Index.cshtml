@@ -14,23 +14,30 @@
         --accent: #1a4a8a;
         --accent-light: #e8f0fb;
         --green: #1a6a3a;
+        --green-light: #e8f5ee;
         --red: #8a1a1a;
         --border: #d4cfc6;
+    }
+
+    *, *::before, *::after {
+        box-sizing: border-box;
     }
 
     body {
         background: var(--paper);
         color: var(--ink);
         font-family: 'DM Sans', sans-serif;
+        margin: 0;
+        padding: 0;
     }
 
     .home-wrap {
         max-width: 1100px;
         margin: 0 auto;
-        padding: 3rem 2rem 5rem;
+        padding: 3rem 2rem 6rem;
     }
 
-    /* HERO */
+    /* ── HERO ─────────────────────────────────────────────── */
     .hero {
         border-bottom: 2px solid var(--ink);
         padding-bottom: 2.5rem;
@@ -55,13 +62,12 @@
         font-size: clamp(2.4rem, 5vw, 3.8rem);
         line-height: 1.05;
         margin: 0 0 0.75rem;
-        color: var(--ink);
     }
 
-    .hero h1 em {
-        font-style: italic;
-        color: var(--accent);
-    }
+        .hero h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
 
     .hero-sub {
         font-size: 1.05rem;
@@ -84,59 +90,200 @@
         margin-top: 0.5rem;
     }
 
-    /* GRID */
-    .grid-3 {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 0;
-        border: 1.5px solid var(--border);
-        margin-bottom: 3rem;
-    }
-
-    .panel {
-        padding: 2rem;
-        border-right: 1.5px solid var(--border);
-        position: relative;
-    }
-
-    .panel:last-child {
-        border-right: none;
-    }
-
-    .panel-num {
+    /* ── SEKCJA NAGŁÓWEK ──────────────────────────────────── */
+    .section-label {
         font-family: 'DM Mono', monospace;
         font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
         color: var(--ink-muted);
-        letter-spacing: 0.15em;
         margin-bottom: 1.2rem;
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
     }
 
-    .panel h2 {
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+    /* ── SIATKA MODUŁÓW 3-kolumnowa ───────────────────────── */
+    .modules-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        border: 1.5px solid var(--border);
+        margin-bottom: 1.5px; /* połączenie z drugim rzędem */
+    }
+
+        .modules-grid + .modules-grid {
+            border-top: none;
+            margin-bottom: 3rem;
+        }
+
+    /* ── KAFELEK MODUŁU ───────────────────────────────────── */
+    .module-card {
+        padding: 2rem;
+        border-right: 1.5px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: inherit;
+        transition: background 0.15s;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .module-card:last-child {
+            border-right: none;
+        }
+
+        .module-card:hover {
+            background: white;
+            text-decoration: none;
+            color: inherit;
+        }
+
+            .module-card:hover .card-arrow {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+        /* Wariant akcentowany */
+        .module-card.accent {
+            background: var(--accent);
+        }
+
+            .module-card.accent:hover {
+                background: #0f2f5c;
+            }
+
+            .module-card.accent .card-num {
+                color: rgba(255,255,255,0.4);
+            }
+
+            .module-card.accent .card-tag {
+                color: rgba(255,255,255,0.6);
+            }
+
+            .module-card.accent .card-title {
+                color: white;
+            }
+
+            .module-card.accent .card-desc {
+                color: rgba(255,255,255,0.75);
+            }
+
+            .module-card.accent .card-arrow {
+                color: white;
+            }
+
+        /* Wariant zielony */
+        .module-card.green {
+            background: var(--green);
+        }
+
+            .module-card.green:hover {
+                background: #0f4024;
+            }
+
+            .module-card.green .card-num {
+                color: rgba(255,255,255,0.4);
+            }
+
+            .module-card.green .card-tag {
+                color: rgba(255,255,255,0.6);
+            }
+
+            .module-card.green .card-title {
+                color: white;
+            }
+
+            .module-card.green .card-desc {
+                color: rgba(255,255,255,0.75);
+            }
+
+            .module-card.green .card-arrow {
+                color: white;
+            }
+
+        /* Wariant ciemny */
+        .module-card.dark {
+            background: var(--ink);
+        }
+
+            .module-card.dark:hover {
+                background: #1a1a1a;
+            }
+
+            .module-card.dark .card-num {
+                color: rgba(255,255,255,0.3);
+            }
+
+            .module-card.dark .card-tag {
+                color: rgba(255,255,255,0.5);
+            }
+
+            .module-card.dark .card-title {
+                color: white;
+            }
+
+            .module-card.dark .card-desc {
+                color: rgba(255,255,255,0.65);
+            }
+
+            .module-card.dark .card-arrow {
+                color: white;
+            }
+
+    .card-num {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.15em;
+        color: var(--ink-muted);
+        margin-bottom: 1.4rem;
+    }
+
+    .card-tag {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+    }
+
+    .card-title {
         font-family: 'DM Serif Display', serif;
-        font-size: 1.3rem;
-        margin: 0 0 0.9rem;
+        font-size: 1.25rem;
         line-height: 1.2;
+        margin: 0 0 0.8rem;
+        color: var(--ink);
     }
 
-    .panel p {
-        font-size: 0.9rem;
+    .card-desc {
+        font-size: 0.85rem;
         color: var(--ink-soft);
         line-height: 1.65;
-        margin: 0;
         font-weight: 300;
+        flex: 1;
+        margin: 0;
     }
 
-    .panel-accent {
-        background: var(--accent);
-        color: white;
+    .card-arrow {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        color: var(--ink-muted);
+        margin-top: 1.6rem;
+        opacity: 0.5;
+        transform: translateX(-4px);
+        transition: opacity 0.15s, transform 0.15s;
     }
 
-    .panel-accent .panel-num { color: rgba(255,255,255,0.5); }
-    .panel-accent h2 { color: white; }
-    .panel-accent p { color: rgba(255,255,255,0.8); }
-
-    /* ALGORITHMS */
+    /* ── SEKCJA ALGORYTMÓW (bez zmian) ───────────────────── */
     .algo-section {
         border: 1.5px solid var(--border);
         margin-bottom: 3rem;
@@ -152,24 +299,23 @@
         gap: 1rem;
     }
 
-    .algo-header span {
-        font-family: 'DM Mono', monospace;
-        font-size: 0.65rem;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        opacity: 0.6;
-    }
+        .algo-header span {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
 
-    .algo-header strong {
-        font-family: 'DM Serif Display', serif;
-        font-size: 1.1rem;
-        font-weight: normal;
-    }
+        .algo-header strong {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.1rem;
+            font-weight: normal;
+        }
 
     .algo-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 0;
     }
 
     .algo-item {
@@ -178,8 +324,13 @@
         border-bottom: 1.5px solid var(--border);
     }
 
-    .algo-item:nth-child(2n) { border-right: none; }
-    .algo-item:nth-last-child(-n+2) { border-bottom: none; }
+        .algo-item:nth-child(2n) {
+            border-right: none;
+        }
+
+        .algo-item:nth-last-child(-n+2) {
+            border-bottom: none;
+        }
 
     .algo-tag {
         font-family: 'DM Mono', monospace;
@@ -204,11 +355,10 @@
         font-weight: 300;
     }
 
-    /* BOTTOM GRID */
+    /* ── SVG EXAMPLE ──────────────────────────────────────── */
     .grid-2 {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 0;
         border: 1.5px solid var(--border);
     }
 
@@ -226,13 +376,42 @@
         margin-bottom: 1.5rem;
     }
 
-    /* SVG AUTOMATON */
     .automaton-svg {
         width: 100%;
         background: white;
         border: 1px solid var(--border);
         margin-bottom: 1.5rem;
     }
+
+    .example-word {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.8rem;
+        background: var(--accent-light);
+        color: var(--accent);
+        padding: 0.2rem 0.5rem;
+    }
+
+    .cta-panel {
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+        .cta-panel h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.6rem;
+            margin: 0 0 1rem;
+            line-height: 1.2;
+        }
+
+        .cta-panel p {
+            font-size: 0.88rem;
+            color: var(--ink-soft);
+            font-weight: 300;
+            line-height: 1.65;
+            margin-bottom: 2rem;
+        }
 
     .btn-edit {
         display: inline-flex;
@@ -247,15 +426,13 @@
         text-transform: uppercase;
         padding: 0.75rem 1.5rem;
         transition: background 0.15s;
-        border: none;
-        cursor: pointer;
     }
 
-    .btn-edit:hover {
-        background: #0f2f5c;
-        color: white;
-        text-decoration: none;
-    }
+        .btn-edit:hover {
+            background: #0f2f5c;
+            color: white;
+            text-decoration: none;
+        }
 
     .btn-generate {
         display: inline-flex;
@@ -273,166 +450,281 @@
         transition: all 0.15s;
     }
 
-    .btn-generate:hover {
-        background: var(--ink);
-        color: var(--paper);
-        text-decoration: none;
+        .btn-generate:hover {
+            background: var(--ink);
+            color: var(--paper);
+            text-decoration: none;
+        }
+
+    @@media (max-width: 860px) {
+        .modules-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+            .modules-grid .module-card:nth-child(2n) {
+                border-right: none;
+            }
+
+            .modules-grid .module-card:nth-child(2) {
+                border-right: none;
+            }
+
+        .algo-grid, .grid-2 {
+            grid-template-columns: 1fr;
+        }
+
+        .graph-panel {
+            border-right: none;
+            border-bottom: 1.5px solid var(--border);
+        }
+
+        .hero {
+            grid-template-columns: 1fr;
+        }
     }
 
-    .cta-panel {
-        padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
+    @@media (max-width: 560px) {
+        .modules-grid {
+            grid-template-columns: 1fr;
+        }
 
-    .cta-panel h2 {
-        font-family: 'DM Serif Display', serif;
-        font-size: 1.6rem;
-        margin: 0 0 1rem;
-        line-height: 1.2;
-    }
-
-    .cta-panel p {
-        font-size: 0.88rem;
-        color: var(--ink-soft);
-        font-weight: 300;
-        line-height: 1.65;
-        margin-bottom: 2rem;
-    }
-
-    .example-word {
-        font-family: 'DM Mono', monospace;
-        font-size: 0.8rem;
-        background: var(--accent-light);
-        color: var(--accent);
-        padding: 0.2rem 0.5rem;
-        border-radius: 2px;
-    }
-
-    @@media (max-width: 768px) {
-        .grid-3, .algo-grid, .grid-2 { grid-template-columns: 1fr; }
-        .panel, .algo-item { border-right: none; }
-        .graph-panel { border-right: none; border-bottom: 1.5px solid var(--border); }
-        .hero { grid-template-columns: 1fr; }
+        .module-card {
+            border-right: none !important;
+            border-bottom: 1.5px solid var(--border);
+        }
     }
 </style>
 
 <div class="home-wrap">
 
-    <!-- HERO -->
+    <!-- ── HERO ─────────────────────────────────────────────── -->
     <div class="hero">
         <div>
             <div class="hero-label">v1.0 &nbsp;·&nbsp; Praca magisterska &nbsp;·&nbsp; UMK</div>
             <h1>Formal Structures<br><em>Platform</em></h1>
-            <p class="hero-sub">System do generowania i analizy struktur formalnych — automatów skończonych, gramatyk - na podstawie opisów słownych w języku naturalnym.</p>
+            <p class="hero-sub">
+                System do generowania i analizy struktur formalnych —
+                automatów skończonych i automatów ze stosem —
+                na podstawie opisów słownych w języku naturalnym.
+            </p>
         </div>
-        <div class="hero-badge">
-            <a asp-controller="Structures" asp-action="Generate" class="hero-label">
-                Przejdź do generatora
-            </a>
-        </div>
+        @* <div class="hero-badge">FSP · 2026</div> *@
     </div>
 
-    <!-- 3 PANELS -->
-    <div class="grid-3">
-        <div class="panel">
-            <span class="panel-num">01 &nbsp;— Cel</span>
-            <h2>Generowanie ze słów</h2>
-            <p>Opisz język formalny w języku naturalnym — system samodzielnie skonstruuje odpowiedni automat skończony lub automat ze stosem.</p>
-        </div>
-        <div class="panel panel-accent">
-            <span class="panel-num">02 &nbsp;— Metoda</span>
-            <h2>Uczenie ze&nbsp;zapytań</h2>
-            <p>Model językowy (LLM) pełni rolę wyroczni — odpowiada na pytania o przynależność słów do języka. Algorytm L* buduje automat na podstawie tych odpowiedzi.</p>
-        </div>
-        <div class="panel">
-            <span class="panel-num">03 &nbsp;— Wynik</span>
-            <h2>Graf &amp; Walidacja</h2>
-            <p>Wygenerowany automat jest wizualizowany jako interaktywny graf, walidowany pod kątem poprawności i analizowany pod kątem właściwości strukturalnych.</p>
-        </div>
+    <!-- ── MODUŁY DFA ────────────────────────────────────────── -->
+    <div class="section-label">Automat skończony &nbsp;(DFA)</div>
+
+    <div class="modules-grid">
+
+        <a class="module-card accent"
+           asp-controller="Structures" asp-action="Generate">
+            <div class="card-num">01 &nbsp;— DFA</div>
+            <div class="card-tag">Generowanie</div>
+            <h2 class="card-title">Generator automatu</h2>
+            <p class="card-desc">
+                Opisz język formalny słowami — algorytm L* z wyrocznią LLM
+                automatycznie zbuduje minimalne DFA przez iteracyjne zapytania
+                o przynależność słów.
+            </p>
+            <div class="card-arrow">→ &nbsp; Przejdź do generatora</div>
+        </a>
+
+        <a class="module-card"
+           asp-controller="Structures" asp-action="Editor">
+            <div class="card-num">02 &nbsp;— DFA</div>
+            <div class="card-tag">Edycja</div>
+            <h2 class="card-title">Edytor automatu</h2>
+            <p class="card-desc">
+                Rysuj i modyfikuj automat skończony ręcznie — dodawaj
+                stany, przejścia, zmieniaj układ grafu.
+                Wynik zapisywany w sesji.
+            </p>
+            <div class="card-arrow">→ &nbsp; Otwórz edytor</div>
+        </a>
+
+        <a class="module-card"
+           asp-controller="Structures" asp-action="Identify">
+            <div class="card-num">03 &nbsp;— DFA</div>
+            <div class="card-tag">Identyfikacja</div>
+            <h2 class="card-title">Identyfikacja języka</h2>
+            <p class="card-desc">
+                Narysuj automat, a system przejdzie po grafie algorytmem BFS/DFS,
+                wyznaczy przykłady słów i — wspierając się modelem —
+                opisze rozpoznawany język.
+            </p>
+            <div class="card-arrow">→ &nbsp; Identyfikuj język</div>
+        </a>
+
     </div>
 
-    <!-- ALGORITHMS -->
+    <!-- ── MODUŁY PDA ────────────────────────────────────────── -->
+    <div class="section-label">Automat ze stosem &nbsp;(PDA)</div>
+
+    <div class="modules-grid">
+
+        <a class="module-card dark"
+           asp-controller="Cfg" asp-action="Generate">
+            <div class="card-num">04 &nbsp;— PDA</div>
+            <div class="card-tag">Generowanie</div>
+            <h2 class="card-title">Generator PDA</h2>
+            <p class="card-desc">
+                Podaj opis języka bezkontekstowego — model wygeneruje gramatykę CFG,
+                algorytm przekonwertuje ją do CNF, zweryfikuje przez CYK
+                i zbuduje automat ze stosem.
+            </p>
+            <div class="card-arrow">→ &nbsp; Generuj PDA</div>
+        </a>
+
+        <a class="module-card green"
+           asp-controller="Cfg" asp-action="PdaEditor">
+            <div class="card-num">05 &nbsp;— PDA</div>
+            <div class="card-tag">Edycja</div>
+            <h2 class="card-title">Edytor PDA</h2>
+            <p class="card-desc">
+                Konstruuj automat ze stosem ręcznie — definiuj stany,
+                przejścia z akcjami na stosie (push/pop) i symbol
+                startowy stosu w interaktywnym grafie.
+            </p>
+            <div class="card-arrow">→ &nbsp; Otwórz edytor</div>
+        </a>
+
+        <a class="module-card"
+           asp-controller="Cfg" asp-action="PdaEditor">
+            <div class="card-num">06 &nbsp;— PDA</div>
+            <div class="card-tag">Identyfikacja</div>
+            <h2 class="card-title">Identyfikacja języka PDA</h2>
+            <p class="card-desc">
+                Symulacja BFS po konfiguracjach (stan, pozycja, stos) wyznacza
+                akceptowane słowa, analizuje zachowanie stosu i z pomocą modelu
+                opisuje język bezkontekstowy.
+            </p>
+            <div class="card-arrow">→ &nbsp; Identyfikuj język</div>
+        </a>
+
+    </div>
+
+    <!-- ── ALGORYTMY ─────────────────────────────────────────── -->
     <div class="algo-section">
         <div class="algo-header">
             <span>Algorytmy</span>
-            <strong>Aktualnie używane metody</strong>
+            <strong>Używane metody formalne</strong>
         </div>
         <div class="algo-grid">
             <div class="algo-item">
-                <span class="algo-tag">Uczenie automatów</span>
+                <span class="algo-tag">Uczenie automatów · DFA</span>
                 <h3>Algorytm L* (Angluin)</h3>
-                <p>Algorytm aktywnego uczenia automatów skończonych. Buduje tablicę obserwacji przez iteracyjne zadawanie zapytań o przynależność (membership queries) i równoważność (equivalence queries).</p>
+                <p>
+                    Aktywne uczenie automatów skończonych przez iteracyjne zapytania
+                    o przynależność (membership queries) i równoważność (equivalence queries).
+                    Model językowy pełni rolę wyroczni.
+                </p>
             </div>
             <div class="algo-item">
-                <span class="algo-tag">Wyrocznia</span>
-                <h3>LLM jako Oracle</h3>
-                <p>Model językowy Mistral (przez Ollama) odpowiada na pytania o przynależność słów do języka. Odpowiedzi TAK/NIE zasilają tablicę obserwacji algorytmu L*.</p>
+                <span class="algo-tag">Normalizacja · PDA</span>
+                <h3>CNF + CYK + GNF→PDA</h3>
+                <p>
+                    Gramatyka CFG z modelu konwertowana jest do postaci normalnej Chomsky'ego
+                    (5 kroków), weryfikowana algorytmem CYK, a następnie
+                    zamieniana na automat ze stosem metodą top-down.
+                </p>
             </div>
             <div class="algo-item">
-                <span class="algo-tag">Ekstrakcja alfabetu</span>
-                <h3>Regex + LLM Fallback</h3>
-                <p>Alfabet języka wyciągany jest bezpośrednio z opisu użytkownika wyrażeniem regularnym (<code>{a,b}</code>). Jeśli nie zostanie znaleziony — model językowy podejmuje próbę ekstrakcji.</p>
+                <span class="algo-tag">Analiza · DFA &amp; PDA</span>
+                <h3>BFS / DFS po grafie stanów</h3>
+                <p>
+                    Algorytmy przeszukiwania grafu wyznaczają stany osiągalne,
+                    pułapki, przykłady słów akceptowanych i odrzuconych —
+                    dostarczając modelowi zweryfikowanych faktów.
+                </p>
             </div>
             <div class="algo-item">
                 <span class="algo-tag">Wizualizacja</span>
-                <h3>Graf skierowany (cytoscape.js)</h3>
-                <p>Stany automatu i przejścia renderowane są jako interaktywny graf skierowany z możliwością ręcznej edycji — dodawania stanów, przejść i zmiany układu.</p>
+                <h3>Graf skierowany · cytoscape.js</h3>
+                <p>
+                    Stany i przejścia renderowane jako interaktywny graf skierowany.
+                    Edytor DFA i PDA umożliwia ręczną modyfikację układu,
+                    dodawanie stanów i przejść w czasie rzeczywistym.
+                </p>
             </div>
         </div>
     </div>
 
-    <!-- BOTTOM: GRAPH + CTA -->
+    <!-- ── PRZYKŁAD + CTA ─────────────────────────────────────── -->
     <div class="grid-2">
         <div class="graph-panel">
-            <div class="graph-panel-label">Przykład &nbsp;— Automat akceptujący słowa kończące się na <span class="example-word">b</span></div>
+            <div class="graph-panel-label">
+                Przykład — automat akceptujący słowa kończące się na
+                <span class="example-word">b</span>
+            </div>
 
-            <!-- Example DFA SVG -->
-            <svg class="automaton-svg" viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg">
-                <!-- q0 -->
-                <circle cx="80" cy="90" r="30" fill="white" stroke="#1a4a8a" stroke-width="2" />
-                <circle cx="80" cy="90" r="24" fill="none" stroke="#e8f0fb" stroke-width="1" />
-                <text x="80" y="95" text-anchor="middle" font-family="DM Mono,monospace" font-size="13" fill="#1a4a8a">q0</text>
-                <!-- start arrow -->
-                <line x1="20" y1="90" x2="46" y2="90" stroke="#0f0f0f" stroke-width="1.5" marker-end="url(#arr)" />
-                <text x="8" y="86" font-family="DM Mono,monospace" font-size="9" fill="#7a7a7a">start</text>
+            <svg class="automaton-svg" viewBox="0 0 420 180"
+                 xmlns="http://www.w3.org/2000/svg">
+                <circle cx="80" cy="90" r="30" fill="white"
+                        stroke="#1a4a8a" stroke-width="2" />
+                <circle cx="80" cy="90" r="24" fill="none"
+                        stroke="#e8f0fb" stroke-width="1" />
+                <text x="80" y="95" text-anchor="middle"
+                      font-family="DM Mono,monospace" font-size="13"
+                      fill="#1a4a8a">q0</text>
+                <line x1="20" y1="90" x2="46" y2="90" stroke="#0f0f0f"
+                      stroke-width="1.5" marker-end="url(#arr)" />
+                <text x="8" y="86" font-family="DM Mono,monospace"
+                      font-size="9" fill="#7a7a7a">start</text>
 
-                <!-- q1 (accepting) -->
-                <circle cx="340" cy="90" r="30" fill="white" stroke="#1a6a3a" stroke-width="2" />
-                <circle cx="340" cy="90" r="24" fill="none" stroke="#1a6a3a" stroke-width="1.5" />
-                <text x="340" y="95" text-anchor="middle" font-family="DM Mono,monospace" font-size="13" fill="#1a6a3a">q1</text>
+                <circle cx="340" cy="90" r="30" fill="white"
+                        stroke="#1a6a3a" stroke-width="2" />
+                <circle cx="340" cy="90" r="24" fill="none"
+                        stroke="#1a6a3a" stroke-width="1.5" />
+                <text x="340" y="95" text-anchor="middle"
+                      font-family="DM Mono,monospace" font-size="13"
+                      fill="#1a6a3a">q1</text>
 
-                <!-- q0 -> q1 on b -->
-                <path d="M110 80 Q210 30 310 80" fill="none" stroke="#0f0f0f" stroke-width="1.5" marker-end="url(#arr)" />
-                <text x="210" y="42" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#0f0f0f">b</text>
+                <path d="M110 80 Q210 30 310 80" fill="none"
+                      stroke="#0f0f0f" stroke-width="1.5"
+                      marker-end="url(#arr)" />
+                <text x="210" y="42" text-anchor="middle"
+                      font-family="DM Mono,monospace" font-size="12"
+                      fill="#0f0f0f">b</text>
 
-                <!-- q1 -> q0 on a -->
-                <path d="M310 100 Q210 150 110 100" fill="none" stroke="#0f0f0f" stroke-width="1.5" marker-end="url(#arr)" />
-                <text x="210" y="148" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#0f0f0f">a</text>
+                <path d="M310 100 Q210 150 110 100" fill="none"
+                      stroke="#0f0f0f" stroke-width="1.5"
+                      marker-end="url(#arr)" />
+                <text x="210" y="148" text-anchor="middle"
+                      font-family="DM Mono,monospace" font-size="12"
+                      fill="#0f0f0f">a</text>
 
-                <!-- q0 self-loop on a -->
-                <path d="M60 62 Q40 20 80 58" fill="none" stroke="#7a7a7a" stroke-width="1.5" marker-end="url(#arr2)" />
-                <text x="38" y="30" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#7a7a7a">a</text>
+                <path d="M60 62 Q40 20 80 58" fill="none"
+                      stroke="#7a7a7a" stroke-width="1.5"
+                      marker-end="url(#arr2)" />
+                <text x="38" y="30" text-anchor="middle"
+                      font-family="DM Mono,monospace" font-size="12"
+                      fill="#7a7a7a">a</text>
 
-                <!-- q1 self-loop on b -->
-                <path d="M360 62 Q400 20 350 60" fill="none" stroke="#1a6a3a" stroke-width="1.5" marker-end="url(#arr3)" />
-                <text x="396" y="30" text-anchor="middle" font-family="DM Mono,monospace" font-size="12" fill="#1a6a3a">b</text>
+                <path d="M360 62 Q400 20 350 60" fill="none"
+                      stroke="#1a6a3a" stroke-width="1.5"
+                      marker-end="url(#arr3)" />
+                <text x="396" y="30" text-anchor="middle"
+                      font-family="DM Mono,monospace" font-size="12"
+                      fill="#1a6a3a">b</text>
 
                 <defs>
-                    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                    <marker id="arr" markerWidth="8" markerHeight="8"
+                            refX="6" refY="3" orient="auto">
                         <path d="M0,0 L0,6 L8,3 z" fill="#0f0f0f" />
                     </marker>
-                    <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                    <marker id="arr2" markerWidth="8" markerHeight="8"
+                            refX="6" refY="3" orient="auto">
                         <path d="M0,0 L0,6 L8,3 z" fill="#7a7a7a" />
                     </marker>
-                    <marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                    <marker id="arr3" markerWidth="8" markerHeight="8"
+                            refX="6" refY="3" orient="auto">
                         <path d="M0,0 L0,6 L8,3 z" fill="#1a6a3a" />
                     </marker>
                 </defs>
             </svg>
 
-            <a asp-controller="Structures" asp-action="Editor" class="btn-edit">
+            <a asp-controller="Structures" asp-action="Editor"
+               class="btn-edit">
                 ✎ &nbsp; Edytuj graf automatu
             </a>
         </div>
@@ -440,11 +732,27 @@
         <div class="cta-panel">
             <div>
                 <h2>Wygeneruj własny automat</h2>
-                <p>Opisz język formalny w dowolny sposób — np. <em>„Słowa nad {a,b} kończące się na ab"</em> lub <em>„Liczby binarne podzielne przez 3"</em>. System zapyta model językowy o przynależność słów i automatycznie zbuduje minimalne DFA.</p>
+                <p>
+                    Opisz język formalny w dowolny sposób — np.
+                    <em>„Słowa nad {a,b} kończące się na ab"</em> lub
+                    <em>„Liczby binarne podzielne przez 3"</em>.
+                    System zapyta model językowy o przynależność słów
+                    i automatycznie zbuduje minimalne DFA.
+                </p>
+                <p>
+                    Dla języków bezkontekstowych — np.
+                    <em>„Słowa postaci aⁿbⁿ"</em> — wygeneruj automat
+                    ze stosem z gramatyki CFG.
+                </p>
             </div>
-            <div>
-                <a asp-controller="Structures" asp-action="Generate" class="btn-generate">
-                    → &nbsp; Przejdź do generatora
+            <div style="display:flex; flex-direction:column; gap:0.8rem;">
+                <a asp-controller="Structures" asp-action="Generate"
+                   class="btn-generate">
+                    → &nbsp; Generator DFA
+                </a>
+                <a asp-controller="Cfg" asp-action="Generate"
+                   class="btn-generate">
+                    → &nbsp; Generator PDA
                 </a>
             </div>
         </div>
