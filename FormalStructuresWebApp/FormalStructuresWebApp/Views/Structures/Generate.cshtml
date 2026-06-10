@@ -444,6 +444,40 @@
     .btn-action.primary { background: var(--accent); border-color: var(--accent); color: white; }
     .btn-action.primary:hover { background: #0f2f5c; border-color: #0f2f5c; color: white; }
 
+    .btn-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.75rem 1.5rem;
+        border: 1.5px solid var(--ink);
+        color: var(--ink);
+        background: transparent;
+        text-decoration: none;
+        transition: all 0.15s;
+    }
+
+        .btn-action:hover {
+            background: var(--ink);
+            color: var(--paper);
+            text-decoration: none;
+        }
+
+        .btn-action.primary {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+            .btn-action.primary:hover {
+                background: #0f2f5c;
+                border-color: #0f2f5c;
+                color: white;
+            }
+
     @@media (max-width: 768px) {
         .results-grid { grid-template-columns: 1fr; }
         .result-panel { border-right: none; border-bottom: 1.5px solid var(--border); }
@@ -631,8 +665,9 @@
             </div>
 
             <div class="graph-actions">
-                <a asp-action="Editor" class="btn-action primary">✎ &nbsp; Edytuj graficznie</a>
+                @* <a asp-action="Editor" class="btn-action primary">✎ &nbsp; Edytuj graficznie</a>*@
                 @* <a asp-action="Edit" class="btn-action">⊞ &nbsp; Edytuj dane</a> *@
+                <a asp-action="Identify" class="btn-action primary">✎ &nbsp; Edytuj / Identyfikuj język</a>
             </div>
         </div>
 

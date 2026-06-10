@@ -550,6 +550,7 @@
                 <div class="result-body">
                     <div class="info-row">
                         <span class="info-pill">Stany: @string.Join(", ", Model.Result.Pda!.States)</span>
+                        <!--<span class="info-pill">Stany: @string.Join(", ", Model.Result.Pda.States.Select(s => s.Name))</span> -->
                         <span class="info-pill">Stan startowy: @Model.Result.Pda.StartState</span>
                         <span class="info-pill">Symbol startowy stosu: @Model.Result.Pda.StartStackSymbol</span>
                         <span class="info-pill">
@@ -560,6 +561,12 @@
                         </span>
                         <span class="info-pill">Alfabet wejściowy: @string.Join(", ", Model.Result.Pda.InputAlphabet)</span>
                         <span class="info-pill">Alfabet stosu: @string.Join(", ", Model.Result.Pda.StackAlphabet)</span>
+                    </div>
+
+                    <div style="margin-top: 1rem;">
+                        <a asp-controller="Cfg" asp-action="PdaIdentify" class="btn-action primary">
+                            ✎ &nbsp; Edytuj / Identyfikuj język
+                        </a>
                     </div>
                 </div>
 

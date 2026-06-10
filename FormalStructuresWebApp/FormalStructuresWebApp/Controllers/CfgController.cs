@@ -43,8 +43,21 @@ namespace FormalStructuresWebApp.Controllers
             var service = new CfgLearningService(_ollamaService);
             var result = await service.LearnAsync(model.Description, alphabet);
 
+            if (result.Success && result.Pda != null)
+            {
+                _pdaSessionService.SetPda(result.Pda);
+            }
+
             model.Result = result;
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult PdaIdentify()
+        {
+            var pda = _pdaSessionService.GetPda();
+            return View("PdaEditor", pda);
+        }
+
     }
 }

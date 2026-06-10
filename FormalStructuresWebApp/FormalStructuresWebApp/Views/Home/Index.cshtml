@@ -123,6 +123,32 @@
             margin-bottom: 3rem;
         }
 
+    .modules-grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border: 1.5px solid var(--border);
+    }
+
+        .modules-grid-2 + .modules-grid-2 {
+            border-top: none;
+            margin-bottom: 3rem;
+        }
+
+        .modules-grid-2 .module-card:last-child {
+            border-right: none;
+        }
+
+    @@media (max-width: 560px) {
+        .modules-grid-2 {
+            grid-template-columns: 1fr;
+        }
+
+            .modules-grid-2 .module-card {
+                border-right: none !important;
+                border-bottom: 1.5px solid var(--border);
+            }
+    }
+
     /* ── KAFELEK MODUŁU ───────────────────────────────────── */
     .module-card {
         padding: 2rem;
@@ -514,7 +540,7 @@
     <!-- ── MODUŁY DFA ────────────────────────────────────────── -->
     <div class="section-label">Automat skończony &nbsp;(DFA)</div>
 
-    <div class="modules-grid">
+    <div class="modules-grid-2">
 
         <a class="module-card accent"
            asp-controller="Structures" asp-action="Generate">
@@ -529,18 +555,6 @@
             <div class="card-arrow">→ &nbsp; Przejdź do generatora</div>
         </a>
 
-        <a class="module-card"
-           asp-controller="Structures" asp-action="Editor">
-            <div class="card-num">02 &nbsp;— DFA</div>
-            <div class="card-tag">Edycja</div>
-            <h2 class="card-title">Edytor automatu</h2>
-            <p class="card-desc">
-                Rysuj i modyfikuj automat skończony ręcznie — dodawaj
-                stany, przejścia, zmieniaj układ grafu.
-                Wynik zapisywany w sesji.
-            </p>
-            <div class="card-arrow">→ &nbsp; Otwórz edytor</div>
-        </a>
 
         <a class="module-card"
            asp-controller="Structures" asp-action="Identify">
@@ -573,19 +587,6 @@
                 i zbuduje automat ze stosem.
             </p>
             <div class="card-arrow">→ &nbsp; Generuj PDA</div>
-        </a>
-
-        <a class="module-card green"
-           asp-controller="Cfg" asp-action="PdaEditor">
-            <div class="card-num">05 &nbsp;— PDA</div>
-            <div class="card-tag">Edycja</div>
-            <h2 class="card-title">Edytor PDA</h2>
-            <p class="card-desc">
-                Konstruuj automat ze stosem ręcznie — definiuj stany,
-                przejścia z akcjami na stosie (push/pop) i symbol
-                startowy stosu w interaktywnym grafie.
-            </p>
-            <div class="card-arrow">→ &nbsp; Otwórz edytor</div>
         </a>
 
         <a class="module-card"
@@ -723,7 +724,7 @@
                 </defs>
             </svg>
 
-            <a asp-controller="Structures" asp-action="Editor"
+            <a asp-controller="Structures" asp-action="Indentify"
                class="btn-edit">
                 ✎ &nbsp; Edytuj graf automatu
             </a>
