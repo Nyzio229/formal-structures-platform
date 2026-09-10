@@ -5,11 +5,100 @@
 \usepackage[polish]{babel}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{url}
 
 \usepackage{lmodern} % lepsza czcionka
+\usepackage{booktabs}
+\usepackage{longtable}
 \setlength{\parindent}{0pt}   % brak wcięcia
 \setlength{\parskip}{6pt}     % odstęp między akapitami
 
+
+
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=1.25cm]{geometry}
+
+\usepackage{setspace}
+\usepackage{ragged2e}
+\usepackage{tocloft}
+
+% Ustawienia formatowania pracy
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\onehalfspacing
+\AtBeginDocument{\justifying}
+
+
+
+
+\usepackage{titlesec}
+
+% ------------------------------------------------------------
+% Formatowanie nagłówków i spisu treści
+% ------------------------------------------------------------
+\titleformat{\section}
+  {\normalfont\bfseries\Large}
+  {Rozdział \thesection.}
+  {0.7em}
+  {}
+
+% Kropka po numerze podrozdziału:
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\titleformat{\subsection}
+  {\normalfont\bfseries\large}
+  {\thesubsection.}
+  {0.7em}
+  {}
+
+% Kropka po numerach w spisie treści.
+\renewcommand{\cftsecfont}{\bfseries}
+\renewcommand{\cftsecpagefont}{\bfseries}
+\renewcommand{\cftsecpresnum}{Rozdział~}
+\renewcommand{\cftsecaftersnum}{.}
+\setlength{\cftsecnumwidth}{2.4cm}
+
+\renewcommand{\cftsubsecaftersnum}{.}
+\setlength{\cftsubsecnumwidth}{1.1cm}
+
+% ------------------------------------------------------------
+% Automatyczny spis wzorów
+% ------------------------------------------------------------
+\makeatletter
+\newlistof{equationlist}{equ}{Spis wzorów}
+\newcommand{\listequations}{\listofequationlist}
+\AtBeginEnvironment{equation}{%
+  \addcontentsline{equ}{equationlist}{\protect\numberline{\theequation.}Wzór}%
+}
+\makeatother
+
+
+
+\usepackage{etoolbox}
+
+\usepackage{listings}
+\usepackage{listingsutf8}
+\renewcommand{\lstlistlistingname}{Spis listingów}
+\lstset{
+    inputencoding=utf8,
+    extendedchars=true,
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    captionpos=b
+}
+\lstset{
+    literate=
+        {ą}{{\k a}}1
+        {ć}{{\'c}}1
+        {ę}{{\k e}}1
+        {ł}{{\l}}1
+        {ń}{{\'n}}1
+        {ó}{{\'o}}1
+        {ś}{{\'s}}1
+        {ź}{{\'z}}1
+        {ż}{{\.z}}1
+}
 
 \begin{document}
 % ----------- STRONA TYTULOWA --------------------------------------------------
@@ -115,7 +204,7 @@ Praca nie koncentruje się na trenowaniu modeli od podstaw, lecz na eksperymenta
 
 \subsection{Struktura pracy}
 
-Praca składa się z sześciu rozdziałów.
+Praca składa się z siedmiu rozdziałów.
 
 \begin{itemize}
     \item W rozdziale 2 przedstawiono teoretyczne podstawy działania dużych modeli językowych i ich roli w przetwarzaniu języka naturalnego.
@@ -127,6 +216,7 @@ Praca składa się z sześciu rozdziałów.
     \item W rozdziale 5 zaprezentowano wyniki eksperymentów przeprowadzonych z użyciem platformy, w tym ocenę skuteczności LLM w generowaniu struktur formalnych.
     
     \item Rozdział 6 zawiera podsumowanie i wnioski, w tym ocenę przyjętej hipotezy badawczej oraz wskazanie dalszych kierunków rozwoju.
+    \item Rozdział 7 zawiera instrukcję uruchomienia aplikacji, obejmującą przygotowanie środowiska .NET, instalację Ollama oraz modelu \texttt{phi4-mini}, a także uruchomienie i podstawową weryfikację działania systemu.
 \end{itemize}
 
 \newpage
@@ -142,11 +232,11 @@ W niniejszym rozdziale przedstawione zostaną podstawowe definicje oraz modele m
 
 \subsection{Zastosowanie języków bezkontekstowych w analizie składniowej}
 
-Języki bezkontekstowe odgrywają kluczową rolę w analizie składniowej, szczególnie w kontekście języków programowania. Struktury takie jak zagnieżdżone wyrażenia, bloki kodu czy wywołania funkcji mogą być naturalnie modelowane przy użyciu gramatyk bezkontekstowych.
+Języki bezkontekstowe są wykorzystywane do opisu struktur składniowych, w tym struktur zagnieżdżonych występujących w językach programowania \cite{hopcroft2007,sipser2012,aho1972}. Gramatyki bezkontekstowe pozwalają opisywać zależności, których nie można w ogólności reprezentować za pomocą samych języków regularnych.
 
-W praktyce stosuje się różne algorytmy parsowania, takie jak parsery LL oraz LR, które umożliwiają efektywną analizę składniową na podstawie gramatyk bezkontekstowych. Proces ten jest niezbędny do weryfikacji poprawności składniowej programów oraz budowy ich reprezentacji wewnętrznej.
+W praktyce stosuje się różne algorytmy parsowania, takie jak parsery LL oraz LR, które umożliwiają analizę składniową na podstawie gramatyk bezkontekstowych \cite{aho1972}. Proces ten służy między innymi do sprawdzania poprawności składniowej programów oraz budowania ich reprezentacji wewnętrznej.
 
-W kontekście projektowanej platformy języki bezkontekstowe oraz automaty ze stosem umożliwiają analizę bardziej złożonych struktur formalnych niż w przypadku języków regularnych, co znacząco rozszerza możliwości systemu.
+W kontekście projektowanej platformy języki bezkontekstowe oraz automaty ze stosem umożliwiają analizę struktur wymagających pamięci stosowej, rozszerzając zakres analizowanych modeli względem automatów skończonych \cite{hopcroft2007,sipser2012}.
 
 \subsection{Podstawowe pojęcia języków formalnych}
 
@@ -270,7 +360,7 @@ Słowo $w$ jest akceptowane przez automat, jeśli:
 
 \subsection{Języki bezkontekstowe i gramatyki bezkontekstowe}
 
-Języki bezkontekstowe stanowią istotną klasę języków formalnych, szczególnie ważną w kontekście analizy składniowej języków programowania. Język bezkontekstowy jest definiowany jako język generowany przez gramatykę bezkontekstową.
+Języki bezkontekstowe stanowią klasę języków formalnych wykorzystywaną między innymi do opisu składni języków programowania. Język bezkontekstowy jest definiowany jako język generowany przez gramatykę bezkontekstową \cite{hopcroft2007,sipser2012,linz2016}.
 
 Gramatyka bezkontekstowa (CFG -- \textit{Context-Free Grammar}) jest szczególnym przypadkiem gramatyki formalnej, w której wszystkie produkcje mają postać:
 \begin{equation}
@@ -291,7 +381,7 @@ S \rightarrow (S)S \mid \varepsilon
 Istotnym elementem związanym z gramatykami bezkontekstowymi jest możliwość reprezentacji procesu generowania w postaci drzewa składniowego, które obrazuje strukturę wyprowadzenia słowa. Węzły drzewa odpowiadają symbolom nieterminalnym, natomiast liście symbolom terminalnym.
 \\
 \\
-W analizie języków bezkontekstowych często wykorzystuje się specjalne postacie gramatyk, które upraszczają ich przetwarzanie. Jedną z najważniejszych jest postać normalna Chomsky’ego (CNF -- \textit{Chomsky Normal Form}), w której każda produkcja ma jedną z postaci:
+W analizie języków bezkontekstowych wykorzystuje się również specjalne postacie gramatyk, które upraszczają ich przetwarzanie. Jedną z nich jest postać normalna Chomsky’ego (CNF -- \textit{Chomsky Normal Form}), w której każda produkcja ma jedną z postaci \cite{chomsky1959,hopcroft2007}:
 \begin{equation}
 A \rightarrow BC \quad \text{lub} \quad A \rightarrow a
 \end{equation}
@@ -303,7 +393,7 @@ A \rightarrow a\alpha
 \end{equation}
 gdzie $a \in \Sigma$, a $\alpha \in V^*$.
 
-Normalne formy gramatyk są szczególnie przydatne w konstrukcji algorytmów parsujących oraz dowodach własności języków.
+Normalne formy gramatyk są wykorzystywane między innymi w konstrukcji algorytmów parsujących oraz w analizie własności języków \cite{hopcroft2007,aho1972}.
 
 \subsection{Automaty ze stosem}
 
@@ -342,7 +432,7 @@ Automaty ze stosem są ściśle powiązane z gramatykami bezkontekstowymi. Istni
 
 \subsection{Algorytm L* Angluin i uczenie języków formalnych}
 
-Jednym z istotnych zagadnień w kontekście analizy i generowania języków formalnych jest problem ich automatycznego uczenia się na podstawie obserwacji. Klasycznym podejściem do tego problemu jest algorytm L* zaproponowany przez Danę Angluin w 1987 roku. Algorytm ten umożliwia identyfikację języka regularnego poprzez konstruowanie minimalnego deterministycznego automatu skończonego na podstawie interakcji z tzw. nauczycielem (\textit{teacher}).
+Jednym z zagadnień związanych z analizą języków formalnych jest ich automatyczne uczenie na podstawie obserwacji. Klasycznym podejściem do tego problemu jest algorytm L* zaproponowany przez Danę Angluin w 1987 roku. Algorytm ten umożliwia identyfikację języka regularnego poprzez konstruowanie deterministycznego automatu skończonego na podstawie interakcji z tzw. nauczycielem (\textit{teacher}) \cite{angluin1987}.
 
 Model uczenia wykorzystywany w algorytmie L* opiera się na dwóch typach zapytań: zapytaniach o przynależność oraz zapytaniach równoważności. Zapytanie o przynależność polega na sprawdzeniu, czy dane słowo $w$ należy do języka $L$, co można formalnie zapisać jako:
 \begin{equation}
@@ -395,13 +485,133 @@ gdzie zbiór stanów $Q$ odpowiada unikalnym wierszom tabeli obserwacji.
 
 Algorytm działa iteracyjnie, rozszerzając zbiory $S$ i $E$ oraz aktualizując tabelę obserwacji aż do momentu uzyskania poprawnego automatu. W przypadku otrzymania kontrprzykładu tabela jest aktualizowana poprzez dodanie odpowiednich prefiksów.
 
-Złożoność algorytmu L* jest wielomianowa względem liczby stanów minimalnego automatu oraz długości kontrprzykładów, co czyni go efektywnym narzędziem w praktyce.
+Złożoność zapytań algorytmu L* jest wielomianowa względem liczby stanów minimalnego automatu oraz parametrów związanych z długością kontrprzykładów \cite{angluin1987}.
 
-Algorytm L* znajduje zastosowanie w wielu obszarach, takich jak inżynieria odwrotna protokołów, testowanie systemów, weryfikacja formalna oraz uczenie modeli zachowań systemów. W kontekście projektowanej platformy algorytm ten może być wykorzystany do automatycznego wnioskowania struktur formalnych na podstawie przykładów dostarczonych przez użytkownika, co stanowi istotny element integracji metod sztucznej inteligencji z teorią języków formalnych.
+Algorytm L* może być wykorzystywany do automatycznej inferencji modeli systemów na podstawie zapytań o przynależność oraz kontrprzykładów. W kontekście projektowanej platformy algorytm ten wykorzystano do automatycznego wnioskowania automatów skończonych na podstawie odpowiedzi dostarczanych przez wyrocznię \cite{angluin1987}.
+
+\subsection{Algorytm Cocke’a-Younger’a-Kasamiego (CYK)}
+
+Algorytm Cocke’a-Younger’a-Kasamiego (CYK -- \textit{Cocke-Younger-Kasami}) jest klasycznym algorytmem rozpoznawania języków bezkontekstowych. Służy do sprawdzania, czy dane słowo należy do języka generowanego przez określoną gramatykę bezkontekstową \cite{younger1967,kasami1965}.
+
+Klasyczny algorytm CYK działa dla gramatyk zapisanych w postaci normalnej Chomsky’ego (CNF -- \textit{Chomsky Normal Form}), w której produkcje mają postać \cite{younger1967,kasami1965}:
+\begin{equation}
+A \rightarrow BC
+\end{equation}
+lub:
+\begin{equation}
+A \rightarrow a
+\end{equation}
+gdzie $A, B, C \in V$, natomiast $a \in \Sigma$.
+
+Algorytm opiera się na programowaniu dynamicznym i wykorzystuje tablicę trójkątną, w której przechowywane są informacje o symbolach nieterminalnych mogących generować fragmenty analizowanego słowa.
+
+Niech:
+\begin{equation}
+w = a_1 a_2 \dots a_n
+\end{equation}
+
+oznacza analizowane słowo długości $n$. Tworzona jest tablica:
+\begin{equation}
+T[i,j]
+\end{equation}
+
+gdzie komórka $T[i,j]$ zawiera zbiór wszystkich symboli nieterminalnych generujących fragment słowa długości $j$, rozpoczynający się od pozycji $i$.
+
+W pierwszym kroku algorytm analizuje pojedyncze symbole wejściowe. Dla każdej produkcji:
+\begin{equation}
+A \rightarrow a_i
+\end{equation}
+
+symbol $A$ zostaje umieszczony w komórce:
+\begin{equation}
+T[i,1]
+\end{equation}
+
+Następnie algorytm iteracyjnie analizuje coraz dłuższe fragmenty słowa. Dla każdej produkcji postaci:
+\begin{equation}
+A \rightarrow BC
+\end{equation}
+
+sprawdzane jest, czy istnieje podział fragmentu słowa na dwie części takie, że:
+\begin{equation}
+B \in T[i,k]
+\end{equation}
+oraz:
+\begin{equation}
+C \in T[i+k,j-k]
+\end{equation}
+
+Jeżeli warunek jest spełniony, symbol $A$ dodawany jest do komórki:
+\begin{equation}
+T[i,j]
+\end{equation}
+
+Proces jest powtarzany aż do wyznaczenia wartości dla całego słowa.
+
+Słowo należy do języka generowanego przez gramatykę wtedy i tylko wtedy, gdy symbol startowy $S$ znajduje się w komórce:
+\begin{equation}
+T[1,n]
+\end{equation}
+
+Formalnie:
+\begin{equation}
+w \in L(G) \iff S \in T[1,n]
+\end{equation}
+
+Przykładowo dla gramatyki:
+\begin{equation}
+S \rightarrow AB
+\end{equation}
+\begin{equation}
+A \rightarrow a
+\end{equation}
+\begin{equation}
+B \rightarrow b
+\end{equation}
+
+oraz słowa:
+\begin{equation}
+w = ab
+\end{equation}
+
+algorytm w pierwszym kroku umieszcza:
+\begin{equation}
+A \in T[1,1]
+\end{equation}
+oraz:
+\begin{equation}
+B \in T[2,1]
+\end{equation}
+
+Następnie, ponieważ istnieje produkcja:
+\begin{equation}
+S \rightarrow AB
+\end{equation}
+
+otrzymujemy:
+\begin{equation}
+S \in T[1,2]
+\end{equation}
+
+co oznacza, że słowo $ab$ należy do języka.
+
+Złożoność czasowa algorytmu CYK wynosi:
+\begin{equation}
+O(n^3 \cdot |P|)
+\end{equation}
+
+gdzie $n$ oznacza długość analizowanego słowa, natomiast $|P|$ liczbę produkcji gramatyki. Złożoność pamięciowa wynosi:
+\begin{equation}
+O(n^2)
+\end{equation}
+
+Algorytm CYK może być wykorzystywany do rozpoznawania języków bezkontekstowych oraz jako element procedur parsowania opartych na programowaniu dynamicznym \cite{younger1967,kasami1965}.
+
+W kontekście projektowanej platformy algorytm CYK może zostać wykorzystany do automatycznej weryfikacji przynależności słów do języka generowanego przez gramatykę bezkontekstową oraz do wizualizacji procesu parsowania i budowy struktur składniowych.
 
 \subsection{Analiza i generowanie języków formalnych}
 
-Analiza języka formalnego polega na sprawdzeniu, czy dane słowo należy do języka:
+Analiza języka formalnego może obejmować sprawdzenie, czy dane słowo należy do języka \cite{hopcroft2007,sipser2012}:
 \begin{equation}
 w \in L
 \end{equation}
@@ -411,9 +621,9 @@ W przypadku gramatyk:
 S \Rightarrow^* w
 \end{equation}
 
-Parsowanie polega na budowie drzewa składniowego reprezentującego proces wyprowadzenia.
+Parsowanie polega na budowie drzewa składniowego reprezentującego proces wyprowadzenia \cite{aho1972}.
 \\ \\
-Generowanie języka polega na wyznaczeniu zbioru:
+Generowanie języka polega na wyznaczeniu zbioru \cite{hopcroft2007,linz2016}:
 \begin{equation}
 L(G) = \{ w \in \Sigma^* \mid S \Rightarrow^* w \}
 \end{equation}
@@ -421,7 +631,7 @@ L(G) = \{ w \in \Sigma^* \mid S \Rightarrow^* w \}
 Proces ten może być realizowany poprzez systematyczne stosowanie reguł produkcji.
 \\
 \\
-W kontekście współczesnych systemów informatycznych istotne znaczenie ma zastosowanie sztucznej inteligencji w analizie i generowaniu języków formalnych. Można to ująć jako odwzorowanie:
+W projektowanej platformie wykorzystanie modelu językowego do interpretacji opisu w języku naturalnym można ująć jako odwzorowanie:
 \begin{equation}
 f: NL \rightarrow FL
 \end{equation}
@@ -434,91 +644,88 @@ gdzie $NL$ oznacza język naturalny, a $FL$ język formalny.
 
 \subsection{Wprowadzenie}
 
-Dynamiczny rozwój metod sztucznej inteligencji oraz uczenia maszynowego w ostatnich latach znacząco wpłynął na sposoby analizy, modelowania i generowania struktur formalnych. Szczególne znaczenie zyskały techniki umożliwiające automatyczne rozpoznawanie wzorców, inferencję gramatyk oraz uczenie modeli reprezentujących języki formalne. Rozwiązania tego typu znajdują zastosowanie między innymi w kompilatorach, analizatorach składniowych, systemach przetwarzania języka naturalnego, weryfikacji formalnej oprogramowania oraz systemach automatycznej analizy kodu źródłowego.
+Metody sztucznej inteligencji i uczenia maszynowego mogą wspomagać analizę, modelowanie oraz generowanie danych tekstowych i struktur reprezentowanych w sposób formalny \cite{zhao2023,jurafsky2026}. W kontekście niniejszej pracy rozważane są przede wszystkim ich zastosowania do inferencji oraz generowania struktur formalnych.
 
-Klasyczne metody analizy języków formalnych opierają się głównie na deterministycznych modelach matematycznych, takich jak automaty skończone, automaty ze stosem czy gramatyki formalne. Podejścia te zapewniają wysoką precyzję opisu języków, jednak w przypadku bardziej złożonych struktur formalnych ich projektowanie i analiza mogą być czasochłonne oraz trudne do automatyzacji. Z tego względu coraz większe znaczenie zyskują metody wykorzystujące sztuczną inteligencję do wspomagania procesu generowania oraz analizy struktur formalnych.
+Klasyczne metody analizy języków formalnych opierają się na modelach matematycznych, takich jak automaty skończone, automaty ze stosem czy gramatyki formalne \cite{hopcroft2007,sipser2012}. Metody uczenia maszynowego mogą natomiast wspomagać proces tworzenia modeli na podstawie danych lub interakcji z systemem uczącym \cite{angluin1987,zhao2023}.
 
-Istotnym obszarem badań jest problem inferencji języków formalnych, czyli automatycznego uczenia modeli opisujących dany język na podstawie przykładów lub interakcji z nauczycielem. Jednym z najbardziej znanych algorytmów w tym zakresie jest algorytm L* zaproponowany przez Danę Angluin, umożliwiający aktywne uczenie automatów skończonych. Algorytm ten stanowi podstawę wielu współczesnych metod automatycznej inferencji struktur formalnych. Jego klasyczna wersja ogranicza się jednak głównie do języków regularnych reprezentowanych przez automaty skończone.
+Inferencja języków formalnych polega na automatycznym uczeniu modelu opisującego dany język na podstawie przykładów lub interakcji z nauczycielem. Jednym z klasycznych algorytmów tego typu jest L*, zaproponowany przez Danę Angluin, który umożliwia aktywne uczenie automatów skończonych reprezentujących języki regularne \cite{angluin1987}. Klasyczna wersja algorytmu dotyczy więc języków regularnych i automatów skończonych.
 
-W przypadku języków bezkontekstowych oraz struktur wymagających pamięci stosowej konieczne staje się zastosowanie bardziej zaawansowanych modeli, takich jak automaty ze stosem. Rozszerzenie metod aktywnego uczenia na tego rodzaju struktury stanowi obecnie istotny problem badawczy, wymagający opracowania nowych mechanizmów reprezentacji oraz analizy stanów i przejść.
+W przypadku języków bezkontekstowych oraz struktur wymagających pamięci stosowej stosuje się modele takie jak automaty ze stosem \cite{hopcroft2007,sipser2012}. Rozszerzenie metod aktywnego uczenia na tego rodzaju struktury wymaga uwzględnienia dodatkowej pamięci oraz zależności zagnieżdżonych, dlatego różni się od klasycznego uczenia automatów skończonych.
 
-Celem niniejszego rozdziału jest przedstawienie współczesnych metod analizy i generowania struktur formalnych z wykorzystaniem sztucznej inteligencji, ze szczególnym uwzględnieniem problemu uczenia automatów i gramatyk formalnych. Omówione zostaną zarówno klasyczne podejścia inferencyjne, jak i nowoczesne metody wykorzystujące modele generatywne oraz uczenie aktywne. Rozdział stanowi również podstawę teoretyczną dla opracowanej w ramach pracy platformy badawczej oraz zaproponowanego rozszerzenia algorytmu L* przeznaczonego dla automatów ze stosem.
+Celem niniejszego rozdziału jest przedstawienie metod analizy i generowania struktur formalnych z wykorzystaniem sztucznej inteligencji, ze szczególnym uwzględnieniem uczenia automatów i gramatyk formalnych. Omówione zostaną klasyczne podejścia inferencyjne oraz metody wykorzystujące modele generatywne.
 
 
 \subsection{Zastosowanie sztucznej inteligencji w językach formalnych}
 
-Sztuczna inteligencja odgrywa coraz większą rolę w analizie, rozpoznawaniu oraz generowaniu języków formalnych. Współczesne systemy informatyczne wykorzystują metody uczenia maszynowego i sztucznej inteligencji do automatyzacji procesów związanych z analizą składniową, inferencją gramatyk, modelowaniem struktur formalnych oraz weryfikacją poprawności składniowej danych wejściowych. Rozwiązania tego typu znajdują zastosowanie zarówno w klasycznych systemach kompilatorów, jak i nowoczesnych systemach przetwarzania języka naturalnego oraz automatycznej analizy kodu źródłowego.
+Metody sztucznej inteligencji i uczenia maszynowego mogą być wykorzystywane do wspomagania analizy tekstu, kodu oraz struktur reprezentowanych formalnie \cite{zhao2023,jurafsky2026}. W niniejszej pracy rozważane są przede wszystkim zastosowania tych metod do generowania i inferencji struktur formalnych.
 
-Jednym z głównych obszarów zastosowań sztucznej inteligencji w językach formalnych jest problem inferencji gramatyk formalnych. Inferencja polega na automatycznym tworzeniu modelu języka na podstawie dostarczonych przykładów lub interakcji z systemem uczącym. W praktyce umożliwia to budowę automatów oraz gramatyk opisujących zachowanie analizowanego systemu bez konieczności ręcznego definiowania wszystkich reguł produkcji i przejść stanów.
+Jednym z obszarów zastosowań metod uczenia jest inferencja gramatyk formalnych. Inferencja polega na tworzeniu modelu języka na podstawie dostarczonych przykładów lub interakcji z systemem uczącym. W przypadku aktywnego uczenia model może być konstruowany na podstawie odpowiedzi uzyskiwanych od nauczyciela \cite{angluin1987}.
 
-Istotne znaczenie mają również metody aktywnego uczenia automatów (\textit{active automata learning}), w których system uczący zadaje pytania dotyczące przynależności słów do języka oraz wykorzystuje kontrprzykłady do stopniowego budowania modelu formalnego. Podejście to zostało spopularyzowane między innymi przez algorytm L* zaproponowany przez Danę Angluin. Algorytm ten umożliwia efektywne uczenie automatów skończonych reprezentujących języki regularne i stanowi podstawę wielu współczesnych systemów inferencji języków formalnych.
+Metody aktywnego uczenia automatów (\textit{active automata learning}) zakładają interakcję systemu uczącego z nauczycielem. System może zadawać pytania dotyczące przynależności słów do języka oraz wykorzystywać kontrprzykłady do aktualizacji modelu \cite{angluin1987}. Algorytm L* jest klasycznym przykładem takiego podejścia.
 
-W ostatnich latach znaczący rozwój osiągnęły również modele generatywnej sztucznej inteligencji, w szczególności modele oparte na architekturze transformera. Systemy te potrafią generować teksty, fragmenty kodu źródłowego oraz struktury składniowe na podstawie wzorców wykrytych w dużych zbiorach danych treningowych. Chociaż modele generatywne charakteryzują się dużą skutecznością w analizie i generowaniu danych tekstowych, często nie gwarantują pełnej zgodności z formalnymi regułami składniowymi. Z tego względu coraz częściej podejmowane są próby łączenia metod symbolicznych z technikami uczenia maszynowego, tworząc podejścia hybrydowe określane jako systemy neuro-symboliczne.
+Modele generatywne oparte na architekturze transformera są wykorzystywane do generowania tekstu i innych sekwencji na podstawie wzorców poznanych podczas uczenia \cite{vaswani2017,brown2020}. W zadaniach wymagających ścisłego przestrzegania reguł formalnych wygenerowany wynik może jednak wymagać dodatkowej walidacji za pomocą metod symbolicznych. W niniejszej pracy przyjęto właśnie takie rozdzielenie generowania i formalnej weryfikacji.
 
 Sztuczna inteligencja znajduje zastosowanie także w automatycznej analizie kodu źródłowego, wykrywaniu błędów składniowych, generowaniu parserów oraz optymalizacji procesów kompilacji. W systemach tych języki formalne wykorzystywane są do reprezentacji składni programów, natomiast algorytmy uczenia maszynowego wspomagają analizę wzorców oraz automatyczne wykrywanie nieprawidłowości.
 
-Szczególnie istotnym kierunkiem badań jest obecnie rozszerzenie metod aktywnego uczenia na języki bezkontekstowe oraz automaty ze stosem. W przeciwieństwie do automatów skończonych modele te umożliwiają reprezentację bardziej złożonych struktur składniowych wymagających pamięci stosowej, takich jak zagnieżdżone wyrażenia czy struktury drzewiaste. Problem efektywnego uczenia takich modeli pozostaje jednym z ważniejszych wyzwań współczesnej teorii języków formalnych oraz sztucznej inteligencji.
+Rozszerzenie metod aktywnego uczenia na języki bezkontekstowe i automaty ze stosem wymaga uwzględnienia pamięci stosowej oraz struktur zagnieżdżonych. Modele te pozwalają reprezentować klasy języków szersze niż języki regularne \cite{hopcroft2007,sipser2012}. W niniejszej pracy problem ten jest rozpatrywany z wykorzystaniem pośredniego podejścia opartego na gramatyce bezkontekstowej.
 
 W niniejszej pracy sztuczna inteligencja wykorzystywana jest jako element wspomagający analizę i generowanie struktur formalnych w ramach opracowanej platformy badawczej. Szczególną uwagę poświęcono możliwości rozszerzenia klasycznego algorytmu L* na modele wykorzystujące mechanizm stosu, co pozwala na analizę bardziej złożonych języków formalnych niż języki regularne.
 
 
-\subsection{Modele językowe i generatywna sztuczna inteligencja}
+\subsection{Modele językowe i generatywna sztuczna inteligencja} \cite{vaswani2017,brown2020,zhao2023}
 
-Współczesny rozwój sztucznej inteligencji doprowadził do powstania zaawansowanych modeli językowych zdolnych do analizy, generowania oraz transformacji danych tekstowych i struktur formalnych. Szczególne znaczenie zyskały modele generatywne wykorzystujące architekturę transformera, które umożliwiły znaczące zwiększenie skuteczności systemów przetwarzania języka naturalnego (\textit{Natural Language Processing - NLP}) oraz automatycznej analizy kodu źródłowego.
+Rozwój modeli językowych doprowadził do powstania systemów zdolnych do analizy i generowania danych tekstowych. Wśród współczesnych modeli generatywnych istotną rolę odgrywa architektura transformera \cite{vaswani2017,brown2020,zhao2023}.
 
-Modele językowe (\textit{Language Models - LM}) są systemami uczonymi na dużych zbiorach danych tekstowych, których zadaniem jest przewidywanie kolejnych elementów sekwencji na podstawie wcześniej występującego kontekstu. W praktyce oznacza to możliwość generowania tekstu, uzupełniania fragmentów kodu, tłumaczenia języków naturalnych oraz rozpoznawania struktur składniowych. W zależności od architektury modele te mogą wykorzystywać sieci rekurencyjne (\textit{Recurrent Neural Networks - RNN}), sieci LSTM (\textit{Long Short-Term Memory}) lub współcześnie dominującą architekturę transformera.
+Modele językowe (\textit{Language Models - LM}) uczą się zależności występujących w danych tekstowych i mogą być wykorzystywane między innymi do przewidywania kolejnych elementów sekwencji oraz generowania tekstu \cite{brown2020,jurafsky2026}. W zależności od architektury mogą wykorzystywać między innymi sieci rekurencyjne, sieci LSTM lub transformery \cite{vaswani2017,jurafsky2026}.
 
-Przełomowym momentem w rozwoju modeli językowych było zaproponowanie architektury transformera, opartej na mechanizmie uwagi (\textit{attention mechanism}). Mechanizm ten umożliwia analizę zależności pomiędzy elementami sekwencji niezależnie od ich odległości w tekście, co pozwala na efektywniejsze modelowanie struktur składniowych oraz semantycznych. Dzięki temu możliwe stało się tworzenie dużych modeli językowych (\textit{Large Language Models -- LLM}), takich jak GPT, BERT czy LLaMA.
+Istotnym etapem rozwoju współczesnych modeli językowych było zaproponowanie architektury transformera opartej na mechanizmie uwagi (\textit{attention mechanism}) \cite{vaswani2017}. Architektura ta stała się podstawą wielu późniejszych modeli językowych, w tym modeli generatywnych z rodziny GPT \cite{brown2020}.
 
-Generatywna sztuczna inteligencja wykorzystuje modele językowe do tworzenia nowych danych na podstawie wzorców wykrytych w procesie uczenia. W przypadku języków formalnych modele generatywne mogą być wykorzystywane do automatycznego generowania wyrażeń regularnych, gramatyk formalnych, struktur składniowych oraz fragmentów kodu źródłowego. Systemy tego typu znajdują zastosowanie między innymi w automatycznym generowaniu parserów, wspomaganiu programowania oraz analizie poprawności składniowej programów komputerowych.
+Modele generatywne mogą być wykorzystywane do tworzenia nowych sekwencji na podstawie wzorców poznanych podczas uczenia \cite{brown2020,zhao2023}. W kontekście niniejszej pracy wykorzystuje się je do generowania opisów struktur formalnych, takich jak automaty i gramatyki.
 
-Pomimo wysokiej skuteczności modeli generatywnych, ich wykorzystanie w kontekście języków formalnych wiąże się z istotnymi ograniczeniami. Modele językowe działają głównie w oparciu o zależności statystyczne występujące w danych treningowych, co oznacza, że generowane struktury nie zawsze spełniają ścisłe reguły formalne. W przeciwieństwie do klasycznych automatów i gramatyk formalnych modele generatywne nie gwarantują pełnej poprawności składniowej ani deterministycznego działania.
+Wykorzystanie modeli generatywnych do zadań wymagających ścisłego przestrzegania reguł formalnych wiąże się z koniecznością dodatkowej weryfikacji wyników. W przeciwieństwie do formalnie zdefiniowanych automatów i gramatyk, generowanie odpowiedzi przez model językowy nie stanowi samo w sobie dowodu spełnienia wszystkich reguł określonej struktury. Z tego względu w niniejszej pracy wygenerowane struktury są poddawane dalszej analizie algorytmicznej.
 
-Problem ten jest szczególnie widoczny w przypadku języków bezkontekstowych oraz struktur wymagających zachowania poprawnych zależności zagnieżdżonych, takich jak nawiasowania czy drzewa składniowe. W takich sytuacjach modele probabilistyczne mogą generować struktury niezgodne z definicją języka formalnego, pomimo pozornie poprawnej składni powierzchniowej.
+W przypadku struktur zagnieżdżonych dodatkowym wymaganiem jest zachowanie zależności pomiędzy odległymi elementami sekwencji. Dlatego wynik wygenerowany przez model językowy może wymagać sprawdzenia względem formalnej definicji języka, co w niniejszej pracy realizowane jest za pomocą klasycznych algorytmów.
 
 W niniejszej pracy modele sztucznej inteligencji wykorzystywane są jako element wspomagający analizę i generowanie struktur formalnych w opracowanej platformie badawczej. Szczególne znaczenie ma możliwość połączenia klasycznych metod inferencji automatów z nowoczesnymi technikami sztucznej inteligencji w celu rozszerzenia możliwości analizy języków bezkontekstowych oraz automatów ze stosem.
 
 \subsection{Automatyczne uczenie automatów i gramatyk}
 
-Automatyczne uczenie automatów i gramatyk formalnych stanowi jeden z istotnych obszarów badań z pogranicza teorii języków formalnych, sztucznej inteligencji oraz uczenia maszynowego. Celem tego procesu jest skonstruowanie modelu formalnego opisującego dany język na podstawie dostępnych danych wejściowych, takich jak przykładowe słowa należące do języka, kontrprzykłady lub odpowiedzi udzielane przez system nauczycielski. Proces ten określany jest mianem inferencji gramatyk (\textit{grammar inference}) lub uczenia automatów (\textit{automata learning}).
+Automatyczne uczenie automatów i gramatyk polega na konstruowaniu modelu formalnego opisującego język na podstawie dostępnych danych lub interakcji z systemem nauczycielskim. W literaturze proces ten określany jest między innymi jako inferencja gramatyk (\textit{grammar inference}) lub uczenie automatów (\textit{automata learning}) \cite{angluin1987,zhao2023}.
 
-Klasyczne podejście do projektowania automatów i gramatyk formalnych wymaga ręcznego definiowania stanów, przejść oraz reguł produkcji. W przypadku złożonych języków formalnych proces ten może być trudny, czasochłonny oraz podatny na błędy. Automatyczne metody uczenia umożliwiają częściową lub całkowitą automatyzację tego procesu poprzez analizę dostarczonych danych oraz stopniowe budowanie modelu opisującego zachowanie badanego języka.
+W podejściu automatycznym model jest konstruowany na podstawie danych lub odpowiedzi uzyskiwanych podczas interakcji z nauczycielem, co ogranicza konieczność ręcznego definiowania całej struktury modelu \cite{angluin1987}.
 
-Wyróżnia się dwa podstawowe podejścia do uczenia języków formalnych: uczenie pasywne (\textit{passive learning}) oraz uczenie aktywne (\textit{active learning}). W podejściu pasywnym system uczący otrzymuje zbiór przykładowych słów należących lub nienależących do języka i na ich podstawie próbuje skonstruować odpowiedni model formalny. Skuteczność tej metody zależy w dużym stopniu od jakości oraz kompletności danych treningowych.
+Wyróżnia się między innymi uczenie pasywne (\textit{passive learning}) oraz uczenie aktywne (\textit{active learning}). W podejściu pasywnym system uczący otrzymuje zbiór przykładów i na ich podstawie konstruuje model formalny, natomiast w podejściu aktywnym może pozyskiwać dodatkowe informacje poprzez interakcję z nauczycielem \cite{angluin1987}.
 
 Uczenie aktywne opiera się natomiast na interakcji pomiędzy systemem uczącym a nauczycielem (\textit{teacher}). Algorytm może zadawać pytania dotyczące przynależności słów do języka (\textit{membership queries}) oraz proponować hipotezy opisujące aktualny model języka. W przypadku błędnej hipotezy nauczyciel zwraca kontrprzykład (\textit{counterexample}), który wykorzystywany jest do dalszego udoskonalania modelu.
 
-Jednym z najbardziej znanych algorytmów aktywnego uczenia automatów jest algorytm L* zaproponowany przez Danę Angluin. Algorytm ten umożliwia efektywne uczenie deterministycznych automatów skończonych reprezentujących języki regularne. Działanie algorytmu opiera się na budowie tablicy obserwacji (\textit{observation table}), która przechowuje informacje o zachowaniu analizowanego języka dla różnych prefiksów oraz sufiksów słów wejściowych.
+Algorytm L* zaproponowany przez Danę Angluin umożliwia aktywne uczenie deterministycznych automatów skończonych reprezentujących języki regularne. Jego działanie opiera się na budowie tablicy obserwacji (\textit{observation table}), która przechowuje informacje o przynależności odpowiednich słów do języka \cite{angluin1987}.
 
-Algorytm L* znajduje zastosowanie między innymi w analizie protokołów komunikacyjnych, testowaniu oprogramowania, inżynierii odwrotnej oraz automatycznej analizie systemów reaktywnych. Jego istotną zaletą jest możliwość konstruowania modeli formalnych bez znajomości wewnętrznej implementacji badanego systemu, wyłącznie na podstawie obserwacji jego zachowania.
+Aktywne uczenie pozwala konstruować model na podstawie obserwacji zachowania systemu, bez konieczności bezpośredniej znajomości jego wewnętrznej implementacji \cite{angluin1987}.
 
 Pomimo dużej skuteczności klasyczny algorytm L* posiada istotne ograniczenia wynikające z faktu, że operuje wyłącznie na językach regularnych reprezentowanych przez automaty skończone. W praktyce wiele rzeczywistych struktur formalnych, takich jak składnia języków programowania czy struktury zagnieżdżone, wymaga zastosowania języków bezkontekstowych oraz automatów ze stosem. W takich przypadkach klasyczne modele automatów skończonych okazują się niewystarczające.
 
-Rozszerzenie metod aktywnego uczenia na automaty ze stosem oraz gramatyki bezkontekstowe stanowi obecnie jeden z ważniejszych kierunków badań w dziedzinie inferencji języków formalnych. Problem ten jest znacznie bardziej złożony ze względu na konieczność modelowania pamięci stosowej oraz zależności zagnieżdżonych pomiędzy symbolami języka.
+Rozszerzenie metod aktywnego uczenia na automaty ze stosem oraz gramatyki bezkontekstowe wymaga uwzględnienia pamięci stosowej i zależności zagnieżdżonych, których nie reprezentują automaty skończone \cite{hopcroft2007,sipser2012}.
 
-Współczesne podejścia badawcze coraz częściej łączą klasyczne algorytmy inferencji z metodami sztucznej inteligencji oraz uczenia maszynowego. Podejścia hybrydowe umożliwiają analizę bardziej złożonych struktur formalnych oraz zwiększenie skuteczności procesu uczenia modeli językowych. Szczególnie obiecujące są rozwiązania wykorzystujące połączenie metod symbolicznych z modelami neuronowymi, które pozwalają na automatyczne wykrywanie wzorców oraz adaptacyjne budowanie struktur formalnych.
+Połączenie metod symbolicznych z metodami uczenia maszynowego pozwala rozdzielić generowanie lub przewidywanie odpowiedzi od formalnej weryfikacji wyników. W niniejszej pracy zastosowano takie rozdzielenie: model językowy dostarcza odpowiedzi lub strukturę, natomiast poprawność jest następnie sprawdzana za pomocą algorytmów formalnych.
 
 W niniejszej pracy problem automatycznego uczenia automatów i gramatyk formalnych stanowi jeden z głównych obszarów badawczych. Szczególną uwagę poświęcono możliwości rozszerzenia klasycznego algorytmu L* na modele wykorzystujące mechanizm stosu, co pozwala na analizę bardziej złożonych języków formalnych reprezentowanych przez automaty ze stosem.
 
-\subsection{Rozszerzenie algorytmu L* dla automatów ze stosem}
+\subsection{Tworzenie automatów ze stosem z wykorzystaniem gramatyk bezkontekstowych}
 
-Klasyczny algorytm L* zaproponowany przez Danę Angluin stanowi jedno z najważniejszych rozwiązań w dziedzinie aktywnego uczenia automatów skończonych. Algorytm ten umożliwia efektywne konstruowanie deterministycznych automatów skończonych na podstawie odpowiedzi na pytania o przynależność słów do języka oraz kontrprzykładów dostarczanych przez nauczyciela. Pomimo wysokiej skuteczności metoda ta ogranicza się jednak wyłącznie do języków regularnych, których możliwości reprezentacyjne są niewystarczające dla wielu bardziej złożonych struktur formalnych.
+Algorytm L* zaproponowany przez Danę Angluin umożliwia konstruowanie deterministycznych automatów skończonych na podstawie odpowiedzi na pytania o przynależność słów do języka oraz kontrprzykładów dostarczanych przez nauczyciela \cite{angluin1987}. Otrzymany model opisuje język regularny, dlatego metoda ta nie obejmuje bezpośrednio struktur wymagających pamięci stosowej.
 
-W praktycznych zastosowaniach często występują języki wymagające obsługi struktur zagnieżdżonych oraz zależności hierarchicznych. Przykładami takich języków są składnie języków programowania, struktury XML, wyrażenia arytmetyczne z nawiasami czy drzewa składniowe wykorzystywane w analizie języka naturalnego. Struktury tego typu należą zazwyczaj do klasy języków bezkontekstowych i wymagają zastosowania modeli posiadających pamięć stosową, takich jak automaty ze stosem (\textit{Pushdown Automata -- PDA}).
+W przypadku struktur wymagających reprezentacji zależności zagnieżdżonych stosuje się języki bezkontekstowe i odpowiadające im automaty ze stosem (\textit{Pushdown Automata -- PDA}) \cite{hopcroft2007,sipser2012}. Dodatkowa pamięć w postaci stosu pozwala reprezentować zależności, których nie można w ogólności odwzorować za pomocą automatów skończonych.
 
-Automaty ze stosem rozszerzają możliwości automatów skończonych poprzez dodanie mechanizmu stosu umożliwiającego zapamiętywanie informacji o wcześniej przetwarzanych symbolach wejściowych. Dzięki temu możliwe staje się rozpoznawanie struktur zagnieżdżonych oraz zależności rekurencyjnych, które nie mogą zostać poprawnie opisane przez klasyczne automaty skończone.
+W prezentowanej platformie badawczej przyjęto odmienne podejście do konstruowania automatów ze stosem niż w przypadku klasycznego algorytmu L*. W obu przypadkach celem jest uzyskanie modelu formalnego odpowiadającego opisowi języka, jednak droga prowadząca do jego utworzenia jest inna. Algorytm L* buduje automat stopniowo, wykorzystując odpowiedzi na zapytania o przynależność słów do języka oraz analizując kontrprzykłady. Proces inferencji polega zatem na bezpośrednim wyznaczaniu struktury automatu.
 
-Rozszerzenie algorytmu L* na automaty ze stosem stanowi istotny problem badawczy ze względu na znaczący wzrost złożoności modelu formalnego. W przeciwieństwie do automatów skończonych, w których stan systemu opisany jest wyłącznie przez aktualny stan automatu, w automatach ze stosem konieczne jest dodatkowe uwzględnienie zawartości stosu oraz operacji wykonywanych na jego elementach. Powoduje to zwiększenie liczby możliwych konfiguracji oraz utrudnia proces inferencji modelu.
+W przypadku języków bezkontekstowych zastosowano podejście pośrednie. Zamiast bezpośredniej inferencji automatu ze stosem tworzona jest najpierw gramatyka bezkontekstowa opisująca analizowany język. Następnie poprawność wygenerowanej gramatyki jest weryfikowana z wykorzystaniem algorytmu CYK, który umożliwia sprawdzenie przynależności przykładowych słów do języka opisanego przez gramatykę. Dopiero po pozytywnej weryfikacji gramatyka staje się podstawą do skonstruowania odpowiadającego jej automatu ze stosem.
 
-W ramach niniejszej pracy zaproponowano rozszerzenie klasycznego algorytmu L* umożliwiające analizę struktur formalnych wykorzystujących mechanizm stosowy. Opracowane podejście bazuje na idei aktywnego uczenia poprzez zadawanie pytań dotyczących przynależności słów do języka oraz analizę kontrprzykładów, jednak dodatkowo uwzględnia informacje związane z operacjami wykonywanymi na stosie.
+Takie podejście różni się od działania algorytmu L* przede wszystkim obiektem podlegającym uczeniu. W algorytmie L* wynikiem procesu jest bezpośrednio automat skończony, którego struktura jest sukcesywnie udoskonalana na podstawie kolejnych informacji uzyskiwanych od nauczyciela. W proponowanym rozwiązaniu modelem tworzonym przez system jest gramatyka bezkontekstowa, natomiast automat ze stosem powstaje jako formalna reprezentacja tej gramatyki. Oznacza to, że proces budowy automatu nie opiera się na analizie kontrprzykładów ani rozszerzaniu tablicy obserwacji, lecz na wykorzystaniu znanych własności gramatyk bezkontekstowych oraz formalnych algorytmów ich analizy.
 
-W proponowanym rozwiązaniu klasyczna tablica obserwacji została rozszerzona o mechanizmy umożliwiające reprezentację kontekstu stosowego oraz zależności pomiędzy symbolami wejściowymi i strukturą stosu. Dzięki temu możliwe staje się modelowanie języków zawierających konstrukcje zagnieżdżone oraz analizowanie przejść zależnych od aktualnej zawartości stosu.
+Zastosowanie algorytmu CYK pełni w tym procesie rolę mechanizmu weryfikacyjnego. Pozwala on ocenić, czy wygenerowana gramatyka poprawnie opisuje analizowany język przed przekształceniem jej do postaci automatu ze stosem. Dzięki temu możliwe jest ograniczenie wpływu błędów powstałych podczas generowania gramatyki przez model sztucznej inteligencji oraz zwiększenie wiarygodności otrzymywanego modelu formalnego.
 
-Istotnym elementem opracowanego podejścia jest również analiza kontrprzykładów w kontekście zmian zachodzących na stosie automatu. W klasycznym algorytmie L* kontrprzykłady wykorzystywane są głównie do rozróżniania stanów automatu skończonego. W przypadku automatów ze stosem konieczne staje się dodatkowe uwzględnienie historii operacji stosowych oraz wpływu tych operacji na dalsze przetwarzanie wejścia.
+Przyjęta metoda uzupełnia podejście reprezentowane przez algorytm L*. L* służy do uczenia automatów dla języków regularnych \cite{angluin1987}, natomiast w proponowanym rozwiązaniu dla języków bezkontekstowych wykorzystano gramatykę, algorytm CYK oraz konstrukcję automatu ze stosem. Oba podejścia prowadzą do utworzenia formalnego modelu języka, lecz wykorzystują odmienne modele i procedury.
 
-Rozszerzenie algorytmu L* dla automatów ze stosem umożliwia analizę bardziej złożonych języków formalnych niż języki regularne. Podejście to może znaleźć zastosowanie między innymi w analizie składni języków programowania, automatycznej inferencji parserów, analizie protokołów komunikacyjnych oraz modelowaniu struktur hierarchicznych wykorzystywanych w systemach sztucznej inteligencji.
-
-Opracowane rozwiązanie stanowi podstawę implementacji platformy badawczej przedstawionej w dalszej części pracy. Platforma umożliwia eksperymentalną analizę procesu uczenia automatów ze stosem oraz porównanie skuteczności klasycznych i rozszerzonych metod inferencji struktur formalnych.
 
 \subsection{Założenia projektowe platformy badawczej}
 
@@ -539,5 +746,1208 @@ Istotnym wymaganiem projektowym jest również możliwość przeprowadzania eksp
 W ramach pracy założono również możliwość wykorzystania platformy jako narzędzia edukacyjnego wspomagającego naukę teorii języków formalnych oraz automatów. Interaktywna forma prezentacji struktur formalnych i procesu działania algorytmów może ułatwić zrozumienie zagadnień związanych z analizą składniową, inferencją języków oraz teorią automatów.
 
 Opracowana platforma badawcza stanowi podstawę części implementacyjnej niniejszej pracy. Szczegółowy opis architektury systemu, zastosowanych technologii oraz działania poszczególnych modułów przedstawiono w kolejnym rozdziale.
+
+
+\subsection{Algorytmy grafowe w analizie struktur formalnych}
+
+W analizie języków formalnych oraz automatów istotną rolę odgrywają struktury grafowe. Automaty skończone, automaty ze stosem oraz drzewa składniowe mogą być reprezentowane w postaci grafów skierowanych, w których wierzchołki odpowiadają stanom lub symbolom nieterminalnym, natomiast krawędzie reprezentują przejścia pomiędzy stanami lub reguły wyprowadzenia.
+
+Reprezentacja grafowa umożliwia wykorzystanie klasycznych algorytmów przeszukiwania grafów do analizy struktur formalnych. W projektowanej platformie badawczej algorytmy grafowe wykorzystywane są między innymi do eksploracji przestrzeni stanów automatów, wyszukiwania ścieżek akceptujących oraz analizy zależności pomiędzy symbolami gramatyk formalnych.
+
+Jednym z podstawowych algorytmów stosowanych w analizie struktur formalnych jest przeszukiwanie wszerz (\textit{Breadth-First Search -- BFS}). Algorytm BFS eksploruje graf poziomami, odwiedzając najpierw wszystkie wierzchołki znajdujące się w tej samej odległości od wierzchołka początkowego \cite{cormen2022}. W kontekście automatów formalnych BFS może być wykorzystywany do wyszukiwania najkrótszej ścieżki prowadzącej do stanu akceptującego oraz do analizy osiągalności stanów.
+
+Formalnie graf można zdefiniować jako:
+\begin{equation}
+G = (V, E)
+\end{equation}
+
+gdzie:
+\begin{equation}
+V
+\end{equation}
+oznacza zbiór wierzchołków, natomiast:
+\begin{equation}
+E \subseteq V \times V
+\end{equation}
+oznacza zbiór krawędzi.
+
+Dla automatu skończonego wierzchołki odpowiadają stanom automatu:
+\begin{equation}
+V = Q
+\end{equation}
+
+natomiast krawędzie odpowiadają funkcji przejścia:
+\begin{equation}
+(q_i, q_j) \in E \iff \exists a \in \Sigma ;; \delta(q_i,a)=q_j
+\end{equation}
+
+Drugim istotnym algorytmem jest przeszukiwanie w głąb (\textit{Depth-First Search -- DFS}), które polega na eksploracji możliwie najgłębszych ścieżek grafu przed powrotem do wcześniejszych wierzchołków. Algorytm DFS znajduje zastosowanie między innymi w analizie struktur rekurencyjnych, wykrywaniu cykli oraz budowie drzew składniowych.
+
+W przypadku języków bezkontekstowych algorytmy DFS mogą być wykorzystywane do analizy wyprowadzeń gramatycznych oraz eksploracji drzew parsowania. Szczególnie istotne jest to w analizie struktur zagnieżdżonych, charakterystycznych dla języków programowania oraz struktur XML.
+
+W projektowanej platformie badawczej algorytmy BFS i DFS zostały wykorzystane jako podstawowe mechanizmy eksploracji struktur formalnych reprezentowanych w postaci grafów stanów. Umożliwia to analizę osiągalności stanów, wyszukiwanie ścieżek akceptujących oraz wizualizację działania automatów.
+
+Istotnym elementem współczesnych systemów analizy struktur formalnych jest również połączenie algorytmów grafowych z metodami sztucznej inteligencji. W podejściach tych algorytmy eksploracji grafów wspomagane są przez modele uczenia maszynowego odpowiedzialne za ocenę istotności stanów, przewidywanie najbardziej prawdopodobnych przejść lub ograniczanie przestrzeni przeszukiwania.
+
+W systemach inferencji automatów możliwe jest traktowanie procesu uczenia jako problemu eksploracji grafu stanów. Wierzchołki reprezentują potencjalne konfiguracje automatu, natomiast krawędzie odpowiadają przejściom wynikającym z analizy kolejnych symboli wejściowych. Modele sztucznej inteligencji mogą wspomagać wybór najbardziej obiecujących ścieżek eksploracji, co pozwala na zmniejszenie złożoności procesu uczenia.
+
+Podejścia hybrydowe łączące algorytmy grafowe z metodami sztucznej inteligencji znajdują zastosowanie między innymi w:
+\begin{itemize}
+\item inferencji automatów i gramatyk formalnych,
+\item analizie składniowej języków programowania,
+\item automatycznej analizie kodu źródłowego,
+\item eksploracji przestrzeni stanów systemów reaktywnych,
+\item weryfikacji formalnej oprogramowania,
+\item analizie struktur hierarchicznych i drzewiastych.
+\end{itemize}
+
+W kontekście niniejszej pracy algorytmy grafowe stanowią podstawowy mechanizm analizy struktur formalnych w opracowanej platformie badawczej. Integracja metod eksploracji grafów z mechanizmami sztucznej inteligencji umożliwia efektywniejszą analizę języków formalnych oraz wspomaga proces inferencji automatów i gramatyk.
+
+\subsection{Algorytmy grafowe w analizie struktur formalnych}
+
+W analizie języków formalnych oraz automatów istotną rolę odgrywają struktury grafowe. Automaty skończone, automaty ze stosem oraz drzewa składniowe mogą być reprezentowane jako grafy skierowane, w których wierzchołki odpowiadają stanom lub symbolom nieterminalnym, natomiast krawędzie opisują relacje przejść pomiędzy stanami lub zależności wynikające z reguł gramatycznych.
+
+Reprezentacja grafowa umożliwia wykorzystanie klasycznych algorytmów przeszukiwania grafów do analizy właściwości struktur formalnych. W opracowanej platformie algorytmy grafowe stanowią jeden z podstawowych mechanizmów analizy automatów skończonych oraz automatów ze stosem. Wykorzystywane są między innymi do określania osiągalności stanów, wykrywania stanów pułapek, analizy skończoności języka, generowania zbiorów testowych oraz symulacji działania automatów.
+
+Formalnie graf można zdefiniować jako:
+
+\begin{equation}
+G=(V,E),
+\end{equation}
+
+gdzie $V$ oznacza zbiór wierzchołków, natomiast
+
+\begin{equation}
+E \subseteq V \times V
+\end{equation}
+
+oznacza zbiór krawędzi.
+
+Dla deterministycznego automatu skończonego zbiór wierzchołków odpowiada zbiorowi stanów
+
+\begin{equation}
+V=Q,
+\end{equation}
+
+natomiast krawędzie odpowiadają funkcji przejścia
+
+\begin{equation}
+(q_i,q_j)\in E \iff \exists a\in\Sigma \; \delta(q_i,a)=q_j.
+\end{equation}
+
+\subsubsection{Przeszukiwanie wszerz (Breadth-First Search)}
+
+Najczęściej wykorzystywanym algorytmem grafowym w platformie jest przeszukiwanie wszerz (Breadth-First Search -- BFS). Algorytm eksploruje graf poziomami, odwiedzając najpierw wszystkie wierzchołki znajdujące się w tej samej odległości od wierzchołka początkowego. Dzięki temu możliwe jest systematyczne przeszukiwanie całej przestrzeni stanów.
+
+Pierwszym zastosowaniem algorytmu BFS jest analiza osiągalności stanów w deterministycznych automatach skończonych. Przeszukiwanie rozpoczyna się od stanu początkowego i odwiedza kolejne stany osiągalne poprzez funkcję przejścia. Wszystkie nieodwiedzone stany są klasyfikowane jako stany nieosiągalne, które nie mają wpływu na rozpoznawany język i mogą zostać wykryte podczas analizy automatu.
+
+Drugim zastosowaniem jest generowanie przykładowych słów akceptowanych i odrzucanych przez automat. W tym przypadku elementami kolejki są pary składające się z aktualnie wygenerowanego słowa oraz odpowiadającego mu stanu automatu. W każdej iteracji do słowa dołączany jest kolejny symbol alfabetu, a następnie wykonywane jest przejście automatu. Pozwala to generować słowa w kolejności rosnącej długości oraz automatycznie budować zestaw zweryfikowanych przykładów wykorzystywanych następnie przez model językowy. Dzięki temu model otrzymuje rzeczywiste przykłady działania automatu zamiast generować je wyłącznie na podstawie własnej wiedzy.
+
+Algorytm BFS wykorzystywany jest również podczas analizy automatów ze stosem (PDA). W tym przypadku przeszukiwany graf nie jest jawnie zapisany w pamięci, lecz tworzony dynamicznie podczas działania programu. Każdy wierzchołek odpowiada konfiguracji automatu opisanej trójką
+
+\begin{equation}
+(q,i,S),
+\end{equation}
+
+gdzie $q$ oznacza aktualny stan automatu, $i$ pozycję analizowanego symbolu wejściowego, natomiast $S$ zawartość stosu. Kolejne konfiguracje generowane są na podstawie możliwych przejść automatu. Akceptacja następuje po osiągnięciu końca słowa wejściowego oraz spełnieniu warunku akceptacji zdefiniowanego dla automatu. Takie podejście pozwala jednocześnie eksplorować wszystkie możliwe ścieżki działania niedeterministycznego automatu ze stosem.
+
+Kolejnym zastosowaniem BFS jest generowanie zbiorów testowych wykorzystywanych podczas benchmarków oraz analizy automatów ze stosem. W tym przypadku wierzchołkami grafu są wszystkie słowa nad danym alfabetem, natomiast krawędzie odpowiadają operacji dopisania kolejnego symbolu. Przeszukiwanie wszerz gwarantuje generowanie słów w kolejności niemalejącej długości, dzięki czemu krótsze słowa są analizowane przed dłuższymi. Pozwala to uzyskać reprezentatywny zbiór przypadków testowych przy ograniczonym koszcie obliczeniowym.
+
+\subsubsection{Przeszukiwanie wszerz w odwróconym grafie}
+
+Istotnym elementem analizy automatów skończonych jest identyfikacja stanów pułapek. W tym celu platforma wykorzystuje przeszukiwanie wszerz wykonywane na odwróconym grafie przejść.
+
+Najpierw odwracane są wszystkie krawędzie automatu, a następnie algorytm BFS rozpoczyna działanie jednocześnie ze wszystkich stanów akceptujących. Odwiedzone zostają wszystkie stany, z których istnieje ścieżka prowadząca do akceptacji. Stany osiągalne ze stanu początkowego, które nie zostały odwiedzone podczas tego przeszukiwania, klasyfikowane są jako stany pułapki. Oznacza to, że po wejściu do takiego stanu nie istnieje już możliwość zaakceptowania żadnego słowa. Informacja ta jest wykorzystywana podczas automatycznej analizy właściwości rozpoznawanego języka.
+
+\subsubsection{Przeszukiwanie w głąb (Depth-First Search)}
+
+Drugim podstawowym algorytmem wykorzystywanym w platformie jest przeszukiwanie w głąb (Depth-First Search -- DFS). W przeciwieństwie do BFS algorytm rozwija ścieżkę tak długo, jak jest to możliwe, zanim powróci do wcześniejszych wierzchołków \cite{cormen2022}.
+
+W opracowanej platformie DFS wykorzystywany jest przede wszystkim do wykrywania cykli w grafie przejść automatu. Implementacja wykorzystuje klasyczny mechanizm kolorowania wierzchołków trzema kolorami: białym oznaczającym wierzchołki nieodwiedzone, szarym oznaczającym wierzchołki aktualnie przetwarzane oraz czarnym oznaczającym zakończone przeszukiwanie.
+
+Pojawienie się krawędzi prowadzącej do wierzchołka oznaczonego kolorem szarym oznacza wykrycie cyklu w grafie przejść. Jeżeli cykl znajduje się w części grafu osiągalnej ze stanu początkowego oraz prowadzącej do stanu akceptującego, automat może akceptować nieskończenie wiele słów. W przeciwnym przypadku język rozpoznawany przez automat pozostaje skończony. Informacja ta stanowi jeden z elementów automatycznej charakterystyki języka generowanej przez platformę.
+
+Połączenie algorytmów BFS i DFS umożliwia kompleksową analizę własności automatów skończonych oraz automatów ze stosem. Algorytmy te współpracują z modułami wykorzystującymi modele językowe, dostarczając zweryfikowanych informacji o strukturze automatu, przykładowych słów oraz właściwościach rozpoznawanego języka. Dzięki temu modele sztucznej inteligencji nie muszą samodzielnie wnioskować o zachowaniu automatu, lecz korzystają z danych uzyskanych metodami algorytmicznymi, co zwiększa poprawność i wiarygodność generowanych analiz.
+
+\section{Projekt i działanie aplikacji}
+
+
+Celem opracowanej aplikacji było stworzenie platformy umożliwiającej analizę, generowanie oraz wizualizację struktur języków formalnych z wykorzystaniem metod sztucznej inteligencji. System został zaprojektowany jako aplikacja webowa pozwalająca na interaktywną pracę z automatami skończonymi, automatami ze stosem oraz gramatykami bezkontekstowymi. Istotnym założeniem projektu było połączenie klasycznych metod teorii automatów i języków formalnych z możliwościami współczesnych modeli językowych.
+
+Aplikacja umożliwia zarówno ręczne konstruowanie struktur formalnych, jak i ich automatyczne generowanie na podstawie opisów zapisanych w języku naturalnym. Oprócz funkcji generacyjnych system oferuje również rozbudowane mechanizmy analizy, pozwalające między innymi na badanie własności automatów, sprawdzanie przynależności słów do języka oraz wizualizację działania wybranych algorytmów.
+
+\subsection{Architektura systemu} \cite{aspnetmvc2026,ollama2026}
+
+Platforma została zaimplementowana z wykorzystaniem technologii ASP.NET Core 8 zgodnie z architekturą MVC (Model--View--Controller). Takie podejście pozwala na wyraźne rozdzielenie warstwy prezentacji, logiki biznesowej oraz modeli danych, co zwiększa czytelność kodu i ułatwia dalszy rozwój aplikacji.
+
+Warstwa prezentacji odpowiada za komunikację z użytkownikiem oraz wizualizację struktur formalnych. Została ona zrealizowana przy użyciu widoków Razor oraz języka JavaScript. Dzięki zastosowaniu technologii webowych użytkownik może w sposób interaktywny tworzyć automaty, definiować gramatyki oraz obserwować wyniki działania algorytmów.
+
+Logika biznesowa została zaimplementowana w postaci zestawu usług odpowiedzialnych za analizę, generowanie oraz przetwarzanie struktur formalnych. Poszczególne komponenty realizują określone zadania, takie jak analiza automatów skończonych, analiza automatów ze stosem, obsługa algorytmu L*, konwersja gramatyk do postaci normalnej Chomsky'ego czy wykonywanie algorytmu CYK.
+
+Warstwa danych odpowiada za przechowywanie aktualnie tworzonych struktur formalnych. W projekcie zastosowano mechanizm sesji użytkownika, dzięki któremu możliwe jest zachowanie stanu edytowanych automatów i gramatyk pomiędzy kolejnymi żądaniami HTTP.
+
+\subsection{Model danych}
+
+W aplikacji zdefiniowano modele reprezentujące podstawowe struktury występujące w teorii języków formalnych. Najważniejszym z nich jest model automatu skończonego składający się ze zbioru stanów, alfabetu wejściowego, funkcji przejścia, stanu początkowego oraz zbioru stanów akceptujących. Poszczególne stany reprezentowane są przez obiekty klasy \texttt{State}, natomiast przejścia przez obiekty klasy \texttt{Transition}.
+
+Drugim istotnym modelem jest automat ze stosem. Oprócz elementów charakterystycznych dla automatów skończonych zawiera on również alfabet stosu, symbol początkowy stosu oraz zbiór operacji wykonywanych na stosie podczas realizacji przejść.
+
+System umożliwia również definiowanie gramatyk bezkontekstowych. Gramatyka przechowywana jest w postaci zbioru produkcji oraz symbolu startowego. Taka reprezentacja pozwala na wykonywanie dalszych operacji analitycznych, takich jak konwersja do postaci normalnej Chomsky'ego czy sprawdzanie przynależności słów do języka.
+\\
+
+\clearpage
+\begin{lstlisting}[language={[Sharp]C},
+caption={Model automatu skończonego wykorzystany w aplikacji},
+label={lst:finite-automaton}]
+public class FiniteAutomaton
+{
+    public string Name { get; set; } = "New Automaton";
+    public FormalStructureType StructureType { get; set; } =
+        FormalStructureType.DeterministicFiniteAutomaton;
+
+    public List<State> States { get; set; } = new();
+    public List<string> Alphabet { get; set; } = new();
+    public List<Transition> Transitions { get; set; } = new();
+
+    public string StartState =>
+        States.FirstOrDefault(x => x.IsStart)?.Name ?? string.Empty;
+
+    public List<string> AcceptingStates =>
+        States.Where(x => x.IsAccepting)
+              .Select(x => x.Name)
+              .ToList();
+
+    public GenerationInfo? GenerationInfo { get; set; }
+}
+\end{lstlisting}
+
+Model ten bezpośrednio odwzorowuje podstawowe elementy automatu skończonego.
+Lista \texttt{States} przechowuje stany konstrukcji, \texttt{Alphabet} alfabet
+wejściowy, natomiast \texttt{Transitions} zbiór przejść. Właściwości
+\texttt{StartState} oraz \texttt{AcceptingStates} pozwalają na wygodne
+uzyskanie informacji o stanie początkowym i stanach akceptujących.
+
+\subsection{Moduł generowania struktur z wykorzystaniem sztucznej inteligencji}
+
+Jednym z najważniejszych elementów platformy jest moduł wykorzystujący modele językowe do generowania struktur formalnych. Zastosowane rozwiązanie umożliwia użytkownikowi opisanie języka w postaci naturalnego tekstu, który następnie interpretowany jest przez model sztucznej inteligencji.
+
+Proces generowania rozpoczyna się od przekazania opisu języka do modelu językowego uruchamianego lokalnie za pomocą środowiska Ollama. Model analizuje otrzymane polecenie i generuje reprezentację struktury formalnej odpowiadającej podanemu opisowi. Następnie wygenerowane dane są przekształcane do wewnętrznych modeli wykorzystywanych przez aplikację, po czym prezentowane użytkownikowi w postaci graficznej.
+
+Takie podejście pozwala znacząco uprościć proces tworzenia automatów i gramatyk, szczególnie dla użytkowników posiadających ograniczoną wiedzę z zakresu teorii języków formalnych.
+\\
+
+\clearpage
+\begin{lstlisting}[language={[Sharp]C},
+caption={Realizacja zapytania o przynależność słowa z wykorzystaniem modelu językowego},
+label={lst:llm-oracle}]
+public async Task<bool> MembershipQuery(string word)
+{
+    if (_cache.TryGetValue(word, out var cached))
+    {
+        RawResponses.Add(
+            $"[{word}] -> (cache: {(cached ? "YES" : "NO")})");
+        return cached;
+    }
+
+    var wordDisplay = word == ""
+        ? "empty word"
+        : $"'{word}'";
+
+    var prompt = $@"Language description: {_description}
+Analyzed word: {wordDisplay}
+
+Does this word belong to the language?
+Answer ONLY: YES or NO.";
+
+    int yesVotes = 0;
+
+    for (int i = 0; i < _votes; i++)
+    {
+        var result = await _ollama.AskAsync(prompt);
+        var parsed = ParseAnswer(result);
+
+        if (parsed == true)
+            yesVotes++;
+    }
+
+    bool answer = yesVotes * 2 > _votes;
+
+    _cache[word] = answer;
+    return answer;
+}
+\end{lstlisting}
+
+Przedstawiony fragment pokazuje sposób wykorzystania modelu językowego
+w charakterze wyroczni odpowiadającej na zapytania o przynależność słów.
+Dla każdego nowego słowa generowane jest zapytanie zawierające opis
+analizowanego języka. W celu ograniczenia wpływu pojedynczej błędnej
+odpowiedzi model może zostać zapytany wielokrotnie, a wynik ustalany jest
+na podstawie głosowania większościowego. Wyniki zapytań są dodatkowo
+zapamiętywane w pamięci podręcznej.
+
+\clearpage
+\begin{lstlisting}[language={[Sharp]C},
+caption={Hybrydowy proces generowania automatu DFA na podstawie wyrażenia regularnego},
+label={lst:regex-dfa}]
+var response =
+    await _ollama.AskAsync(
+        BuildRegexPrompt(description, alphabet));
+
+var candidateRegex =
+    ExtractRegexLine(response);
+
+RegexNode ast;
+
+try
+{
+    ast = new RegexParser(
+        candidateRegex, alphabet).Parse();
+}
+catch (RegexParseException ex)
+{
+    Candidates.Add(new RegexCandidateInfo
+    {
+        Regex = candidateRegex,
+        ParseError = ex.Message
+    });
+
+    continue;
+}
+
+var nfa =
+    _thompson.Build(ast, alphabet);
+
+var dfa =
+    _determinizer.Convert(nfa, alphabet);
+
+DfaCompletion.CompleteWithTrapState(
+    dfa, alphabet);
+
+var minimal =
+    _minimizer.Minimize(dfa, alphabet);
+\end{lstlisting}
+
+\subsection{Implementacja algorytmu L*} \cite{angluin1987}
+
+W systemie zaimplementowano algorytm aktywnego uczenia automatów L* zaproponowany przez Danę Angluin. Algorytm ten umożliwia automatyczne konstruowanie deterministycznego automatu skończonego na podstawie odpowiedzi udzielanych przez nauczyciela (ang. \emph{oracle}).
+
+Podstawą działania algorytmu jest tabela obserwacji zawierająca informacje o przynależności wybranych słów do analizowanego języka. W kolejnych iteracjach tabela jest rozszerzana do momentu spełnienia warunków domknięcia i spójności. Na podstawie uzyskanych danych tworzona jest hipoteza automatu reprezentująca aktualną wiedzę o języku.
+
+W opracowanej platformie rolę nauczyciela może pełnić model językowy, który odpowiada na zapytania dotyczące przynależności słów do języka. Pozwala to na eksperymentalne połączenie klasycznych metod aktywnego uczenia z nowoczesnymi technikami sztucznej inteligencji.
+
+\clearpage
+
+\begin{lstlisting}[language={[Sharp]C},
+caption={Kluczowy fragment implementacji algorytmu L*},
+label={lst:lstar-main}]
+public async Task<FiniteAutomaton> LearnAsync(
+    IAutomatonOracle oracle,
+    List<string> alphabet)
+{
+    var S = new List<string> { "" };
+    var E = new List<string> { "" };
+    E.AddRange(alphabet);
+
+    var table =
+        new Dictionary<(string, string), bool>();
+
+    await FillTable(
+        oracle, S, E, alphabet, table);
+
+    await MakeClosedAndConsistent(
+        oracle, S, E, alphabet, table);
+
+    var hypothesis =
+        BuildAutomaton(S, E, alphabet, table);
+
+    for (int round = 0;
+         round < MaxEquivalenceRounds; round++)
+    {
+        var counterexample =
+            await FindCounterexampleAsync(
+                oracle, hypothesis,
+                alphabet);
+
+        if (counterexample == null)
+            return hypothesis;
+
+        foreach (var prefix
+            in AllPrefixes(counterexample))
+        {
+            if (!S.Contains(prefix))
+                S.Add(prefix);
+        }
+
+        await FillTable(
+            oracle, S, E, alphabet, table);
+
+        await MakeClosedAndConsistent(
+            oracle, S, E, alphabet, table);
+
+        hypothesis =
+            BuildAutomaton(
+                S, E, alphabet, table);
+    }
+
+    return hypothesis;
+}
+\end{lstlisting}
+
+
+
+\clearpage
+
+\begin{lstlisting}[language={[Sharp]C},
+caption={Sprawdzanie domknięcia i spójności tabeli obserwacji},
+label={lst:lstar-refinement}]
+private async Task MakeClosedAndConsistent(
+    IAutomatonOracle oracle,
+    List<string> S,
+    List<string> E,
+    List<string> alphabet,
+    Dictionary<(string, string), bool> table)
+{
+    bool changed;
+    do
+    {
+        changed = false;
+        var violation =
+            FindClosednessViolation(
+                S, alphabet, E, table);
+        if (violation != null)
+        {
+            S.Add(violation);
+            await FillTable(
+                oracle, S, E,
+                alphabet, table);
+
+            changed = true;
+            continue;
+        }
+        var suffix =  FindConsistencyViolation( S, E, alphabet, table);
+        if (suffix != null)
+        {
+            E.Add(suffix);
+            await FillTable(
+                oracle, S, E,
+                alphabet, table);
+            changed = true;
+        }
+    } while (changed);
+}
+\end{lstlisting}
+
+
+
+\clearpage
+\begin{lstlisting}[language={[Sharp]C},
+caption={Konstrukcja automatu DFA na podstawie tabeli obserwacji},
+label={lst:lstar-build}]
+private FiniteAutomaton BuildAutomaton(List<string> S, 
+    List<string> E, List<string> alphabet, 
+    Dictionary<(string, string), bool> table){
+    string RowSig(string s) => RowSignature(s, E, table);
+    var representatives = 
+    S.GroupBy(RowSig).Select(g => g.First()).ToList();
+    var stateNames = representatives.ToDictionary(r => RowSig(r), r => $"q{representatives.IndexOf(r)}");
+    var automaton = new FiniteAutomaton{
+        Name = "L* Generated DFA", Alphabet = alphabet,
+        States = new List<State>(), 
+        Transitions = new List<Transition>()
+    };
+    foreach (var rep in representatives){
+        var sig = RowSig(rep);
+        automaton.States.Add(new State{
+            Name = stateNames[sig],
+            IsStart = rep == "", 
+            IsAccepting =  table.GetValueOrDefault((rep, ""))
+        });
+    }
+    foreach (var rep in representatives){
+        foreach (var symbol in alphabet){
+            var successor = rep + symbol;
+            var sig = RowSig(successor);
+            if (stateNames.TryGetValue(sig, out var target)){
+                automaton.Transitions.Add(new Transition{
+                        FromState = stateNames[RowSig(rep)],
+                        Symbol = symbol, ToState = target
+                    });
+            }
+        }
+    }
+    return automaton;
+}
+\end{lstlisting}
+
+
+\subsection{Moduł analizy automatów skończonych}
+
+Aplikacja zawiera moduł umożliwiający automatyczną analizę automatów skończonych. Podczas analizy wyznaczane są podstawowe parametry konstrukcji, takie jak liczba stanów, liczba przejść, wielkość alfabetu czy liczba stanów akceptujących.
+
+Oprócz prostych statystyk system przeprowadza również analizę strukturalną automatu. W szczególności sprawdzana jest deterministyczność konstrukcji oraz poprawność zdefiniowanych przejść. Wyniki prezentowane są użytkownikowi w postaci raportu tekstowego.
+
+\clearpage
+\begin{lstlisting}[language={[Sharp]C},
+caption={Przygotowanie danych automatu do analizy języka},
+label={lst:automaton-analysis}]
+public LanguageAnalysisResult Analyze(
+    FiniteAutomaton automaton)
+{
+    var result =
+        new LanguageAnalysisResult();
+
+    var stateNames =
+        automaton.States
+            .Select(s => s.Name)
+            .ToHashSet();
+
+    var acceptingStates =
+        automaton.States
+            .Where(s => s.IsAccepting)
+            .Select(s => s.Name)
+            .ToHashSet();
+
+    var alphabet =
+        automaton.Alphabet;
+
+    result.IsComplete =
+        automaton.States.All(state =>
+            alphabet.All(symbol =>
+                automaton.Transitions.Any(t =>
+                    t.FromState == state.Name &&
+                    t.Symbol == symbol)));
+
+    result.ReachableStates =
+        GetReachableStates(
+            automaton.StartState,
+            automaton.Transitions);
+
+    result.UnreachableStates =
+        stateNames
+            .Except(result.ReachableStates)
+            .ToList();
+    return result;
+}
+\end{lstlisting}
+
+\subsection{Moduł analizy automatów ze stosem}
+
+W przypadku automatów ze stosem zaimplementowano bardziej zaawansowane metody analizy wynikające z większej złożoności tych struktur. System umożliwia symulację działania automatu dla wybranego słowa wejściowego, śledząc jednocześnie zawartość stosu na kolejnych etapach obliczeń.
+
+Dodatkowo realizowana jest analiza osiągalności stanów oraz wyszukiwanie przykładowych słów akceptowanych i odrzucanych przez automat. Do eksploracji przestrzeni konfiguracji wykorzystano algorytm przeszukiwania wszerz (BFS), który pozwala efektywnie analizować możliwe ścieżki wykonania.
+
+\clearpage
+\begin{lstlisting}[language={[Sharp]C},
+caption={Symulacja automatu ze stosem z wykorzystaniem BFS},
+label={lst:pda-bfs}]
+var initial = new Configuration
+{
+    State = automaton.StartState,
+    Position = 0,
+    Stack = new Stack<string>()
+};
+
+var queue = new Queue<Configuration>();
+var visited = new HashSet<string>();
+
+queue.Enqueue(initial);
+
+while (queue.Count > 0)
+{
+    var current = queue.Dequeue();
+    var key = CreateConfigurationKey(current);
+
+    if (!visited.Add(key))
+        continue;
+
+    if (current.Position == word.Length &&
+        IsAccepting(current))
+        return true;
+
+    foreach (var transition
+        in GetAvailableTransitions(current))
+    {
+        var next = ApplyTransition(
+            current, transition, word);
+
+        if (next != null)
+            queue.Enqueue(next);
+    }
+}
+return false;
+\end{lstlisting}
+
+\clearpage
+\subsection{Obsługa gramatyk bezkontekstowych}
+
+Platforma udostępnia rozbudowany moduł pracy z gramatykami bezkontekstowymi. Użytkownik może definiować własne produkcje, analizować strukturę gramatyki oraz wykonywać operacje transformacji.
+
+Szczególnie istotnym elementem jest możliwość konwersji gramatyki do postaci normalnej Chomsky'ego, która stanowi podstawę działania algorytmu CYK. Dodatkowo zaimplementowano procedurę konwersji gramatyki bezkontekstowej do równoważnego automatu ze stosem, co pozwala na prezentację zależności pomiędzy różnymi modelami obliczeń.
+
+\clearpage
+
+\begin{lstlisting}[language={[Sharp]C},
+caption={Konstrukcja automatu ze stosem na podstawie gramatyki bezkontekstowej},
+label={lst:cfg-pda}]
+var pda = new PushdownAutomaton
+{
+    States = new List<State>(),
+    Transitions = new List<PdaTransition>(),
+    InputAlphabet = grammar.Terminals,
+    StackAlphabet = grammar.NonTerminals
+};
+var startState = new State{ Name = "q0", IsStart = true };
+var loopState = new State { Name = "q1" };
+pda.States.Add(startState);
+pda.States.Add(loopState);
+foreach (var production in grammar.Productions)
+{
+    pda.Transitions.Add(
+        new PdaTransition
+        {
+            FromState = loopState.Name,
+            ToState = loopState.Name,
+            InputSymbol = null,
+            StackTop = production.Left,
+            PushSymbols =
+                production.Right
+        });
+}
+foreach (var terminal in grammar.Terminals)
+{
+    pda.Transitions.Add(
+        new PdaTransition
+        {
+            FromState = loopState.Name,
+            ToState = loopState.Name,
+            InputSymbol = terminal,
+            StackTop = terminal,
+            PushSymbols =
+                new List<string>()
+        });
+}
+\end{lstlisting}
+
+
+\subsection{Implementacja algorytmu CYK} \cite{younger1967,kasami1965}
+
+W celu sprawdzania przynależności słów do języków generowanych przez gramatyki bezkontekstowe zaimplementowano algorytm Cocke'a--Youngera--Kasamiego (CYK). Algorytm ten działa na gramatykach zapisanych w postaci normalnej Chomsky'ego i wykorzystuje programowanie dynamiczne.
+
+Podczas działania tworzona jest trójkątna tablica zawierająca informacje o nieterminalach zdolnych do wygenerowania poszczególnych fragmentów analizowanego słowa. Wypełnianie tablicy rozpoczyna się od symboli terminalnych, a następnie stopniowo analizowane są coraz dłuższe fragmenty wejścia. Ostatecznie obecność symbolu startowego w ostatniej komórce tablicy oznacza, że badane słowo należy do języka generowanego przez gramatykę.
+
+\clearpage
+
+\begin{lstlisting}[language={[Sharp]C},
+caption={Wypełnianie tablicy programowania dynamicznego w algorytmie CYK},
+label={lst:cyk}]
+int n = word.Length;
+var table = new HashSet<string>[n, n];
+for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
+        table[i, j] = new HashSet<string>();
+
+for (int i = 0; i < n; i++)
+{
+    foreach (var production
+        in grammar.TerminalProductions)
+    {
+        if (production.Terminal == word[i])
+            table[i, i].Add(production.Left);
+    }
+}
+for (int len = 2; len <= n; len++)
+{
+    for (int i = 0; i <= n - len; i++)
+    {
+        int j = i + len - 1;
+        for (int k = i; k < j; k++)
+        {
+            foreach (var production
+                in grammar.BinaryProductions)
+            {
+                if (table[i, k].Contains(
+                        production.LeftSymbol) &&
+                    table[k + 1, j].Contains(
+                        production.RightSymbol))
+                {
+                    table[i, j].Add(
+                        production.Left);
+                }
+            }
+        }
+    }
+}
+return table[0, n - 1].Contains(grammar.StartSymbol);
+\end{lstlisting}
+
+
+
+\subsection{Graficzny edytor struktur formalnych}
+
+Integralnym elementem systemu jest interaktywny edytor grafowy umożliwiający wizualne tworzenie struktur formalnych. Użytkownik może dodawać nowe stany, tworzyć przejścia pomiędzy nimi oraz oznaczać stany początkowe i akceptujące.
+
+Wszystkie zmiany są natychmiast prezentowane na ekranie, co znacząco ułatwia projektowanie i analizowanie automatów. Zastosowanie interfejsu graficznego eliminuje konieczność ręcznego definiowania struktur w postaci matematycznej, dzięki czemu korzystanie z systemu staje się bardziej intuicyjne.
+
+\clearpage
+\begin{lstlisting}[language={[Sharp]C},
+caption={Dodawanie stanu w graficznym edytorze automatu},
+label={lst:editor-add-state}]
+public void AddState(
+    FiniteAutomaton automaton,
+    string stateName,
+    bool isStart,
+    bool isAccepting,
+    double x,
+    double y)
+{
+    if (string.IsNullOrWhiteSpace(stateName))
+        return;
+
+    if (automaton.States.Any(
+        s => s.Name == stateName))
+        return;
+
+    if (isStart)
+    {
+        foreach (var state in
+            automaton.States)
+        {
+            state.IsStart = false;
+        }
+    }
+
+    automaton.States.Add(
+        new State
+        {
+            Name = stateName,
+            IsStart = isStart,
+            IsAccepting = isAccepting,
+            X = x,
+            Y = y
+        });
+}
+\end{lstlisting}
+
+\section{Analiza rozwiązania}
+
+\subsection{Metodologia ewaluacji}
+
+Do oceny skuteczności platformy zbudowano skrypt \texttt{benchmark.py}, porównujący trzy warianty generowania struktur formalnych z opisu w języku naturalnym:
+
+\begin{itemize}
+    \item \textbf{ChatGPT-4o} - pojedyncze zapytanie do modelu komercyjnego, odpowiedź parsowana z tekstu;
+    \item \textbf{Ollama (raw)} - pojedyncze zapytanie do lokalnego modelu (Mistral-7B \cite{jiang2023}) bez żadnej warstwy formalnej, odpowiedź parsowana analogicznie;
+    \item \textbf{FSP (hybryda)} - pełny pipeline platformy: L* z wyrocznią LLM dla automatów regularnych (z jednostrzałową ścieżką regex jako szybszą alternatywą) oraz generowanie gramatyki CFG i konstrukcja PDA dla języków bezkontekstowych.
+\end{itemize}
+
+Zbiór testowy obejmuje 12 języków w trzech kategoriach: \emph{trywialne} (\texttt{ends\_b}, \texttt{contains\_a}, \texttt{starts\_ab}), \emph{regularne} (\texttt{even\_a}, \texttt{div3\_binary}, \texttt{no\_aa}, \texttt{ends\_ab}, \texttt{len\_mod3}) oraz \emph{bezkontekstowe} (\texttt{anbn}, \texttt{balanced\_parens}, \texttt{palindrome\_ab}, \texttt{equal\_ab}). Dla każdego języka generowany automat/gramatyka jest symulowany na wszystkich słowach testowych do zadanej długości (127 słów dla języków regularnych, 255 - 511 dla bezkontekstowych), a \emph{accuracy} to odsetek poprawnie sklasyfikowanych słów. Dodatkowo rejestrowane są: powodzenie parsowania odpowiedzi modelu, kompletność wygenerowanej struktury (czy symulacja daje jednoznaczną odpowiedź dla każdego słowa) oraz czas generowania.
+
+\subsection{Iteracyjne poprawki algorytmu L*}
+
+Wstępne przebiegi benchmarku ujawniły, że wariant FSP dla języków regularnych bywał gorszy od naiwnego zapytania do surowego modelu - sygnał, że problem leży w implementacji, nie w samej koncepcji hybrydowej. Analiza kodu i wyników doprowadziła do zidentyfikowania i naprawienia następujących błędów:
+
+\begin{itemize}
+    \item \textbf{Brak sprawdzania spójności tabeli obserwacji} - implementacja L* weryfikowała wyłącznie domkniętość (\emph{closedness}), pomijając sprawdzanie spójności (\emph{consistency}), co mogło prowadzić do błędnego scalania faktycznie różnych stanów. Dodano pełne sprawdzanie spójności zgodnie z klasycznym algorytmem Angluin.
+    \item \textbf{Brak pętli zapytań o równoważność} - pierwsza domknięta tabela była akceptowana bez żadnej weryfikacji względem wyroczni, co przy zaszumionych odpowiedziach LLM prowadziło do automatów z rażąco zaniżoną liczbą stanów (zaobserwowano automat o 1 stanie dla języka opartego o długość modulo 3, podczas gdy minimalna liczba stanów wynosi 3). Dodano pętlę \emph{equivalence query} z przetwarzaniem kontrprzykładu, testującą hipotezę na dodatkowych słowach przed jej zaakceptowaniem.
+    \item \textbf{Szum wyroczni LLM} - wprowadzono głosowanie większościowe (3-krotne zapytanie o to samo słowo) w miejscach krytycznych dla poprawności strukturalnej, redukujące wpływ pojedynczych, przypadkowych pomyłek modelu.
+    \item \textbf{Niekompletność automatów} - automaty zwracane z tabeli, która nie zdążyła się w pełni domknąć (np. z powodu budżetu czasowego), mogły mieć brakujące przejścia. Dodano jawne dopełnianie stanem pułapką, gwarantujące całkowitość zwracanego DFA niezależnie od tego, na jakim etapie nauka została przerwana.
+    \item \textbf{Sprzeczność w promptcie generowania gramatyki} - dla języka \texttt{balanced\_parens} (alfabet: nawiasy) prompt jednocześnie podawał właściwy alfabet i instruował model, by terminale ograniczał do liter/cyfr. Sprzeczność powodowała sporadyczne, drastyczne spadki accuracy (do 0.05) przy niezmienionym kodzie. Poprawiono prompt, by dynamicznie opisywał rzeczywisty alfabet zamiast zakładać litery/cyfry.
+\end{itemize}
+
+Dodatkowo zaimplementowano alternatywną, jednostrzałową ścieżkę generowania automatów regularnych, analogiczną do już sprawdzonej architektury CFG: model generuje wyrażenie regularne \emph{raz}, a klasyczne algorytmy formalne (konstrukcja Thompsona, determinizacja, minimalizacja metodą Moore'a) budują z niego DFA. Wygenerowany kandydat przechodzi samospójnościową weryfikację (3 niezależne generacje, wybór najlepszej względem próbki słów ocenionej przez wyrocznię z głosowaniem większościowym) i w razie niepowodzenia system spada do pełnego L* jako mechanizmu awaryjnego.
+
+\subsection{Wyniki końcowe dla modelu bazowego}
+
+Tabela~\ref{tab:benchmark-final} przedstawia reprezentatywne wyniki accuracy po wdrożeniu wszystkich powyższych poprawek, dla modelu bazowego Mistral-7B. Ze względu na niedeterminizm generowania (opisany w podrozdziale~\ref{subsec:wariancja}), podano zakresy wartości zaobserwowane w kilku niezależnych przebiegach identycznego kodu.
+
+\newpage
+
+\begin{longtable}{lccc}
+\toprule
+\textbf{Język}  & \textbf{Ollama (raw)} & \textbf{FSP (hybryda)} \\
+\midrule
+\endhead
+\multicolumn{4}{l}{\textit{Trywialne}} \\
+\texttt{ends\_b}          & 0.50--1.00 & 0.86--1.00 \\
+\texttt{contains\_a}      & 0.46       & 0.71--1.00 \\
+\texttt{starts\_ab}       & 0.51       & 0.36--0.57 \\
+\multicolumn{4}{l}{\textit{Regularne}} \\
+\texttt{even\_a}          & 0.50       & 0.49--0.58 \\
+\texttt{div3\_binary}     & 0.00--0.48 & 0.35--0.64 \\
+\texttt{no\_aa}           & 0.41--0.59 & 0.43--0.80 \\
+\texttt{ends\_ab}         & 0.24--0.75 & 0.25--0.76 \\
+\texttt{len\_mod3}        & 0.42--0.57 & 0.44--0.68 \\
+\multicolumn{4}{l}{\textit{Bezkontekstowe}} \\
+\texttt{anbn}             & 0.00 & 0.87--0.99 \\
+\texttt{balanced\_parens} & 0.00 & 0.93--0.95 \\
+\texttt{palindrome\_ab}   & 0.00 & 0.82--0.83 \\
+\texttt{equal\_ab}        & 0.00 & 0.81--0.87 \\
+\bottomrule
+\caption{Accuracy klasyfikacji słów testowych po wdrożeniu poprawek (Mistral-7B jako model bazowy). }
+\label{tab:benchmark-final}
+\end{longtable}
+
+Wyniki potwierdzają główną tezę pracy w sposób zróżnicowany między kategoriami języków. Dla języków bezkontekstowych przewaga architektury hybrydowej jest jednoznaczna i stabilna. FSP osiąga 0.81 - 0.99 accuracy, podczas gdy surowy model uzyskuje 0.00 trafności dla każdego z czterech testowanych języków (parsowanie odpowiedzi konsekwentnie się nie powodzi - modele nie potrafią poprawnie opisać struktury wymagającej pamięci stosowej w pojedynczej odpowiedzi tekstowej). Dla języków regularnych obraz jest bardziej niejednoznaczny: FSP przewyższa surowy model w większości przypadków, ale przewaga jest znacznie mniejsza i w kilku językach (\texttt{starts\_ab}, częściowo \texttt{div3\_binary}) architektura hybrydowa nie przynosi wyraźnej korzyści względem prostego zapytania.
+
+\subsection{Wariancja między przebiegami}
+\label{subsec:wariancja}
+
+Wielokrotne uruchomienia identycznego kodu na tym samym modelu dały zauważalnie różne wyniki - np. \texttt{ends\_b} wahało się między 0.76 a 1.00, a liczba stanów wyuczona dla \texttt{len\_mod3} oscylowała między 1 (błędnie, przed poprawkami) a 3 (poprawnie, teoretyczne minimum) w zależności od przebiegu, mimo braku zmian w kodzie między uruchomieniami. Źródłem tej wariancji jest niedeterminizm samego modelu językowego (niezerowa temperatura generowania) w połączeniu z tym, że zarówno L*, jak i ścieżka regexowa, opierają swoją poprawność na wielokrotnych, niezależnych zapytaniach do tego samego, niedoskonałego źródła. 
+
+\subsection{Eksperyment: doszkalanie modelu metodą LoRA}
+\label{subsec:finetuning} \cite{hu2022}
+
+Mimo wdrożenia opisanych powyżej poprawek algorytmicznych, pewne kategorie języków - w szczególności wymagające rozpoznawania własności modularnych (\texttt{div3\_binary}, \texttt{len\_mod3}) oraz rozróżniania pozycji wzorca w słowie (\texttt{starts\_ab} vs. \texttt{contains\_a}) - pozostawały systematycznie słabe niezależnie od dalszych modyfikacji kodu. Powtarzalność tego wzorca w kolejnych, niezależnych poprawkach sugerowała, że przyczyną nie jest błąd implementacyjny, lecz rzeczywiste ograniczenie kompetencji modelu bazowego w tych konkretnych zadaniach. Zdecydowano się zweryfikować tę hipotezę eksperymentalnie poprzez doszkalanie (\emph{fine-tuning}) metodą LoRA.
+
+\subsubsection{Generowanie danych treningowych}
+
+Kluczowym założeniem metodologicznym było wygenerowanie danych treningowych w sposób w pełni syntetyczny i formalnie zweryfikowany, bez ręcznego etykietowania. Zbudowano generator obejmujący:
+
+\begin{itemize}
+    \item \textbf{Sparametryzowane rodziny języków}: wzorce podłańcuchowe (zaczyna się/kończy się/zawiera/nie zawiera, które są budowane klasycznym automatem KMP), długość słowa modulo $k$, liczba wystąpień symbolu modulo $k$, oraz wartość liczby w zapisie pozycyjnym o zadanej podstawie modulo $k$ (uogólnienie \texttt{div3\_binary});
+    \item \textbf{Konwerter DFA→regex} metodą eliminacji stanów (algorytm McNaughtona--Yamady), generujący docelowe wyrażenia regularne w sposób w pełni deterministyczny, bez udziału LLM;
+    \item \textbf{Niezależny walidator} - osobna implementacja parsera wyrażeń regularnych wraz z symulacją metodą wyprowadzeń Brzozowskiego, używana wyłącznie do potwierdzenia, że każda wygenerowana para (opis, regex) jest semantycznie poprawna względem oryginalnego DFA, zanim trafi do zbioru treningowego.
+\end{itemize}
+
+Podział na zbiór treningowy i testowy przeprowadzono \emph{po parametrach szablonu}, nie po pojedynczych przykładach: modulo 3 (zarówno dla długości słowa, jak i dla wartości w zapisie binarnym) oraz wzorzec \texttt{"ab"} zostały celowo wykluczone z treningu i umieszczone wyłącznie w zbiorze testowym. Taki podział odtwarza dokładnie sytuację najsłabszych kategorii z benchmarku (\texttt{len\_mod3}, \texttt{div3\_binary}, \texttt{starts\_ab}/\texttt{ends\_ab}), a jednocześnie pozwala zmierzyć rzeczywiste \emph{uogólnienie} modelu na nieznaną kombinację parametrów, zamiast zapamiętania konkretnych przykładów.
+
+Ostatecznie uzyskano ok. 8490 przykładów dla zadania wyroczni (zapytanie o przynależność słowa: TAK/NIE) oraz 250 przykładów dla zadania generowania regexu (po odfiltrowaniu instancji, dla których algorytm eliminacji stanów wygenerował patologicznie długie wyrażenia - do ok. 22~tys. znaków dla języków modularnych o wyższych podstawach, co jest znanym efektem ubocznym tej klasycznej metody i czyni takie przykłady praktycznie niemożliwymi do nauczenia).
+
+\subsubsection{Proces treningu i napotkane trudności}
+
+Doszkalanie przeprowadzono metodą QLoRA (kwantyzacja 4-bit, \texttt{rank}=16) na modelu Mistral-7B-v0.1, w środowisku Google Colab (GPU T4). Proces napotkał szereg trudności o charakterze infrastrukturalnym, które same w sobie stanowią wart odnotowania wniosek praktyczny dla podobnych eksperymentów:
+
+\begin{itemize}
+    \item niekompatybilność precyzji \texttt{bfloat16} z architekturą GPU (Turing/T4, brak akceleracji sprzętowej), skutkująca spowolnieniem treningu o rząd wielkości, oraz błędem uniemożliwiającym trening przy równoczesnym użyciu \texttt{float16} z mechanizmem \texttt{GradScaler} bez jawnego, spójnego wymuszenia precyzji na wszystkich poziomach (model, adapter LoRA, konfiguracja \texttt{accelerate});
+    \item konflikty wersji bibliotek (\texttt{transformers}, \texttt{peft}, \texttt{trl}, \texttt{torchao}) charakterystyczne dla szybko zmieniającego się ekosystemu narzędzi do doszkalania modeli językowych;
+    \item konieczność jawnego maskowania funkcji straty wyłącznie na części odpowiedzi (\emph{completion-only loss}) - bez tego model uczy się przewidywać cały tekst promptu (silnie zdominowany przez powtarzalny szablon), a nie samą odpowiedź; w pierwszej próbie objawiło się to degeneracją modelu do generowania wyłącznie znaków nowej linii.
+\end{itemize}
+
+\subsubsection{Wyniki i wnioski}
+
+Po naprawieniu maskowania straty i przeprowadzeniu treningu na pełnym zbiorze danych (ok. 6960 przykładów treningowych, 3 epoki), model doszkalany do roli wyroczni osiągnął \textbf{53,6\% ogólnej zgodności} na zbalansowanym zbiorze testowym (765 przykładów TAK / 765 NIE). Rozbicie wyniku ze względu na kategorię ujawnia istotną strukturę:
+
+\begin{itemize}
+    \item \textbf{59,6\%} na kategoriach reprezentowanych (w innych wariantach parametrów) w zbiorze treningowym;
+    \item \textbf{50,3\%} - a więc dokładnie na poziomie przypadku - na module 3, celowo wykluczonym z treningu jako test rzeczywistego uogólnienia.
+\end{itemize}
+
+Model wykazywał ponadto silne, systematyczne obciążenie w stronę odpowiedzi przeczącej (92,7\% predykcji 'NIE' przy zbalansowanym zbiorze testowym), co wskazuje na niedostateczną siłę sygnału treningowego przy zastosowanej konfiguracji (rank adaptera, liczba epok) do pełnego wyuczenia granicy decyzyjnej zależnej od treści opisu.
+
+Eksperyment z doszkalaniem adaptera do generowania wyrażeń regularnych nie doprowadził do rozstrzygającej ewaluacji, po wyeliminowaniu problemu patologicznie długich celów treningowych oraz poprawieniu błędu metodologicznego w skrypcie ewaluacyjnym (limit generowanych tokenów dostosowany do zadania wyroczni, ~8 tokenów, okazał się drastycznie zbyt mały dla wielotokenowych wyrażeń regularnych, co sztucznie zaniżało zmierzoną skuteczność do 0\%).
+
+\textbf{Wniosek z eksperymentu}: doszkalanie przyniosło mierzalną, ale ograniczoną poprawę wyłącznie na kategoriach zbliżonych strukturalnie do widzianych w treningu. Wynik na module 3, dokładnie na poziomie przypadku mimo jego jawnej obecności (w innych wariantach) w zbiorze treningowym i mimo architektury podziału zaprojektowanej pod kątem promowania uogólnienia, stanowi mocny argument na rzecz hipotezy, że rozpoznawanie własności modularnych jest ograniczeniem zdolności rozumowania matematycznego małego modelu językowego w pojedynczym przebiegu obliczeniowym (bez jawnego łańcucha wnioskowania), a nie deficytem danych treningowych możliwym do usunięcia niewielkim doszkalaniem LoRA. Obserwacja ta znajduje potwierdzenie w kolejnym eksperymencie, opisanym w podrozdziale~\ref{subsec:modele}.
+
+\subsection{Porównanie alternatywnych modeli bazowych}
+\label{subsec:modele} \cite{jiang2023,abdin2024,deepseek2025}
+
+Jako alternatywę wobec doszkalania istotnie tańszą w realizacji przetestowano podmianę modelu bazowego obsługiwanego przez Ollamę, bez żadnych zmian w kodzie platformy poza konfiguracją. Wybrano dwa modele o odmiennej charakterystyce: \textbf{phi4-mini \cite{abdin2024}}, projektowany pod kątem zadań matematyczno-logicznych przy małym rozmiarze, oraz \textbf{DeepSeek-R1} (wariant 8B), model typu \emph{reasoning}, generujący jawny, widoczny łańcuch rozumowania przed odpowiedzią końcową.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Język} & \textbf{Mistral-7B} & \textbf{phi4-mini} & \textbf{DeepSeek-R1-8B} \\
+\midrule
+\texttt{ends\_b}          & 0.86--1.00 & 1.00 & 0.50$^{*}$ \\
+\texttt{contains\_a}      & 0.71--1.00 & 0.71 & 0.06$^{*}$ \\
+\texttt{starts\_ab}       & 0.36--0.57 & 0.41 & 0.76$^{*}$ \\
+\texttt{even\_a}          & 0.49--0.58 & 0.58 & 0.50$^{*}$ \\
+\texttt{div3\_binary}     & 0.35--0.64 & 0.56 & 0.64$^{*}$ \\
+\texttt{no\_aa}           & 0.43--0.80 & 0.60 & 0.59$^{*}$ \\
+\texttt{ends\_ab}         & 0.25--0.76 & 0.25 & 0.76$^{*}$ \\
+\texttt{len\_mod3}        & 0.44--0.68 & 0.54 & 0.00$^{\dagger}$ \\
+\texttt{anbn}             & 0.87--0.99 & 0.99 & 0.99 \\
+\texttt{balanced\_parens} & 0.93--0.95 & 0.95 & 0.95 \\
+\texttt{palindrome\_ab}   & 0.82--0.83 & 0.82 & 0.82 \\
+\texttt{equal\_ab}        & 0.81--0.87 & 0.87 & 0.87 \\
+\bottomrule
+\end{tabular}
+\caption{Porównanie accuracy dla trzech modeli bazowych. $^{*}$ Automaty dla DeepSeek-R1 w językach regularnych są zdegenerowane (1--2 stany) - budżet czasowy L* wyczerpywał się po zaledwie 2--3 z 40 zaplanowanych zapytań ze względu na bardzo długi czas pojedynczej odpowiedzi modelu (rozumowanie krok-po-kroku); wysokie wartości accuracy w tej kolumnie są w dużej mierze artefaktem niezbalansowania klas w teście, nie efektem rzeczywistego uczenia się, i nie powinny być interpretowane jako przewaga modelu. $^{\dagger}$ Przekroczono maksymalny, wydłużony limit czasu żądania (600s).}
+\label{tab:model-comparison}
+\end{table}
+
+Wyniki dla języków bezkontekstowych są niemal identyczne dla wszystkich trzech modeli, mimo że pojedyncze zapytanie do DeepSeek-R1 trwało od kilkudziesięciu do ponad 500 sekund (wobec kilku sekund dla Mistrala). Ścieżka  generatywno-weryfikacyjna okazała się w pełni odporna na tak drastyczną różnicę w szybkości i stylu odpowiedzi modelu bazowego. W przeciwną stronę zadziałało to dla ścieżki L*: ta sama różnica w szybkości modelu doprowadziła do praktycznej niefunkcjonalności tego komponentu przy DeepSeek-R1 - mechanizmy zabezpieczające przed nadmiernym zużyciem czasu (wprowadzone w toku prac, zob. podrozdział~5.2) zadziałały zgodnie z założeniem, przerywając naukę przed przekroczeniem globalnego limitu czasu, lecz przy tak wolnym modelu zdążyły przetworzyć zaledwie ułamek zaplanowanych zapytań, co uniemożliwiło uzyskanie sensownego automatu.
+
+Obserwacja ta stanowi niezależne, mocniejsze potwierdzenie wniosku architektonicznego sformułowanego już w kontekście eksperymentu z doszkalaniem: \textbf{architektura oparta na jednorazowej generacji z klasyczną weryfikacją formalną (zastosowana dla języków bezkontekstowych) jest odporna zarówno na jakość, jak i szybkość modelu bazowego, podczas gdy architektura oparta na wielokrotnym odpytywaniu LLM w roli wyroczni (algorytm L* dla języków regularnych) jest wobec obu tych czynników krucha}. Spowolnienie lub obniżenie jakości modelu nie degraduje jej wyników stopniowo, lecz prowadzi do gwałtownej, jakościowej zmiany zachowania systemu.
+
+\subsection{Podsumowanie wniosków z analizy}
+
+Zebrane wyniki pozwalają zweryfikować postawioną we wstępie hipotezę badawczą w sposób zniuansowany. Dla języków bezkontekstowych hipoteza o przewadze podejścia hybrydowego nad czystym LLM znajduje jednoznaczne, powtarzalne potwierdzenie - zarówno w benchmarku porównawczym, jak i w eksperymencie z trzema różnymi modelami bazowymi. Dla języków regularnych obraz jest bardziej złożony: iteracyjne poprawki algorytmu L* (sprawdzanie spójności, zapytania o równoważność, głosowanie większościowe, jednostrzałowa ścieżka regexowa) przyniosły wymierną poprawę względem początkowej, błędnej implementacji, lecz nie usunęły w pełni luki wobec prostego zapytania do modelu w kilku kategoriach, a w szczególności nie rozwiązały systematycznej słabości w zadaniach wymagających rozumowania modularnego - luki, której nie usunęło również ukierunkowane doszkalanie metodą LoRA. Sugeruje to, że o ile formalna weryfikacja i klasyczne algorytmy skutecznie korygują błędy strukturalne wynikające z niedoskonałości pojedynczych odpowiedzi modelu, o tyle nie są w stanie zrekompensować fundamentalnego braku kompetencji modelu bazowego w konkretnej klasie zadań, a to z kolei wskazuje architekturę minimalizującą powierzchnię, na jakiej niedoskonałość modelu językowego może wpływać na poprawność wyniku (jedno zapytanie generatywne plus weryfikacja klasyczna), jako kierunek o największym potencjale dalszego rozwoju platformy.
+
+% ------------------------------------------------------------
+% Rodział 6 - Podsumowanie
+%------------------------------------------------------------
+
+\section{Podsumowanie i wnioski}
+
+Celem niniejszej pracy było opracowanie platformy umożliwiającej analizę, generowanie oraz wizualizację struktur języków formalnych z wykorzystaniem metod sztucznej inteligencji, a także zbadanie możliwości wykorzystania dużych modeli językowych do transformacji opisów w języku naturalnym na formalne reprezentacje języków. Istotnym założeniem pracy było połączenie możliwości modeli językowych z klasycznymi algorytmami teorii automatów i języków formalnych, tak aby ograniczyć wpływ błędów generowanych przez modele i jednocześnie zachować możliwość automatycznego tworzenia struktur formalnych.
+
+W ramach pracy przeanalizowano podstawowe zagadnienia związane z językami formalnymi, w tym gramatyki formalne, wyrażenia regularne, automaty skończone, automaty ze stosem oraz języki bezkontekstowe. Szczególną uwagę poświęcono metodom pozwalającym na automatyczną analizę i uczenie struktur formalnych, takim jak algorytm L* Angluin oraz algorytm Cocke'a--Youngera--Kasamiego. Przedstawiono również możliwości zastosowania modeli językowych do zadań związanych z językami formalnymi oraz problemy wynikające z różnicy pomiędzy generowaniem tekstu w języku naturalnym a tworzeniem struktur podlegających ścisłym regułom formalnym.
+
+W wyniku przeprowadzonych prac opracowano aplikację webową stanowiącą platformę eksperymentalną. System został zaimplementowany z wykorzystaniem technologii ASP.NET Core 8 oraz architektury MVC. Platforma umożliwia tworzenie i edycję automatów skończonych, automatów ze stosem oraz gramatyk bezkontekstowych, a także ich analizę i wizualizację. Zaimplementowano między innymi mechanizmy analizy automatów skończonych i automatów ze stosem, konwersję gramatyk bezkontekstowych do postaci normalnej Chomsky'ego, konwersję gramatyk do automatów ze stosem oraz algorytm CYK służący do sprawdzania przynależności słów do języka.
+
+Istotną częścią platformy jest moduł wykorzystujący modele językowe uruchamiane lokalnie za pośrednictwem środowiska Ollama. Pozwala on na generowanie struktur formalnych na podstawie opisów przedstawionych w języku naturalnym. Dzięki temu użytkownik nie musi samodzielnie definiować wszystkich elementów automatu lub gramatyki w formalnym zapisie. Jednocześnie wygenerowane struktury mogą być poddawane dalszej analizie za pomocą klasycznych algorytmów, co pozwala oddzielić proces interpretacji opisu od procesu formalnej analizy utworzonej struktury.
+
+Szczególnie istotnym elementem pracy było zastosowanie algorytmu L* w połączeniu z modelem językowym pełniącym funkcję wyroczni. Takie rozwiązanie pozwoliło zbadać możliwość wykorzystania LLM do aktywnego uczenia automatów skończonych. Przeprowadzone eksperymenty wykazały jednak, że bezpośrednie połączenie algorytmu wymagającego wielu zapytań z niedeterministycznym modelem językowym jest podatne na błędy. W toku prac zidentyfikowano między innymi brak sprawdzania spójności tabeli obserwacji, brak pełnej obsługi zapytań o równoważność, wpływ pojedynczych błędnych odpowiedzi modelu oraz możliwość generowania niekompletnych automatów. Problemy te zostały następnie wykorzystane do iteracyjnego udoskonalenia implementacji.
+
+Wprowadzone poprawki obejmowały pełne sprawdzanie domknięcia i spójności tabeli obserwacji, wykorzystanie zapytań o równoważność wraz z kontrprzykładami, głosowanie większościowe dla wybranych zapytań oraz automatyczne uzupełnianie konstrukcji stanem pułapką. Dodatkowo opracowano alternatywną ścieżkę generowania automatów regularnych, w której model językowy generuje wyrażenie regularne w pojedynczym zapytaniu, natomiast dalsze tworzenie automatu realizowane jest za pomocą klasycznych algorytmów. Podejście to ogranicza liczbę miejsc, w których błędna odpowiedź modelu może bezpośrednio wpłynąć na wynik końcowy.
+
+Przeprowadzone eksperymenty pozwoliły przede wszystkim porównać działanie samego modelu językowego z działaniem opracowanej architektury hybrydowej. Dla języków bezkontekstowych uzyskano wyraźną przewagę rozwiązania hybrydowego. W czterech badanych przypadkach model Mistral-7B wykorzystywany bez dodatkowej warstwy formalnej uzyskał skuteczność równą $0.00$, podczas gdy platforma osiągnęła wartości od $0.81$ do $0.99$. Podobne wyniki uzyskano również po zastąpieniu modelu bazowego innymi modelami. Oznacza to, że w przypadku bardziej złożonych struktur formalnych klasyczne algorytmy stanowią skuteczną warstwę zabezpieczającą przed ograniczeniami pojedynczej odpowiedzi modelu językowego.
+
+Znacznie bardziej złożone rezultaty uzyskano dla języków regularnych. W większości badanych przypadków rozwiązanie hybrydowe osiągało wyniki lepsze od surowego modelu, jednak różnica nie była tak wyraźna jak dla języków bezkontekstowych. W niektórych zadaniach, między innymi związanych z pozycją wzorca w słowie, przewaga rozwiązania hybrydowego była niewielka lub nie występowała. Szczególnym problemem okazały się zadania wymagające rozpoznawania własności modularnych, takie jak długość słowa modulo określonej wartości czy wartość liczby binarnej modulo $k$. Wyniki te pokazują, że samo zastosowanie formalnego algorytmu uczącego nie gwarantuje wysokiej jakości rozwiązania, jeżeli źródłem informacji o języku pozostaje model posiadający ograniczone możliwości rozumowania w danej klasie problemów.
+
+Ważnym wnioskiem z przeprowadzonych badań jest również obserwowana wariancja wyników. Wielokrotne uruchomienie tego samego programu na tym samym modelu mogło prowadzić do różnych rezultatów, mimo braku zmian w kodzie platformy. Wynikało to z niedeterminizmu generowania odpowiedzi przez model językowy oraz wielokrotnego wykorzystywania jego odpowiedzi podczas działania algorytmu L*. Zjawisko to ma szczególne znaczenie w przypadku zadań formalnych, ponieważ nawet pojedyncza błędna odpowiedź wyroczni może wpłynąć na kolejne etapy procesu uczenia. Pokazuje to, że w systemach wykorzystujących LLM do zadań wymagających ścisłej poprawności nie można traktować pojedynczej odpowiedzi modelu jako bezwarunkowo wiarygodnego źródła informacji.
+
+Kolejnym elementem badań była próba poprawy wyników poprzez doszkalanie modelu metodą LoRA. W tym celu przygotowano syntetyczny zbiór danych, którego przykłady były generowane na podstawie formalnie zdefiniowanych języków, a następnie niezależnie weryfikowane. Takie rozwiązanie pozwoliło uniknąć ręcznego etykietowania danych oraz zagwarantować ich zgodność z odpowiednimi strukturami formalnymi. Zastosowano również podział danych według parametrów rodziny języków, dzięki czemu możliwe było sprawdzenie rzeczywistej zdolności modelu do generalizacji.
+
+Eksperyment z doszkalaniem nie doprowadził jednak do pełnego rozwiązania problemu. Model osiągnął 53.6\(\%\) zgodności na zbalansowanym zbiorze testowym, a dla specjalnie wyłączonego z treningu przypadku modulo 3 uzyskano wynik 50.3\%, czyli praktycznie poziom losowego wyboru. Jednocześnie model wykazywał silne przesunięcie w kierunku odpowiedzi przeczących. Wyniki te wskazują, że zastosowane doszkalanie przyniosło ograniczoną poprawę, ale nie pozwoliło modelowi na skuteczne uogólnienie wiedzy na niewidziane wcześniej warianty problemów. W szczególności sugeruje to, że obserwowane ograniczenia nie wynikały wyłącznie z niewystarczającej liczby przykładów treningowych.
+
+Istotnych informacji dostarczyło również porównanie różnych modeli bazowych. Zastosowanie modelu phi4-mini oraz modelu DeepSeek-R1-8B pokazało, że sama zmiana modelu nie rozwiązuje wszystkich problemów platformy. W przypadku języków bezkontekstowych wyniki wszystkich trzech modeli były bardzo zbliżone, co dodatkowo potwierdziło odporność architektury generatywno-weryfikacyjnej. Jednocześnie duża liczba i czas odpowiedzi modelu DeepSeek-R1 powodowały praktyczne problemy w przypadku algorytmu L*, który wymaga wielokrotnego odpytywania modelu. Prowadziło to do wyczerpywania limitu czasu zanim algorytm był w stanie zebrać wystarczającą ilość informacji.
+
+Na podstawie przeprowadzonych eksperymentów można zatem sformułować ogólny wniosek dotyczący architektury systemów łączących sztuczną inteligencję z metodami formalnymi. Najbardziej obiecujące okazuje się podejście, w którym model językowy wykorzystywany jest przede wszystkim do interpretacji opisu problemu i wygenerowania kandydata, natomiast jego formalna poprawność jest następnie sprawdzana lub dalsze etapy konstrukcji są realizowane za pomocą deterministycznych algorytmów. Takie rozdzielenie odpowiedzialności pozwala wykorzystać mocne strony modeli językowych, związane z przetwarzaniem języka naturalnego, bez powierzania im całkowitej odpowiedzialności za zachowanie formalnej poprawności konstrukcji.
+
+Wyniki pracy pozwalają również odnieść się bezpośrednio do postawionej hipotezy badawczej. Zakładała ona, że odpowiednio przystosowane duże modele językowe mogą interpretować opisy w języku naturalnym i generować struktury języków formalnych porównywalne pod względem poprawności z konstrukcjami uzyskiwanymi metodami klasycznymi. Hipoteza ta została \textbf{częściowo potwierdzona}. W przypadku języków bezkontekstowych zastosowana architektura hybrydowa uzyskała wysoką i stabilną skuteczność, znacząco przewyższającą wyniki surowego modelu językowego. Pokazuje to, że połączenie LLM z klasycznymi metodami formalnymi może być skutecznym sposobem automatycznego tworzenia struktur.
+
+Jednocześnie wyniki dla języków regularnych pokazują, że skuteczność takiego rozwiązania jest zależna od charakteru problemu oraz możliwości wykorzystanego modelu. Szczególnie trudne okazały się zadania wymagające rozumowania modularnego. Ani dalsze modyfikacje algorytmu L*, ani niewielkie doszkalanie modelu metodą LoRA nie usunęły w pełni tych ograniczeń. Oznacza to, że formalna warstwa systemu może skutecznie wykrywać i ograniczać błędy strukturalne, ale nie jest w stanie całkowicie zastąpić kompetencji rozumowania, których brakuje modelowi odpowiedzialnemu za dostarczenie informacji wejściowych.
+
+Przeprowadzone badania pokazują więc, że wykorzystanie sztucznej inteligencji w analizie języków formalnych powinno być traktowane nie jako zastąpienie klasycznych metod, lecz jako ich uzupełnienie. Modele językowe dobrze sprawdzają się jako warstwa komunikacji pomiędzy opisem problemu w języku naturalnym a formalną reprezentacją, natomiast klasyczne algorytmy zapewniają deterministyczne mechanizmy analizy, weryfikacji i przekształcania struktur. Opracowana platforma stanowi przykład takiej architektury i jednocześnie środowisko pozwalające na dalsze badanie tego rodzaju połączeń.
+
+Warto również podkreślić, że jednym z rezultatów pracy nie jest wyłącznie sama implementacja platformy, lecz także identyfikacja ograniczeń poszczególnych sposobów integracji modeli językowych z algorytmami formalnymi. Eksperymenty pokazały, że rozwiązania wykorzystujące wielokrotne zapytania do LLM są szczególnie wrażliwe na czas odpowiedzi, niedeterminizm oraz pojedyncze błędy modelu. Z kolei rozwiązania oparte na jednorazowej generacji i klasycznej weryfikacji wykazały znacznie większą odporność na zmianę modelu bazowego oraz jego szybkości działania. Jest to istotny wniosek projektowy, który może zostać wykorzystany przy dalszym rozwoju platformy.
+
+\subsection{Ograniczenia i kierunki dalszego rozwoju}
+
+Pomimo osiągnięcia założonych celów, przeprowadzone badania posiadają pewne ograniczenia. Eksperymenty zostały wykonane na stosunkowo niewielkim zbiorze 12 języków testowych, obejmującym zarówno proste języki regularne, bardziej wymagające języki regularne, jak i wybrane języki bezkontekstowe. Wyniki należy zatem interpretować jako ocenę zastosowanej architektury w ramach zdefiniowanego zbioru eksperymentalnego, a nie jako pełną charakterystykę możliwości modeli językowych w całej klasie języków formalnych.
+
+Ograniczeniem pozostają również dostępne zasoby obliczeniowe oraz czas wykonywania eksperymentów. Jest to szczególnie widoczne w przypadku modeli generujących rozbudowane odpowiedzi z jawnym procesem rozumowania. W przypadku algorytmu L* zwiększenie czasu pojedynczego zapytania przekłada się bezpośrednio na zmniejszenie liczby zapytań możliwych do wykonania w ramach ustalonego budżetu czasowego.
+
+Naturalnym kierunkiem dalszego rozwoju platformy jest rozszerzenie zbioru testowego o większą liczbę rodzin języków oraz bardziej złożone problemy. W szczególności interesujące byłoby zbadanie języków o większej liczbie stanów minimalnych, bardziej złożonych zależnościach modularnych oraz problemów wymagających jednoczesnego uwzględnienia wielu własności słów.
+
+Kolejnym kierunkiem może być opracowanie bardziej rozbudowanej warstwy weryfikacyjnej, która automatycznie generowałaby kontrprzykłady dla wygenerowanych struktur. Pozwoliłoby to ograniczyć zależność od ręcznie przygotowanych przypadków testowych i stworzyć bardziej uniwersalny mechanizm wykrywania błędów modeli językowych. Możliwe jest również rozwinięcie podejścia generatywno-weryfikacyjnego poprzez wykorzystanie kilku niezależnych modeli lub różnych sposobów generowania tej samej struktury i porównywanie otrzymanych wyników.
+
+Interesującym kierunkiem dalszych badań pozostaje również wykorzystanie większych lub wyspecjalizowanych modeli językowych oraz bardziej zaawansowanych metod ich adaptacji. Eksperyment z LoRA pokazał, że samo zwiększenie ilości przykładów podobnego typu nie musi prowadzić do poprawy zdolności generalizacji. W przyszłości można zatem zbadać metody treningu ukierunkowane bezpośrednio na rozumowanie symboliczne, generowanie formalnych reprezentacji lub wieloetapowe rozwiązywanie problemów.
+
+Rozbudowy wymagać może także sama warstwa użytkowa platformy. Obecna aplikacja stanowi przede wszystkim środowisko badawcze, jednak jej architektura pozwala na dalsze rozszerzenie funkcjonalności dydaktycznych. Możliwe byłoby między innymi dodanie automatycznego wyjaśniania kolejnych etapów działania algorytmów, generowania zadań dla użytkownika oraz interaktywnego porównywania struktur wygenerowanych przez model z konstrukcjami uzyskanymi metodami klasycznymi.
+
+Podsumowując, opracowana praca pokazuje, że połączenie dużych modeli językowych z klasycznymi metodami teorii języków formalnych jest wykonalne i może prowadzić do praktycznie użytecznych rezultatów. Jednocześnie eksperymenty wskazują, że kluczowe znaczenie ma sposób podziału odpowiedzialności pomiędzy model językowy i algorytm formalny. Model może skutecznie pełnić rolę interfejsu pomiędzy językiem naturalnym a strukturą formalną, jednak zapewnienie wysokiej poprawności wymaga zastosowania niezależnych, deterministycznych mechanizmów analizy i weryfikacji. Właśnie takie połączenie stanowi najważniejszy rezultat przeprowadzonych badań i podstawę do dalszego rozwoju opracowanej platformy.
+
+
+
+
+% ------------------------------------------------------------
+
+% ------------------------------------------------------------
+% Rozdział 7 - Instrukcja uruchomienia aplikacji
+% ------------------------------------------------------------
+
+\clearpage
+\section{Instrukcja uruchomienia aplikacji}
+
+Opracowana platforma jest aplikacją internetową opartą na technologii ASP.NET Core 8. Do korzystania z funkcji wykorzystujących sztuczną inteligencję wymagane jest dodatkowo lokalne środowisko Ollama oraz pobrany model językowy \texttt{phi4-mini}. Niniejszy rozdział przedstawia uproszczoną procedurę przygotowania środowiska i uruchomienia aplikacji.
+
+\subsection{Wymagania środowiskowe}
+
+Do uruchomienia aplikacji potrzebne są:
+
+\begin{itemize}
+    \item system operacyjny umożliwiający uruchomienie platformy .NET 8,
+    \item zainstalowany pakiet .NET 8 SDK,
+    \item zainstalowane środowisko Ollama,
+    \item pobrany model językowy \texttt{phi4-mini},
+    \item przeglądarka internetowa.
+\end{itemize}
+
+Do przygotowania i uruchomienia projektu można wykorzystać środowisko Visual Studio lub terminal systemowy. W przypadku uruchamiania aplikacji z poziomu terminala wymagane jest przejście do katalogu zawierającego plik projektu \texttt{FormalStructuresWebApp.csproj}.
+
+\subsection{Przygotowanie projektu}
+
+Po pobraniu kodu źródłowego aplikacji należy rozpakować archiwum z projektem. Następnie w terminalu należy przejść do katalogu:
+
+\begin{verbatim}
+FormalStructuresWebApp/FormalStructuresWebApp
+\end{verbatim}
+
+W katalogu tym znajduje się plik projektu \texttt{FormalStructuresWebApp.csproj}. Przed pierwszym uruchomieniem należy pobrać wymagane zależności projektu za pomocą polecenia:
+
+\begin{verbatim}
+dotnet restore
+\end{verbatim}
+
+Polecenie pobiera pakiety wymagane przez projekt i przygotowuje środowisko do kompilacji aplikacji.
+
+\subsection{Instalacja i konfiguracja Ollama}
+
+Funkcje sztucznej inteligencji w aplikacji są realizowane z wykorzystaniem lokalnego środowiska Ollama. Ollama udostępnia interfejs API działający lokalnie, z którego aplikacja korzysta podczas wysyłania zapytań do modelu językowego. W konfiguracji aplikacji adres tego interfejsu ustawiono na \texttt{http://localhost:11434}, co odpowiada domyślnemu adresowi lokalnego API Ollama.
+
+Ollama należy zainstalować zgodnie z instrukcją dla używanego systemu operacyjnego. Po instalacji poprawność działania można sprawdzić poleceniem:
+
+\begin{verbatim}
+ollama --version
+\end{verbatim}
+
+Następnie należy pobrać model wykorzystywany przez aplikację:
+
+\begin{verbatim}
+ollama pull phi4-mini
+\end{verbatim}
+
+Po zakończeniu pobierania dostępne modele można sprawdzić poleceniem:
+
+\begin{verbatim}
+ollama list
+\end{verbatim}
+
+Na liście powinien znajdować się model \texttt{phi4-mini}.
+
+\subsection{Konfiguracja modelu językowego}
+
+Adres Ollama oraz nazwa modelu są przechowywane w pliku \texttt{appsettings.json}. Dla wersji aplikacji opisanej w niniejszej pracy konfiguracja powinna zawierać:
+
+\begin{lstlisting}[language={},caption={Konfiguracja połączenia aplikacji z Ollama},label={lst:ollama-config}]
+"Ollama": {
+  "BaseUrl": "http://localhost:11434",
+  "Model": "phi4-mini"
+}
+\end{lstlisting}
+
+Aplikacja odczytuje te wartości podczas uruchamiania. Klasa \texttt{OllamaService} wykorzystuje następnie skonfigurowany adres do wysyłania żądań do endpointu generowania odpowiedzi modelu. Dzięki temu model nie jest uruchamiany bezpośrednio przez aplikację ASP.NET Core, lecz działa jako osobny lokalny proces udostępniający API.
+
+Przed uruchomieniem aplikacji można dodatkowo sprawdzić działanie modelu poleceniem:
+
+\begin{verbatim}
+ollama run phi4-mini
+\end{verbatim}
+
+Po uruchomieniu modelu można wykonać przykładowe zapytanie w terminalu. Po zakończeniu testu aplikacja może korzystać z tego samego lokalnego środowiska Ollama.
+
+\subsection{Uruchomienie aplikacji}
+
+Po przygotowaniu środowiska oraz pobraniu modelu należy upewnić się, że terminal znajduje się w katalogu zawierającym plik \texttt{FormalStructuresWebApp.csproj}. Aplikację uruchamia się poleceniem:
+
+\begin{verbatim}
+dotnet run
+\end{verbatim}
+
+Podczas uruchamiania aplikacja zostanie skompilowana, a serwer ASP.NET Core rozpocznie nasłuchiwanie na adresach określonych w konfiguracji profili uruchomieniowych. W dostarczonej wersji projektu są to między innymi:
+
+\begin{verbatim}
+https://localhost:7160
+http://localhost:5265
+\end{verbatim}
+
+Po uruchomieniu serwera jeden z powyższych adresów należy otworzyć w przeglądarce internetowej. Zalecane jest użycie adresu HTTPS:
+
+\begin{verbatim}
+https://localhost:7160
+\end{verbatim}
+
+Jeżeli przeglądarka wyświetli ostrzeżenie związane z lokalnym certyfikatem deweloperskim HTTPS, certyfikat można zatwierdzić w środowisku deweloperskim lub, w przypadku potrzeby jego ponownego zaufania, wykonać polecenie:
+
+\begin{verbatim}
+dotnet dev-certs https --trust
+\end{verbatim}
+
+\subsection{Weryfikacja działania}
+
+Po otwarciu aplikacji w przeglądarce należy sprawdzić, czy strona główna została poprawnie wyświetlona. Następnie można przejść do jednego z modułów wykorzystujących model językowy i wykonać przykładowe zadanie generowania lub analizy struktury formalnej.
+
+Jeżeli funkcje wykorzystujące sztuczną inteligencję nie działają, w pierwszej kolejności należy sprawdzić, czy środowisko Ollama jest uruchomione oraz czy model \texttt{phi4-mini} został pobrany. Pomocne są w tym polecenia:
+
+\begin{verbatim}
+ollama list
+ollama run phi4-mini
+\end{verbatim}
+
+Jeżeli model nie znajduje się na liście, należy ponownie wykonać:
+
+\begin{verbatim}
+ollama pull phi4-mini
+\end{verbatim}
+
+W przypadku problemów z uruchomieniem samej aplikacji należy natomiast sprawdzić, czy polecenie \texttt{dotnet run} jest wykonywane w katalogu zawierającym plik projektu oraz czy zainstalowana wersja .NET SDK obsługuje platformę .NET 8.
+
+\subsection{Podstawowa procedura uruchomienia}
+
+Po jednorazowym przygotowaniu środowiska kolejne uruchomienia aplikacji wymagają jedynie uruchomienia Ollama oraz aplikacji ASP.NET Core. Minimalna procedura przedstawia się następująco:
+
+\begin{enumerate}
+    \item uruchomić środowisko Ollama,
+    \item przejść do katalogu zawierającego plik \texttt{FormalStructuresWebApp.csproj},
+    \item wykonać polecenie \texttt{dotnet run},
+    \item otworzyć w przeglądarce adres \texttt{https://localhost:7160},
+    \item korzystać z funkcji platformy, w tym modułów wykorzystujących model \texttt{phi4-mini}.
+\end{enumerate}
+
+Instalacja zależności projektu za pomocą \texttt{dotnet restore} oraz pobranie modelu \texttt{phi4-mini} za pomocą \texttt{ollama pull} są wymagane przede wszystkim przy pierwszym przygotowaniu środowiska lub po zmianie konfiguracji.
+
+
+% Bibliografia
+% ------------------------------------------------------------
+\clearpage
+\section*{Bibliografia}
+\addcontentsline{toc}{section}{Bibliografia}
+
+\begin{thebibliography}{99}
+
+\bibitem{hopcroft2007}
+J.~E. Hopcroft, R.~Motwani, J.~D. Ullman,
+\textit{Introduction to Automata Theory, Languages, and Computation},
+3rd ed., Pearson, 2007.
+
+\bibitem{sipser2012}
+M.~Sipser,
+\textit{Introduction to the Theory of Computation},
+3rd ed., Cengage Learning, 2012.
+
+\bibitem{linz2016}
+P.~Linz,
+\textit{An Introduction to Formal Languages and Automata},
+6th ed., Jones \& Bartlett Learning, 2016.
+
+\bibitem{chomsky1959}
+N.~Chomsky,
+``On Certain Formal Properties of Grammars,''
+\textit{Information and Control},
+vol.~2, no.~2, pp.~137--167, 1959.
+
+\bibitem{aho1972}
+A.~V. Aho, J.~D. Ullman,
+\textit{The Theory of Parsing, Translation, and Compiling},
+Prentice-Hall, 1972.
+
+\bibitem{thompson1968}
+K.~Thompson,
+``Programming Techniques: Regular Expression Search Algorithm,''
+\textit{Communications of the ACM},
+vol.~11, no.~6, pp.~419--422, 1968,
+doi: 10.1145/363347.363387.
+
+\bibitem{mcnaughton1960}
+R.~McNaughton, H.~Yamada,
+``Regular Expressions and State Graphs for Automata,''
+\textit{IRE Transactions on Electronic Computers},
+vol.~EC-9, no.~1, pp.~39--47, 1960.
+
+\bibitem{angluin1987}
+D.~Angluin,
+``Learning Regular Sets from Queries and Counterexamples,''
+\textit{Information and Computation},
+vol.~75, no.~2, pp.~87--106, 1987,
+doi: 10.1016/0890-5401(87)90052-6.
+
+\bibitem{younger1967}
+D.~H. Younger,
+``Recognition and Parsing of Context-Free Languages in Time $n^3$,''
+\textit{Information and Control},
+vol.~10, no.~2, pp.~189--208, 1967.
+
+\bibitem{kasami1965}
+T.~Kasami,
+``An Efficient Recognition and Syntax-Analysis Algorithm for Context-Free Languages,''
+Technical Report, Air Force Cambridge Research Laboratory, 1965.
+
+\bibitem{cormen2022}
+T.~H. Cormen, C.~E. Leiserson, R.~L. Rivest, C.~Stein,
+\textit{Introduction to Algorithms},
+4th ed., MIT Press, 2022.
+
+\bibitem{vaswani2017}
+A.~Vaswani, N.~Shazeer, N.~Parmar, J.~Uszkoreit,
+L.~Jones, A.~N. Gomez, Ł.~Kaiser, I.~Polosukhin,
+``Attention Is All You Need,''
+in \textit{Advances in Neural Information Processing Systems 30},
+2017.
+
+\bibitem{brown2020}
+T.~B. Brown et al.,
+``Language Models Are Few-Shot Learners,''
+in \textit{Advances in Neural Information Processing Systems 33},
+2020.
+
+\bibitem{jurafsky2026}
+D.~Jurafsky, J.~H. Martin,
+\textit{Speech and Language Processing: An Introduction to Natural Language Processing,
+Computational Linguistics, and Speech Recognition with Language Models},
+3rd ed., online manuscript, 2026.
+
+\bibitem{zhao2023}
+W.~X. Zhao et al.,
+``A Survey of Large Language Models,''
+\textit{arXiv preprint arXiv:2303.18223}, 2023.
+
+\bibitem{ouyang2022}
+L.~Ouyang et al.,
+``Training Language Models to Follow Instructions with Human Feedback,''
+in \textit{Advances in Neural Information Processing Systems 35},
+2022.
+
+\bibitem{lewis2020}
+P.~Lewis et al.,
+``Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks,''
+in \textit{Advances in Neural Information Processing Systems 33},
+2020.
+
+\bibitem{hu2022}
+E.~J. Hu et al.,
+``LoRA: Low-Rank Adaptation of Large Language Models,''
+in \textit{International Conference on Learning Representations},
+2022.
+
+\bibitem{jiang2023}
+A.~Q. Jiang et al.,
+``Mistral 7B,''
+\textit{arXiv preprint arXiv:2310.06825}, 2023.
+
+\bibitem{abdin2024}
+M.~I. Abdin et al.,
+``Phi-4 Technical Report,''
+Microsoft Research, 2024.
+
+\bibitem{deepseek2025}
+DeepSeek-AI, D.~Guo, D.~Yang et al.,
+``DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning,''
+\textit{arXiv preprint arXiv:2501.12948}, 2025.
+
+\bibitem{guo2025}
+D.~Guo et al.,
+``DeepSeek-R1 Incentivizes Reasoning in LLMs through Reinforcement Learning,''
+\textit{Nature}, vol.~645, pp.~633--638, 2025.
+
+\bibitem{aspnetmvc2026}
+Microsoft,
+``ASP.NET Core MVC Overview,''
+2026.
+Available at: \url{https://learn.microsoft.com/aspnet/core/mvc/overview}
+
+\bibitem{ollama2026}
+Ollama,
+``Ollama API Documentation,''
+2026.
+Available at: \url{https://docs.ollama.com/api/introduction}
+
+\bibitem{peft2026}
+Hugging Face,
+``PEFT: Parameter-Efficient Fine-Tuning,''
+2026.
+Available at: \url{https://huggingface.co/docs/peft}
+
+\end{thebibliography}
+
+
+% ------------------------------------------------------------
+% Spisy
+% ------------------------------------------------------------
+\clearpage
+% \listoffigures
+\lstlistoflistings
+\clearpage
+\listoftables
+
+\clearpage
+\listequations
+
+
+
+
 
 \end{document}
