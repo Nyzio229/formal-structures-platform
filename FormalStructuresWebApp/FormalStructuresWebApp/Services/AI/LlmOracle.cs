@@ -6,13 +6,25 @@ namespace FormalStructuresWebApp.Services.AI
     {
         private readonly IOllamaService _ollama;
         private readonly string _description;
+        private readonly int _votes;
         public List<string> RawResponses { get; } = new();
         private readonly Dictionary<string, bool> _cache = new();
 
-        public LlmOracle(IOllamaService ollama, string description)
+        /// <param name="votes">
+        /// Liczba niezależnych zapytań do LLM na KAŻDE nowe słowo, z odpowiedzią
+        /// większościową. Pojedyncze zapytanie do modelu bywa niespójne/błędne
+        /// (zwłaszcza dla własności wymagających liczenia, np. długość mod 3),
+        /// a L* z consistency check + equivalence query traktuje każdą taką
+        /// pomyłkę jako dowód na istnienie nowego stanu — bez głosowania
+        /// prowadzi to do wybuchu liczby stanów (obserwowane: 21 stanów
+        /// zamiast ~3-4 dla "słowo zaczyna się od ab"). Musi być liczbą
+        /// nieparzystą, żeby uniknąć remisów.
+        /// </param>
+        public LlmOracle(IOllamaService ollama, string description, int votes = 3)
         {
             _ollama = ollama;
             _description = description;
+            _votes = votes < 1 ? 1 : (votes % 2 == 0 ? votes + 1 : votes);
         }
 
         public async Task<bool> MembershipQuery(string word)
@@ -32,10 +44,21 @@ namespace FormalStructuresWebApp.Services.AI
 
                 Czy to słowo należy do języka? Odpowiedz TYLKO: TAK lub NIE.";
 
-            var result = await _ollama.AskAsync(prompt);
-            bool answer = ParseAnswer(result) ?? false;
+            int yesVotes = 0;
+            var voteLog = new List<string>();
 
-            RawResponses.Add($"[{word}] → {(answer ? "TAK" : "NIE")}");
+            for (int i = 0; i < _votes; i++)
+            {
+                var result = await _ollama.AskAsync(prompt);
+                var parsed = ParseAnswer(result);
+                voteLog.Add(parsed == true ? "TAK" : parsed == false ? "NIE" : "?");
+                if (parsed == true) yesVotes++;
+            }
+
+            // Odpowiedź większościowa; niejednoznaczne/puste odpowiedzi liczą się jako "NIE".
+            bool answer = yesVotes * 2 > _votes;
+
+            RawResponses.Add($"[{word}] → {(answer ? "TAK" : "NIE")} (głosy: {string.Join(",", voteLog)})");
             _cache[word] = answer;
             return answer;
         }

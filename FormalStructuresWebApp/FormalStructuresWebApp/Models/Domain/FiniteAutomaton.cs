@@ -13,5 +13,8 @@
 
         public List<string> AcceptingStates =>
             States.Where(x => x.IsAccepting).Select(x => x.Name).ToList();
+
+        /// <summary>Diagnostyka: jak dokładnie ten automat powstał (patrz GenerationInfo.cs).</summary>
+        public GenerationInfo? GenerationInfo { get; set; }
     }
 }

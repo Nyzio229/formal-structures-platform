@@ -73,23 +73,25 @@ namespace FormalStructuresWebApp.Services.CFG
         private string BuildGrammarPrompt(string description, List<string> alphabet)
         {
             var alphabetStr = alphabet.Any()
-                ? string.Join(", ", alphabet)
+                ? string.Join(", ", alphabet.Select(a => $"'{a}'"))
                 : "wywnioskuj z opisu";
 
             return $@"Twoim zadaniem jest zapisanie gramatyki bezkontekstowej (CFG).
 
                 OPIS JĘZYKA: {description}
-                ALFABET TERMINALI: {alphabetStr}
+                ALFABET TERMINALI (dokładnie te symbole, nic innego): {alphabetStr}
 
                 ZASADY — przestrzegaj ściśle:
                 - Każda produkcja w osobnej linii, format: A -> prawa_strona
                 - Alternatywy oddzielaj: |
                 - Symbol pusty: ε
                 - Nieterminale: TYLKO wielkie litery lub wielkie litery z cyfrą (S, A, B, S1, A1)
-                - Terminale: TYLKO małe litery lub cyfry (a, b, 0, 1)
-                - NIE łącz terminali z nieterminalami w nazwach (nie pisz aA, bB itp.)
+                - Terminale: UŻYWAJ WYŁĄCZNIE symboli z podanego wyżej alfabetu — {alphabetStr}.
+                  To mogą być litery, cyfry, lub znaki specjalne (np. nawiasy) — użyj
+                  DOKŁADNIE tych znaków, nie zamieniaj ich na litery czy inne symbole.
+                - NIE łącz terminali z nieterminalami w nazwach
 
-                PRZYKŁAD dla języka aⁿbⁿ (n≥1):
+                PRZYKŁAD dla języka aⁿbⁿ (n≥1), gdzie alfabet to 'a', 'b':
                 S -> a S b | a b
 
                 Napisz TYLKO produkcje gramatyki, zero wyjaśnień.";
